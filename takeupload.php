@@ -1,5 +1,6 @@
 <?php
 require_once("include/benc.php");
+require_once("include/benc_new.php");
 require_once("include/bittorrent.php");
 ini_set("upload_max_filesize",$max_torrent_size);
 dbconn();
@@ -26,6 +27,7 @@ if (!isset($_FILES["file"]))
 bark($lang_takeupload['std_missing_form_data']);
 
 $f = $_FILES['file'];
+
 $fname = unesc($f['name']);
 if (empty($fname))
 bark($lang_takeupload['std_empty_filename']);
@@ -114,6 +116,13 @@ $torrent = unesc($_POST["name"]);
 if ($f['size'] > $max_torrent_size)
 bark($lang_takeupload['std_torrent_file_too_big'].number_format($max_torrent_size).$lang_takeupload['std_remake_torrent_note']);
 $tmpname = $f['tmp_name'];
+
+if(isset($_GET["debug"])){
+	$dict = \Rid\Bencode\Bencode::load($tmpname);
+	var_dump($dict);
+	die();
+}
+
 if (!is_uploaded_file($tmpname))
 bark("eek");
 
