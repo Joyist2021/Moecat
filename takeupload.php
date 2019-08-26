@@ -249,7 +249,7 @@ unset($dict['value']['announce-list']); // remove multi-tracker capability
 unset($dict['value']['azureus_properties']); 
 //unset($dict['value']['encoding']); 
 unset($dict['value']['nodes']); // remove cached peers (Bitcomet & Azareus)
-$dict=bdec(benc($dict)); // double up on the becoding solves the occassional misgenerated infohash
+//$dict=bdec(benc($dict)); // double up on the becoding solves the occassional misgenerated infohash
 list($info) = dict_check($dict, "info");
 //list($ann, $info) = dict_check($dict, "announce(string):info");
 $infohash = pack("H*", sha1($info["string"]));

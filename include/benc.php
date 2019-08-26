@@ -42,16 +42,15 @@ function benc_dict($d) {
 	$s .= "e";
 	return $s;
 }
-function bdec_file($f, $ms) {
-	$fp = fopen($f, "rb");
-	if (!$fp)
-		return;
-	//$e = fread($fp, $ms);
-	
-	do{$e .= fread($fp, 4096);} while (!feof($fp));
-
-	fclose($fp);
-	return bdec($e);
+function bdec_file($path)
+{
+    try{
+        return bdec_decode_new(file_get_contents($path, FILE_BINARY));
+    }
+    catch (Exception $e){
+        return;
+    }
+   
 }
 function bdec($s) {
 	if (preg_match('/^(\d+):/', $s, $m)) {
@@ -139,5 +138,77 @@ function bdec_simple($dict) {
 foreach ($dict['value'] as $key=>$value)
 if(!in_array($key,array('created by','creation date','info','encoding')))unset($dict['value'][$key]);
 return $dict;
+}
+function bdec_decode_new($data, &$pos = 0)
+{
+    $start_decode = ($pos === 0);
+    if ($data[$pos] === 'd') {
+        $pos++;
+        $return = [];
+        while ($data[$pos] !== 'e') {
+            $type=$data[$pos-1];
+            $key = bdec_decode_new($data, $pos)['value'];
+            $value = bdec_decode_new($data, $pos);
+            if ($key === null || $value === null) {
+                break;
+            }
+            if (!is_string($key)) {
+
+
+                throw new Exception('Invalid key type, must be string: ' . gettype($key));
+            }
+            $return[$key] = $value;
+
+            //$return[]=$value;
+        }
+        $return = array('type' => "dictionary", 'value' => $return,'strlen' => 0, 'string' => 0);
+        ksort($return);
+        $pos++;
+    } elseif ($data[$pos] === 'l') {
+        $pos++;
+        $return = [];
+        while ($data[$pos] !== 'e') {
+            $value = bdec_decode_new($data, $pos);
+
+                $return[]=$value;
+        }
+        $return = array('type' => "list", 'value' => $return,'strlen' => 0, 'string' => 0);
+        $pos++;
+    } elseif ($data[$pos] === 'i') {
+        $pos++;
+        $digits = strpos($data, 'e', $pos) - $pos;
+        $return = substr($data, $pos, $digits);
+        if ($return === '-0') {
+
+
+            throw new Exception('Cannot have integer value -0');
+        }
+        $multiplier = 1;
+        if ($return[0] === '-') {
+            $multiplier = -1;
+            $return = substr($return, 1);
+        }
+        if (!ctype_digit($return)) {
+
+
+            throw new Exception('Cannot have non-digit values in integer number: ' . $return);
+        }
+        $return = $multiplier * ((int)$return);
+        $pos += $digits + 1;
+        $return = array('type' => "integer", 'value' => $return,'strlen' => 0, 'string' => 0);
+    } else {
+        $digits = strpos($data, ':', $pos) - $pos;
+        $len = (int)substr($data, $pos, $digits);
+        $pos += ($digits + 1);
+        $return = substr($data, $pos, $len);
+        $pos += $len;
+        $return = array('type' => "string", 'value' => $return,'strlen' => 0, 'string' => 0);
+    }
+    if ($start_decode) {
+        if ($pos !== strlen($data)) {
+            throw new Exception('Could not fully decode bencode string');
+        }
+    }
+    return $return;
 }
 ?>
