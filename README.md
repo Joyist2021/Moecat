@@ -15,6 +15,8 @@ PHP 5.6.40
 
 [exec function](http://php.net/manual/en/function.exec.php)
 
+[OPcache](https://www.php.net/manual/zh/book.opcache.php)
+
 ## 因为时间太紧，我也有点懒，文件里面还有少许的蚂蚁PT的文字/图标（上线网站已删除）
 ## 如果你要架设网站，请务必删除（包括但不限于蚂蚁的标识，文字，图标等等），谢谢
 
@@ -27,6 +29,8 @@ PHP 5.6.40
 如果要开启IMDB系统，请到include/functions_plus.php文件里，更换你自己的APIKEY。
 
 H&R系统设定在include/cleanup.php。
+
+请自行在数据库torrents表中新建tags字段  `alter table pt.torrents  add tags int`
 
 首页聊天机器人ID设定在include/config.php文件，大约在440行。
 
