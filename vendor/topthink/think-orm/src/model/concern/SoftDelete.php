@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\model\concern;
 
@@ -56,7 +56,7 @@ trait SoftDelete
     /**
      * 是否包含软删除数据
      * @access protected
-     * @param  bool $withTrashed 是否包含软删除数据
+     * @param bool $withTrashed 是否包含软删除数据
      * @return $this
      */
     protected function withTrashedData(bool $withTrashed)
@@ -142,8 +142,8 @@ trait SoftDelete
     /**
      * 删除记录
      * @access public
-     * @param  mixed $data 主键列表 支持闭包查询条件
-     * @param  bool  $force 是否强制删除
+     * @param mixed $data 主键列表 支持闭包查询条件
+     * @param bool $force 是否强制删除
      * @return bool
      */
     public static function destroy($data, bool $force = false): bool
@@ -155,7 +155,7 @@ trait SoftDelete
             $query->where($data);
             $data = null;
         } elseif ($data instanceof \Closure) {
-            call_user_func_array($data, [ & $query]);
+            call_user_func_array($data, [& $query]);
             $data = null;
         } elseif (is_null($data)) {
             return false;
@@ -173,7 +173,7 @@ trait SoftDelete
     /**
      * 恢复被软删除的记录
      * @access public
-     * @param  array $where 更新条件
+     * @param array $where 更新条件
      * @return bool
      */
     public function restore($where = []): bool
@@ -205,7 +205,7 @@ trait SoftDelete
     /**
      * 获取软删除字段
      * @access protected
-     * @param  bool  $read 是否查询操作 写操作的时候会自动去掉表别名
+     * @param bool $read 是否查询操作 写操作的时候会自动去掉表别名
      * @return string|false
      */
     protected function getDeleteTimeField(bool $read = false)
@@ -231,7 +231,7 @@ trait SoftDelete
     /**
      * 查询的时候默认排除软删除数据
      * @access protected
-     * @param  Query  $query
+     * @param Query $query
      * @return void
      */
     protected function withNoTrashed(Query $query): void

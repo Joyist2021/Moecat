@@ -55,54 +55,54 @@
  */
 class HTTP_Request2_MultipartBody
 {
-   /**
-    * MIME boundary
-    * @var  string
-    */
+    /**
+     * MIME boundary
+     * @var  string
+     */
     private $_boundary;
 
-   /**
-    * Form parameters added via {@link HTTP_Request2::addPostParameter()}
-    * @var  array
-    */
+    /**
+     * Form parameters added via {@link HTTP_Request2::addPostParameter()}
+     * @var  array
+     */
     private $_params = array();
 
-   /**
-    * File uploads added via {@link HTTP_Request2::addUpload()}
-    * @var  array
-    */
+    /**
+     * File uploads added via {@link HTTP_Request2::addUpload()}
+     * @var  array
+     */
     private $_uploads = array();
 
-   /**
-    * Header for parts with parameters
-    * @var  string
-    */
+    /**
+     * Header for parts with parameters
+     * @var  string
+     */
     private $_headerParam = "--%s\r\nContent-Disposition: form-data; name=\"%s\"\r\n\r\n";
 
-   /**
-    * Header for parts with uploads
-    * @var  string
-    */
+    /**
+     * Header for parts with uploads
+     * @var  string
+     */
     private $_headerUpload = "--%s\r\nContent-Disposition: form-data; name=\"%s\"; filename=\"%s\"\r\nContent-Type: %s\r\n\r\n";
 
-   /**
-    * Current position in parameter and upload arrays
-    *
-    * First number is index of "current" part, second number is position within
-    * "current" part
-    *
-    * @var  array
-    */
+    /**
+     * Current position in parameter and upload arrays
+     *
+     * First number is index of "current" part, second number is position within
+     * "current" part
+     *
+     * @var  array
+     */
     private $_pos = array(0, 0);
 
 
-   /**
-    * Constructor. Sets the arrays with POST data.
-    *
-    * @param    array   values of form fields set via {@link HTTP_Request2::addPostParameter()}
-    * @param    array   file uploads set via {@link HTTP_Request2::addUpload()}
-    * @param    bool    whether to append brackets to array variable names
-    */
+    /**
+     * Constructor. Sets the arrays with POST data.
+     *
+     * @param array   values of form fields set via {@link HTTP_Request2::addPostParameter()}
+     * @param array   file uploads set via {@link HTTP_Request2::addUpload()}
+     * @param bool    whether to append brackets to array variable names
+     */
     public function __construct(array $params, array $uploads, $useBrackets = true)
     {
         $this->_params = self::_flattenArray('', $params, $useBrackets);
@@ -112,7 +112,7 @@ class HTTP_Request2_MultipartBody
             } else {
                 for ($i = 0; $i < count($f['fp']); $i++) {
                     $upload = array(
-                        'name' => ($useBrackets? $fieldName . '[' . $i . ']': $fieldName)
+                        'name' => ($useBrackets ? $fieldName . '[' . $i . ']' : $fieldName)
                     );
                     foreach (array('fp', 'filename', 'size', 'type') as $key) {
                         $upload[$key] = $f[$key][$i];
@@ -123,32 +123,32 @@ class HTTP_Request2_MultipartBody
         }
     }
 
-   /**
-    * Returns the length of the body to use in Content-Length header
-    *
-    * @return   integer
-    */
+    /**
+     * Returns the length of the body to use in Content-Length header
+     *
+     * @return   integer
+     */
     public function getLength()
     {
-        $boundaryLength     = strlen($this->getBoundary());
-        $headerParamLength  = strlen($this->_headerParam) - 4 + $boundaryLength;
+        $boundaryLength = strlen($this->getBoundary());
+        $headerParamLength = strlen($this->_headerParam) - 4 + $boundaryLength;
         $headerUploadLength = strlen($this->_headerUpload) - 8 + $boundaryLength;
-        $length             = $boundaryLength + 6;
+        $length = $boundaryLength + 6;
         foreach ($this->_params as $p) {
             $length += $headerParamLength + strlen($p[0]) + strlen($p[1]) + 2;
         }
         foreach ($this->_uploads as $u) {
             $length += $headerUploadLength + strlen($u['name']) + strlen($u['type']) +
-                       strlen($u['filename']) + $u['size'] + 2;
+                strlen($u['filename']) + $u['size'] + 2;
         }
         return $length;
     }
 
-   /**
-    * Returns the boundary to use in Content-Type header
-    *
-    * @return   string
-    */
+    /**
+     * Returns the boundary to use in Content-Type header
+     *
+     * @return   string
+     */
     public function getBoundary()
     {
         if (empty($this->_boundary)) {
@@ -157,56 +157,56 @@ class HTTP_Request2_MultipartBody
         return $this->_boundary;
     }
 
-   /**
-    * Returns next chunk of request body
-    *
-    * @param    integer Amount of bytes to read
-    * @return   string  Up to $length bytes of data, empty string if at end
-    */
+    /**
+     * Returns next chunk of request body
+     *
+     * @param integer Amount of bytes to read
+     * @return   string  Up to $length bytes of data, empty string if at end
+     */
     public function read($length)
     {
-        $ret         = '';
-        $boundary    = $this->getBoundary();
-        $paramCount  = count($this->_params);
+        $ret = '';
+        $boundary = $this->getBoundary();
+        $paramCount = count($this->_params);
         $uploadCount = count($this->_uploads);
         while ($length > 0 && $this->_pos[0] <= $paramCount + $uploadCount) {
             $oldLength = $length;
             if ($this->_pos[0] < $paramCount) {
                 $param = sprintf($this->_headerParam, $boundary,
-                                 $this->_params[$this->_pos[0]][0]) .
-                         $this->_params[$this->_pos[0]][1] . "\r\n";
-                $ret    .= substr($param, $this->_pos[1], $length);
+                        $this->_params[$this->_pos[0]][0]) .
+                    $this->_params[$this->_pos[0]][1] . "\r\n";
+                $ret .= substr($param, $this->_pos[1], $length);
                 $length -= min(strlen($param) - $this->_pos[1], $length);
 
             } elseif ($this->_pos[0] < $paramCount + $uploadCount) {
-                $pos    = $this->_pos[0] - $paramCount;
+                $pos = $this->_pos[0] - $paramCount;
                 $header = sprintf($this->_headerUpload, $boundary,
-                                  $this->_uploads[$pos]['name'],
-                                  $this->_uploads[$pos]['filename'],
-                                  $this->_uploads[$pos]['type']);
+                    $this->_uploads[$pos]['name'],
+                    $this->_uploads[$pos]['filename'],
+                    $this->_uploads[$pos]['type']);
                 if ($this->_pos[1] < strlen($header)) {
-                    $ret    .= substr($header, $this->_pos[1], $length);
+                    $ret .= substr($header, $this->_pos[1], $length);
                     $length -= min(strlen($header) - $this->_pos[1], $length);
                 }
-                $filePos  = max(0, $this->_pos[1] - strlen($header));
+                $filePos = max(0, $this->_pos[1] - strlen($header));
                 if ($length > 0 && $filePos < $this->_uploads[$pos]['size']) {
-                    $ret     .= fread($this->_uploads[$pos]['fp'], $length);
-                    $length  -= min($length, $this->_uploads[$pos]['size'] - $filePos);
+                    $ret .= fread($this->_uploads[$pos]['fp'], $length);
+                    $length -= min($length, $this->_uploads[$pos]['size'] - $filePos);
                 }
                 if ($length > 0) {
-                    $start   = $this->_pos[1] + ($oldLength - $length) -
-                               strlen($header) - $this->_uploads[$pos]['size'];
-                    $ret    .= substr("\r\n", $start, $length);
+                    $start = $this->_pos[1] + ($oldLength - $length) -
+                        strlen($header) - $this->_uploads[$pos]['size'];
+                    $ret .= substr("\r\n", $start, $length);
                     $length -= min(2 - $start, $length);
                 }
 
             } else {
-                $closing  = '--' . $boundary . "--\r\n";
-                $ret     .= substr($closing, $this->_pos[1], $length);
-                $length  -= min(strlen($closing) - $this->_pos[1], $length);
+                $closing = '--' . $boundary . "--\r\n";
+                $ret .= substr($closing, $this->_pos[1], $length);
+                $length -= min(strlen($closing) - $this->_pos[1], $length);
             }
             if ($length > 0) {
-                $this->_pos     = array($this->_pos[0] + 1, 0);
+                $this->_pos = array($this->_pos[0] + 1, 0);
             } else {
                 $this->_pos[1] += $oldLength;
             }
@@ -214,11 +214,11 @@ class HTTP_Request2_MultipartBody
         return $ret;
     }
 
-   /**
-    * Sets the current position to the start of the body
-    *
-    * This allows reusing the same body in another request
-    */
+    /**
+     * Sets the current position to the start of the body
+     *
+     * This allows reusing the same body in another request
+     */
     public function rewind()
     {
         $this->_pos = array(0, 0);
@@ -227,14 +227,14 @@ class HTTP_Request2_MultipartBody
         }
     }
 
-   /**
-    * Returns the body as string
-    *
-    * Note that it reads all file uploads into memory so it is a good idea not
-    * to use this method with large file uploads and rely on read() instead.
-    *
-    * @return   string
-    */
+    /**
+     * Returns the body as string
+     *
+     * Note that it reads all file uploads into memory so it is a good idea not
+     * to use this method with large file uploads and rely on read() instead.
+     *
+     * @return   string
+     */
     public function __toString()
     {
         $this->rewind();
@@ -242,15 +242,15 @@ class HTTP_Request2_MultipartBody
     }
 
 
-   /**
-    * Helper function to change the (probably multidimensional) associative array
-    * into the simple one.
-    *
-    * @param    string  name for item
-    * @param    mixed   item's values
-    * @param    bool    whether to append [] to array variables' names
-    * @return   array   array with the following items: array('item name', 'item value');
-    */
+    /**
+     * Helper function to change the (probably multidimensional) associative array
+     * into the simple one.
+     *
+     * @param string  name for item
+     * @param mixed   item's values
+     * @param bool    whether to append [] to array variables' names
+     * @return   array   array with the following items: array('item name', 'item value');
+     */
     private static function _flattenArray($name, $values, $useBrackets)
     {
         if (!is_array($values)) {
@@ -271,4 +271,5 @@ class HTTP_Request2_MultipartBody
         }
     }
 }
+
 ?>

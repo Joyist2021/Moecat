@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\model\concern;
 
@@ -65,7 +65,7 @@ trait OptimLock
 
     public function getWhere()
     {
-        $where     = parent::getWhere();
+        $where = parent::getWhere();
         $optimLock = $this->getOptimLockField();
 
         if ($optimLock && $lockVer = $this->getOrigin($optimLock)) {

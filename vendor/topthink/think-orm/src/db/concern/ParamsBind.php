@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\db\concern;
 
@@ -40,9 +40,9 @@ trait ParamsBind
     /**
      * 单个参数绑定
      * @access public
-     * @param mixed   $value 绑定变量值
-     * @param integer $type  绑定类型
-     * @param string  $name  绑定标识
+     * @param mixed $value 绑定变量值
+     * @param integer $type 绑定类型
+     * @param string $name 绑定标识
      * @return string
      */
     public function bindValue($value, int $type = null, string $name = null)
@@ -67,8 +67,8 @@ trait ParamsBind
     /**
      * 参数绑定
      * @access public
-     * @param string $sql  绑定的sql表达式
-     * @param array  $bind 参数绑定
+     * @param string $sql 绑定的sql表达式
+     * @param array $bind 参数绑定
      * @return void
      */
     protected function bindParams(string &$sql, array $bind = []): void

@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\db\concern;
 
@@ -119,7 +119,7 @@ trait ResultOperation
     /**
      * 使用获取器处理数据
      * @access protected
-     * @param array $result   查询数据
+     * @param array $result 查询数据
      * @param array $withAttr 字段获取器
      * @return void
      */
@@ -172,9 +172,9 @@ trait ResultOperation
     /**
      * JSON字段数据转换
      * @access protected
-     * @param array $result           查询数据
-     * @param array $json             JSON字段
-     * @param bool  $assoc            是否转换为数组
+     * @param array $result 查询数据
+     * @param array $json JSON字段
+     * @param bool $assoc 是否转换为数组
      * @param array $withRelationAttr 关联获取器
      * @return void
      */
@@ -194,7 +194,7 @@ trait ResultOperation
             }
 
             if (!$assoc) {
-                $result[$name] = (object) $result[$name];
+                $result[$name] = (object)$result[$name];
             }
         }
     }

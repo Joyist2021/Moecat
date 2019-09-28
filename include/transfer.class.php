@@ -2,20 +2,23 @@
 
 require_once "transfer_config.php";
 
-class Transfer {
+class Transfer
+{
     const ZH_ASCII_LOW = 224;
     const ZH_ASCII_HIGHT = 239;
     public static $utf8_gb2312;
     public static $utf8_big5;
 
-    public function __construct() {
+    public function __construct()
+    {
         global $UTF8_GB2312;
         global $UTF8_BIG5;
         self::$utf8_gb2312 = $UTF8_GB2312;
         self::$utf8_big5 = $UTF8_BIG5;
     }
 
-    public function cnToTw($string) {
+    public function cnToTw($string)
+    {
         $traditional = "";     //繁体变量初始化
         $length = strlen($string);  //提取string字符串的ASCII码长度，注意一个中文字符对应于3位
         $count = 0;
@@ -34,7 +37,8 @@ class Transfer {
         return $traditional;
     }
 
-    public function twToCn($string) {
+    public function twToCn($string)
+    {
         $simplified = "";
         $length = strlen($string);
         $count = 0;

@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\model\concern;
 
@@ -30,7 +30,7 @@ trait ModelEvent
     /**
      * 当前操作的事件响应
      * @access protected
-     * @param  bool $event  是否需要事件响应
+     * @param bool $event 是否需要事件响应
      * @return $this
      */
     public function withEvent(bool $event)
@@ -42,7 +42,7 @@ trait ModelEvent
     /**
      * 触发事件
      * @access protected
-     * @param  string $event 事件名
+     * @param string $event 事件名
      * @return bool
      */
     protected function trigger(string $event): bool

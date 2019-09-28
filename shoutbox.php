@@ -60,7 +60,7 @@ $cssupdatedate = ($cssdate_tweak ? "?" . htmlspecialchars($cssdate_tweak) : "");
             // parent.document.getElementById("hbsubmit").disabled = false;
             parent.document.getElementById('countdown').innerHTML = time;
             time = time - 1;
-            if(!time){
+            if (!time) {
                 time = 60;
                 check_shoutbox();
             }

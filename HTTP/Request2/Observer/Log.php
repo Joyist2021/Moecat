@@ -157,36 +157,36 @@ class HTTP_Request2_Observer_Log implements SplObserver
         }
 
         switch ($event['name']) {
-        case 'connect':
-            $this->log('* Connected to ' . $event['data']);
-            break;
-        case 'sentHeaders':
-            $headers = explode("\r\n", $event['data']);
-            array_pop($headers);
-            foreach ($headers as $header) {
-                $this->log('> ' . $header);
-            }
-            break;
-        case 'sentBody':
-            $this->log('> ' . $event['data'] . ' byte(s) sent');
-            break;
-        case 'receivedHeaders':
-            $this->log(sprintf('< HTTP/%s %s %s',
-                $event['data']->getVersion(),
-                $event['data']->getStatus(),
-                $event['data']->getReasonPhrase()));
-            $headers = $event['data']->getHeader();
-            foreach ($headers as $key => $val) {
-                $this->log('< ' . $key . ': ' . $val);
-            }
-            $this->log('< ');
-            break;
-        case 'receivedBody':
-            $this->log($event['data']->getBody());
-            break;
-        case 'disconnect':
-            $this->log('* Disconnected');
-            break;
+            case 'connect':
+                $this->log('* Connected to ' . $event['data']);
+                break;
+            case 'sentHeaders':
+                $headers = explode("\r\n", $event['data']);
+                array_pop($headers);
+                foreach ($headers as $header) {
+                    $this->log('> ' . $header);
+                }
+                break;
+            case 'sentBody':
+                $this->log('> ' . $event['data'] . ' byte(s) sent');
+                break;
+            case 'receivedHeaders':
+                $this->log(sprintf('< HTTP/%s %s %s',
+                    $event['data']->getVersion(),
+                    $event['data']->getStatus(),
+                    $event['data']->getReasonPhrase()));
+                $headers = $event['data']->getHeader();
+                foreach ($headers as $key => $val) {
+                    $this->log('< ' . $key . ': ' . $val);
+                }
+                $this->log('< ');
+                break;
+            case 'receivedBody':
+                $this->log($event['data']->getBody());
+                break;
+            case 'disconnect':
+                $this->log('* Disconnected');
+                break;
         }
     }
 

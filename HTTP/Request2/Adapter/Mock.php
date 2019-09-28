@@ -70,22 +70,22 @@ require_once 'HTTP/Request2/Adapter.php';
  */
 class HTTP_Request2_Adapter_Mock extends HTTP_Request2_Adapter
 {
-   /**
-    * A queue of responses to be returned by sendRequest()
-    * @var  array
-    */
+    /**
+     * A queue of responses to be returned by sendRequest()
+     * @var  array
+     */
     protected $responses = array();
 
-   /**
-    * Returns the next response from the queue built by addResponse()
-    *
-    * If the queue is empty it will return default empty response with status 400,
-    * if an Exception object was added to the queue it will be thrown.
-    *
-    * @param    HTTP_Request2
-    * @return   HTTP_Request2_Response
-    * @throws   Exception
-    */
+    /**
+     * Returns the next response from the queue built by addResponse()
+     *
+     * If the queue is empty it will return default empty response with status 400,
+     * if an Exception object was added to the queue it will be thrown.
+     *
+     * @param HTTP_Request2
+     * @return   HTTP_Request2_Response
+     * @throws   Exception
+     */
     public function sendRequest(HTTP_Request2 $request)
     {
         if (count($this->responses) > 0) {
@@ -94,9 +94,9 @@ class HTTP_Request2_Adapter_Mock extends HTTP_Request2_Adapter
                 return $response;
             } else {
                 // rethrow the exception
-                $class   = get_class($response);
+                $class = get_class($response);
                 $message = $response->getMessage();
-                $code    = $response->getCode();
+                $code = $response->getCode();
                 throw new $class($message, $code);
             }
         } else {
@@ -104,13 +104,13 @@ class HTTP_Request2_Adapter_Mock extends HTTP_Request2_Adapter
         }
     }
 
-   /**
-    * Adds response to the queue
-    *
-    * @param    mixed   either a string, a pointer to an open file,
-    *                   an instance of HTTP_Request2_Response or Exception
-    * @throws   HTTP_Request2_Exception
-    */
+    /**
+     * Adds response to the queue
+     *
+     * @param mixed   either a string, a pointer to an open file,
+     *                   an instance of HTTP_Request2_Response or Exception
+     * @throws   HTTP_Request2_Exception
+     */
     public function addResponse($response)
     {
         if (is_string($response)) {
@@ -118,25 +118,25 @@ class HTTP_Request2_Adapter_Mock extends HTTP_Request2_Adapter
         } elseif (is_resource($response)) {
             $response = self::createResponseFromFile($response);
         } elseif (!$response instanceof HTTP_Request2_Response &&
-                  !$response instanceof Exception
+            !$response instanceof Exception
         ) {
             throw new HTTP_Request2_Exception('Parameter is not a valid response');
         }
         $this->responses[] = $response;
     }
 
-   /**
-    * Creates a new HTTP_Request2_Response object from a string
-    *
-    * @param    string
-    * @return   HTTP_Request2_Response
-    * @throws   HTTP_Request2_Exception
-    */
+    /**
+     * Creates a new HTTP_Request2_Response object from a string
+     *
+     * @param string
+     * @return   HTTP_Request2_Response
+     * @throws   HTTP_Request2_Exception
+     */
     public static function createResponseFromString($str)
     {
-        $parts       = preg_split('!(\r?\n){2}!m', $str, 2);
+        $parts = preg_split('!(\r?\n){2}!m', $str, 2);
         $headerLines = explode("\n", $parts[0]);
-        $response    = new HTTP_Request2_Response(array_shift($headerLines));
+        $response = new HTTP_Request2_Response(array_shift($headerLines));
         foreach ($headerLines as $headerLine) {
             $response->parseHeaderLine($headerLine);
         }
@@ -147,13 +147,13 @@ class HTTP_Request2_Adapter_Mock extends HTTP_Request2_Adapter
         return $response;
     }
 
-   /**
-    * Creates a new HTTP_Request2_Response object from a file
-    *
-    * @param    resource    file pointer returned by fopen()
-    * @return   HTTP_Request2_Response
-    * @throws   HTTP_Request2_Exception
-    */
+    /**
+     * Creates a new HTTP_Request2_Response object from a file
+     *
+     * @param resource    file pointer returned by fopen()
+     * @return   HTTP_Request2_Response
+     * @throws   HTTP_Request2_Exception
+     */
     public static function createResponseFromFile($fp)
     {
         $response = new HTTP_Request2_Response(fgets($fp));
@@ -168,4 +168,5 @@ class HTTP_Request2_Adapter_Mock extends HTTP_Request2_Adapter
         return $response;
     }
 }
+
 ?>

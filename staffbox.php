@@ -213,8 +213,8 @@ begin_main_frame();
         if (get_user_class() < $staffmem_class)
             permissiondenied();
         $setArr = implode(",", $_POST["setanswered"]);
-        if($setArr){
-            foreach ($setArr as &$v){
+        if ($setArr) {
+            foreach ($setArr as &$v) {
                 $v = intval($v);
             }
         }

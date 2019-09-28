@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: 麦当苗儿 <zuojiazi@vip.qq.com> <http://zjzit.cn>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\db\exception;
 
@@ -22,20 +22,20 @@ class DbException extends Exception
     /**
      * DbException constructor.
      * @access public
-     * @param  string    $message
-     * @param  array     $config
-     * @param  string    $sql
-     * @param  int       $code
+     * @param string $message
+     * @param array $config
+     * @param string $sql
+     * @param int $code
      */
     public function __construct(string $message, array $config = [], string $sql = '', int $code = 10500)
     {
         $this->message = $message;
-        $this->code    = $code;
+        $this->code = $code;
 
         $this->setData('Database Status', [
-            'Error Code'    => $code,
+            'Error Code' => $code,
             'Error Message' => $message,
-            'Error SQL'     => $sql,
+            'Error SQL' => $sql,
         ]);
 
         unset($config['username'], $config['password']);
@@ -62,7 +62,7 @@ class DbException extends Exception
      *   key2      value2
      *
      * @param string $label 数据分类，用于异常页面显示
-     * @param array  $data  需要显示的数据，必须为关联数组
+     * @param array $data 需要显示的数据，必须为关联数组
      */
     final protected function setData($label, array $data)
     {

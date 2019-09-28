@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: 麦当苗儿 <zuojiazi@vip.qq.com> <http://zjzit.cn>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\db\exception;
 
@@ -21,11 +21,11 @@ class BindParamException extends DbException
     /**
      * BindParamException constructor.
      * @access public
-     * @param  string $message
-     * @param  array  $config
-     * @param  string $sql
-     * @param  array    $bind
-     * @param  int    $code
+     * @param string $message
+     * @param array $config
+     * @param string $sql
+     * @param array $bind
+     * @param int $code
      */
     public function __construct(string $message, array $config, string $sql, array $bind, int $code = 10502)
     {

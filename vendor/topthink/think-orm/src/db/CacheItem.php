@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\db;
 
@@ -60,7 +60,7 @@ class CacheItem
     /**
      * 为此缓存项设置「键」
      * @access public
-     * @param  string $key
+     * @param string $key
      * @return $this
      */
     public function setKey(string $key)
@@ -126,7 +126,7 @@ class CacheItem
     /**
      * 为此缓存项设置「值」
      * @access public
-     * @param  mixed $value
+     * @param mixed $value
      * @return $this
      */
     public function set($value)
@@ -139,7 +139,7 @@ class CacheItem
     /**
      * 为此缓存项设置所属标签
      * @access public
-     * @param  string $tag
+     * @param string $tag
      * @return $this
      */
     public function tag(string $tag = null)
@@ -151,7 +151,7 @@ class CacheItem
     /**
      * 设置缓存项的有效期
      * @access public
-     * @param  mixed $expire
+     * @param mixed $expire
      * @return $this
      */
     public function expire($expire)
@@ -172,7 +172,7 @@ class CacheItem
     /**
      * 设置缓存项的准确过期时间点
      * @access public
-     * @param  DateTimeInterface $expiration
+     * @param DateTimeInterface $expiration
      * @return $this
      */
     public function expiresAt($expiration)
@@ -196,7 +196,7 @@ class CacheItem
     public function expiresAfter($timeInterval)
     {
         if ($timeInterval instanceof DateInterval) {
-            $this->expire = (int) DateTime::createFromFormat('U', (string) time())->add($timeInterval)->format('U');
+            $this->expire = (int)DateTime::createFromFormat('U', (string)time())->add($timeInterval)->format('U');
         } elseif (is_numeric($timeInterval)) {
             $this->expire = $timeInterval + time();
         } else {

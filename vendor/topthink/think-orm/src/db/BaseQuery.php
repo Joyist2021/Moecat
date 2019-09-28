@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\db;
 
@@ -102,7 +102,7 @@ class BaseQuery
      * 利用__call方法实现一些特殊的Model方法
      * @access public
      * @param string $method 方法名称
-     * @param array  $args   调用参数
+     * @param array $args 调用参数
      * @return mixed
      * @throws Exception
      */
@@ -212,8 +212,8 @@ class BaseQuery
     /**
      * 执行查询 返回数据集
      * @access public
-     * @param string $sql  sql指令
-     * @param array  $bind 参数绑定
+     * @param string $sql sql指令
+     * @param array $bind 参数绑定
      * @return array
      * @throws BindParamException
      * @throws PDOException
@@ -226,8 +226,8 @@ class BaseQuery
     /**
      * 执行语句
      * @access public
-     * @param string $sql  sql指令
-     * @param array  $bind 参数绑定
+     * @param string $sql sql指令
+     * @param array $bind 参数绑定
      * @return int
      * @throws BindParamException
      * @throws PDOException
@@ -283,8 +283,8 @@ class BaseQuery
     /**
      * 得到某个字段的值
      * @access public
-     * @param string $field   字段名
-     * @param mixed  $default 默认值
+     * @param string $field 字段名
+     * @param mixed $default 默认值
      * @return mixed
      */
     public function value(string $field, $default = null)
@@ -296,7 +296,7 @@ class BaseQuery
      * 得到某个列的数组
      * @access public
      * @param string $field 字段名 多个字段用逗号分隔
-     * @param string $key   索引
+     * @param string $key 索引
      * @return array
      */
     public function column(string $field, string $key = ''): array
@@ -307,8 +307,8 @@ class BaseQuery
     /**
      * 查询SQL组装 union
      * @access public
-     * @param mixed   $union UNION
-     * @param boolean $all   是否适用UNION ALL
+     * @param mixed $union UNION
+     * @param boolean $all 是否适用UNION ALL
      * @return $this
      */
     public function union($union, bool $all = false)
@@ -361,11 +361,11 @@ class BaseQuery
         if (true === $field) {
             // 获取全部字段
             $fields = $this->getTableFields();
-            $field  = $fields ?: ['*'];
+            $field = $fields ?: ['*'];
         }
 
         if (isset($this->options['field'])) {
-            $field = array_merge((array) $this->options['field'], $field);
+            $field = array_merge((array)$this->options['field'], $field);
         }
 
         $this->options['field'] = array_unique($field);
@@ -391,10 +391,10 @@ class BaseQuery
 
         // 字段排除
         $fields = $this->getTableFields();
-        $field  = $fields ? array_diff($fields, $field) : $field;
+        $field = $fields ? array_diff($fields, $field) : $field;
 
         if (isset($this->options['field'])) {
-            $field = array_merge((array) $this->options['field'], $field);
+            $field = array_merge((array)$this->options['field'], $field);
         }
 
         $this->options['field'] = array_unique($field);
@@ -405,10 +405,10 @@ class BaseQuery
     /**
      * 指定其它数据表的查询字段
      * @access public
-     * @param mixed   $field     字段信息
-     * @param string  $tableName 数据表名
-     * @param string  $prefix    字段前缀
-     * @param string  $alias     别名前缀
+     * @param mixed $field 字段信息
+     * @param string $tableName 数据表名
+     * @param string $prefix 字段前缀
+     * @param string $alias 别名前缀
      * @return $this
      */
     public function tableField($field, string $tableName, string $prefix = '', string $alias = '')
@@ -424,7 +424,7 @@ class BaseQuery
         if (true === $field) {
             // 获取全部字段
             $fields = $this->getTableFields($tableName);
-            $field  = $fields ?: ['*'];
+            $field = $fields ?: ['*'];
         }
 
         // 添加统一的前缀
@@ -439,7 +439,7 @@ class BaseQuery
         }
 
         if (isset($this->options['field'])) {
-            $field = array_merge((array) $this->options['field'], $field);
+            $field = array_merge((array)$this->options['field'], $field);
         }
 
         $this->options['field'] = array_unique($field);
@@ -476,10 +476,10 @@ class BaseQuery
     /**
      * 字段值增长
      * @access public
-     * @param string  $field    字段名
-     * @param float   $step     增长值
+     * @param string $field 字段名
+     * @param float $step 增长值
      * @param integer $lazyTime 延时时间(s)
-     * @param string  $op       INC/DEC
+     * @param string $op INC/DEC
      * @return $this
      */
     public function inc(string $field, float $step = 1, int $lazyTime = 0, string $op = 'INC')
@@ -506,8 +506,8 @@ class BaseQuery
     /**
      * 字段值减少
      * @access public
-     * @param string  $field    字段名
-     * @param float   $step     增长值
+     * @param string $field 字段名
+     * @param float $step 增长值
      * @param integer $lazyTime 延时时间(s)
      * @return $this
      */
@@ -539,7 +539,7 @@ class BaseQuery
     {
         if ('' === $option) {
             $this->options = [];
-            $this->bind    = [];
+            $this->bind = [];
         } elseif (isset($this->options[$option])) {
             unset($this->options[$option]);
         }
@@ -564,7 +564,7 @@ class BaseQuery
     /**
      * 指定分页
      * @access public
-     * @param int $page     页数
+     * @param int $page 页数
      * @param int $listRows 每页数量
      * @return $this
      */
@@ -579,33 +579,33 @@ class BaseQuery
      * 分页查询
      * @access public
      * @param int|array $listRows 每页数量 数组表示配置参数
-     * @param int|bool  $simple   是否简洁模式或者总记录数
+     * @param int|bool $simple 是否简洁模式或者总记录数
      * @return Paginator
      * @throws Exception
      */
     public function paginate($listRows = null, $simple = false): Paginator
     {
         if (is_int($simple)) {
-            $total  = $simple;
+            $total = $simple;
             $simple = false;
         }
 
         $defaultConfig = [
-            'query'     => [], //url额外参数
-            'fragment'  => '', //url锚点
-            'var_page'  => 'page', //分页变量
+            'query' => [], //url额外参数
+            'fragment' => '', //url锚点
+            'var_page' => 'page', //分页变量
             'list_rows' => 15, //每页数量
         ];
 
         if (is_array($listRows)) {
-            $config   = array_merge($defaultConfig, $listRows);
+            $config = array_merge($defaultConfig, $listRows);
             $listRows = intval($config['list_rows']);
         } else {
-            $config   = $defaultConfig;
+            $config = $defaultConfig;
             $listRows = intval($listRows ?: $config['list_rows']);
         }
 
-        $page = isset($config['page']) ? (int) $config['page'] : Paginator::getCurrentPage($config['var_page']);
+        $page = isset($config['page']) ? (int)$config['page'] : Paginator::getCurrentPage($config['var_page']);
 
         $page = $page < 1 ? 1 : $page;
 
@@ -616,12 +616,12 @@ class BaseQuery
 
             unset($this->options['order'], $this->options['limit'], $this->options['page'], $this->options['field']);
 
-            $bind    = $this->bind;
-            $total   = $this->count();
+            $bind = $this->bind;
+            $total = $this->count();
             $results = $this->options($options)->bind($bind)->page($page, $listRows)->select();
         } elseif ($simple) {
             $results = $this->limit(($page - 1) * $listRows, $listRows + 1)->select();
-            $total   = null;
+            $total = null;
         } else {
             $results = $this->page($page, $listRows)->select();
         }
@@ -636,28 +636,28 @@ class BaseQuery
      * 根据数字类型字段进行分页查询（大数据）
      * @access public
      * @param int|array $listRows 每页数量或者分页配置
-     * @param string    $key      分页索引键
-     * @param string    $sort     索引键排序 asc|desc
+     * @param string $key 分页索引键
+     * @param string $sort 索引键排序 asc|desc
      * @return Paginator
      * @throws Exception
      */
     public function paginateX($listRows = null, string $key = null, string $sort = null): Paginator
     {
         $defaultConfig = [
-            'query'     => [], //url额外参数
-            'fragment'  => '', //url锚点
-            'var_page'  => 'page', //分页变量
+            'query' => [], //url额外参数
+            'fragment' => '', //url锚点
+            'var_page' => 'page', //分页变量
             'list_rows' => 15, //每页数量
         ];
 
-        $config   = is_array($listRows) ? array_merge($defaultConfig, $listRows) : $defaultConfig;
-        $listRows = is_int($listRows) ? $listRows : (int) $config['list_rows'];
-        $page     = isset($config['page']) ? (int) $config['page'] : Paginator::getCurrentPage($config['var_page']);
-        $page     = $page < 1 ? 1 : $page;
+        $config = is_array($listRows) ? array_merge($defaultConfig, $listRows) : $defaultConfig;
+        $listRows = is_int($listRows) ? $listRows : (int)$config['list_rows'];
+        $page = isset($config['page']) ? (int)$config['page'] : Paginator::getCurrentPage($config['var_page']);
+        $page = $page < 1 ? 1 : $page;
 
         $config['path'] = $config['path'] ?? Paginator::getCurrentPath();
 
-        $key     = $key ?: $this->getPk();
+        $key = $key ?: $this->getPk();
         $options = $this->getOptions();
 
         if (is_null($sort)) {
@@ -705,10 +705,10 @@ class BaseQuery
     /**
      * 根据最后ID查询更多N个数据
      * @access public
-     * @param int        $limit  LIMIT
+     * @param int $limit LIMIT
      * @param int|string $lastId LastId
-     * @param string     $key    分页索引键 默认为主键
-     * @param string     $sort   索引键排序 asc|desc
+     * @param string $key 分页索引键 默认为主键
+     * @param string $sort 索引键排序 asc|desc
      * @return array
      * @throws Exception
      */
@@ -737,7 +737,7 @@ class BaseQuery
         $result->first();
 
         return [
-            'data'   => $result,
+            'data' => $result,
             'lastId' => $last[$key],
         ];
     }
@@ -769,13 +769,13 @@ class BaseQuery
             } elseif (false === strpos($table, ',')) {
                 if (strpos($table, ' ')) {
                     list($item, $alias) = explode(' ', $table);
-                    $table              = [];
+                    $table = [];
                     $this->alias([$item => $alias]);
                     $table[$item] = $alias;
                 }
             } else {
                 $tables = explode(',', $table);
-                $table  = [];
+                $table = [];
 
                 foreach ($tables as $item) {
                     $item = trim($item);
@@ -790,7 +790,7 @@ class BaseQuery
             }
         } elseif (is_array($table)) {
             $tables = $table;
-            $table  = [];
+            $table = [];
 
             foreach ($tables as $key => $val) {
                 if (is_numeric($key)) {
@@ -835,7 +835,7 @@ class BaseQuery
      * 指定排序 order('id','desc') 或者 order(['id'=>'desc','create_time'=>'desc'])
      * @access public
      * @param string|array|Raw $field 排序字段
-     * @param string           $order 排序
+     * @param string $order 排序
      * @return $this
      */
     public function order($field, string $order = '')
@@ -884,7 +884,7 @@ class BaseQuery
      * 表达式方式指定Field排序
      * @access public
      * @param string $field 排序字段
-     * @param array  $bind  参数绑定
+     * @param array $bind 参数绑定
      * @return $this
      */
     public function orderRaw(string $field, array $bind = [])
@@ -901,9 +901,9 @@ class BaseQuery
     /**
      * 指定Field排序 orderField('id',[1,2,3],'desc')
      * @access public
-     * @param string $field  排序字段
-     * @param array  $values 排序值
-     * @param string $order  排序 desc/asc
+     * @param string $field 排序字段
+     * @param array $values 排序值
+     * @param string $order 排序 desc/asc
      * @return $this
      */
     public function orderField(string $field, array $values, string $order = '')
@@ -931,9 +931,9 @@ class BaseQuery
     /**
      * 查询缓存
      * @access public
-     * @param mixed             $key    缓存key
+     * @param mixed $key 缓存key
      * @param integer|\DateTime $expire 缓存有效期
-     * @param string            $tag    缓存标签
+     * @param string $tag 缓存标签
      * @return $this
      */
     public function cache($key = true, $expire = null, string $tag = null)
@@ -944,7 +944,7 @@ class BaseQuery
 
         if ($key instanceof \DateTimeInterface || $key instanceof \DateInterval || (is_int($key) && is_null($expire))) {
             $expire = $key;
-            $key    = true;
+            $key = true;
         }
 
         $this->options['cache'] = [$key, $expire, $tag];
@@ -1152,13 +1152,13 @@ class BaseQuery
     /**
      * 设置JSON字段信息
      * @access public
-     * @param array $json  JSON字段
-     * @param bool  $assoc 是否取出数组
+     * @param array $json JSON字段
+     * @param bool $assoc 是否取出数组
      * @return $this
      */
     public function json(array $json = [], bool $assoc = false)
     {
-        $this->options['json']       = $json;
+        $this->options['json'] = $json;
         $this->options['json_assoc'] = $assoc;
         return $this;
     }
@@ -1220,7 +1220,7 @@ class BaseQuery
      * 设置当前的查询参数
      * @access public
      * @param string $option 参数名
-     * @param mixed  $value  参数值
+     * @param mixed $value 参数值
      * @return $this
      */
     public function setOption(string $option, $value)
@@ -1245,8 +1245,8 @@ class BaseQuery
     /**
      * 保存记录 自动判断insert或者update
      * @access public
-     * @param array $data        数据
-     * @param bool  $forceInsert 是否强制insert
+     * @param array $data 数据
+     * @param bool $forceInsert 是否强制insert
      * @return integer
      */
     public function save(array $data = [], bool $forceInsert = false)
@@ -1269,7 +1269,7 @@ class BaseQuery
     /**
      * 插入记录
      * @access public
-     * @param array   $data         数据
+     * @param array $data 数据
      * @param boolean $getLastInsID 返回自增主键
      * @return integer|string
      */
@@ -1296,8 +1296,8 @@ class BaseQuery
     /**
      * 批量插入记录
      * @access public
-     * @param array   $dataSet 数据集
-     * @param integer $limit   每次写入数据限制
+     * @param array $dataSet 数据集
+     * @param integer $limit 每次写入数据限制
      * @return integer
      */
     public function insertAll(array $dataSet = [], int $limit = 0): int
@@ -1307,7 +1307,7 @@ class BaseQuery
         }
 
         if (empty($limit) && !empty($this->options['limit']) && is_numeric($this->options['limit'])) {
-            $limit = (int) $this->options['limit'];
+            $limit = (int)$this->options['limit'];
         }
 
         return $this->connection->insertAll($this, $dataSet, $limit);
@@ -1316,8 +1316,8 @@ class BaseQuery
     /**
      * 通过Select方式插入记录
      * @access public
-     * @param array  $fields 要插入的数据表字段名
-     * @param string $table  要插入的数据表名
+     * @param array $fields 要插入的数据表字段名
+     * @param string $table 要插入的数据表名
      * @return integer
      * @throws PDOException
      */
@@ -1470,17 +1470,17 @@ class BaseQuery
     /**
      * 分批数据返回处理
      * @access public
-     * @param integer      $count    每次处理的数据数量
-     * @param callable     $callback 处理回调方法
-     * @param string|array $column   分批处理的字段名
-     * @param string       $order    字段排序
+     * @param integer $count 每次处理的数据数量
+     * @param callable $callback 处理回调方法
+     * @param string|array $column 分批处理的字段名
+     * @param string $order 字段排序
      * @return bool
      * @throws Exception
      */
     public function chunk(int $count, callable $callback, $column = null, string $order = 'asc'): bool
     {
         $options = $this->getOptions();
-        $column  = $column ?: $this->getPk();
+        $column = $column ?: $this->getPk();
 
         if (isset($options['order'])) {
             unset($options['order']);
@@ -1512,7 +1512,7 @@ class BaseQuery
                 $times++;
                 $query = $this->options($options)->page($times, $count);
             } else {
-                $end    = $resultSet->pop();
+                $end = $resultSet->pop();
                 $lastId = is_array($end) ? $end[$key] : $end->getData($key);
 
                 $query = $this->options($options)
@@ -1588,10 +1588,10 @@ class BaseQuery
         if (isset($options['page'])) {
             // 根据页数计算limit
             list($page, $listRows) = $options['page'];
-            $page                  = $page > 0 ? $page : 1;
-            $listRows              = $listRows ?: (is_numeric($options['limit']) ? $options['limit'] : 20);
-            $offset                = $listRows * ($page - 1);
-            $options['limit']      = $offset . ',' . $listRows;
+            $page = $page > 0 ? $page : 1;
+            $listRows = $listRows ?: (is_numeric($options['limit']) ? $options['limit'] : 20);
+            $offset = $listRows * ($page - 1);
+            $options['limit'] = $offset . ',' . $listRows;
         }
 
         $this->options = $options;
@@ -1608,7 +1608,7 @@ class BaseQuery
      */
     public function parseUpdateData(&$data): bool
     {
-        $pk       = $this->getPk();
+        $pk = $this->getPk();
         $isUpdate = false;
         // 如果存在主键数据 则自动作为更新条件
         if (is_string($pk) && isset($data[$pk])) {

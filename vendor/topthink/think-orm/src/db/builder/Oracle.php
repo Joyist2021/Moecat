@@ -6,7 +6,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\db\builder;
 
@@ -23,8 +23,8 @@ class Oracle extends Builder
     /**
      * limit分析
      * @access protected
-     * @param  Query $query 查询对象
-     * @param  mixed $limit
+     * @param Query $query 查询对象
+     * @param mixed $limit
      * @return string
      */
     protected function parseLimit(Query $query, string $limit): string
@@ -48,8 +48,8 @@ class Oracle extends Builder
     /**
      * 设置锁机制
      * @access protected
-     * @param  Query      $query 查询对象
-     * @param  bool|false $lock
+     * @param Query $query 查询对象
+     * @param bool|false $lock
      * @return string
      */
     protected function parseLock(Query $query, $lock = false): string
@@ -64,9 +64,9 @@ class Oracle extends Builder
     /**
      * 字段和表名处理
      * @access public
-     * @param  Query  $query  查询对象
-     * @param  string $key
-     * @param  string $strict
+     * @param Query $query 查询对象
+     * @param string $key
+     * @param string $strict
      * @return string
      */
     public function parseKey(Query $query, $key, bool $strict = false): string
@@ -76,7 +76,7 @@ class Oracle extends Builder
         if (strpos($key, '->') && false === strpos($key, '(')) {
             // JSON字段支持
             list($field, $name) = explode($key, '->');
-            $key                = $field . '."' . $name . '"';
+            $key = $field . '."' . $name . '"';
         }
 
         return $key;
@@ -85,7 +85,7 @@ class Oracle extends Builder
     /**
      * 随机排序
      * @access protected
-     * @param  Query $query 查询对象
+     * @param Query $query 查询对象
      * @return string
      */
     protected function parseRand(Query $query): string

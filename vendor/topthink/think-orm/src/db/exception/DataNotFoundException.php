@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: 麦当苗儿 <zuojiazi@vip.qq.com> <http://zjzit.cn>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\db\exception;
 
@@ -19,14 +19,14 @@ class DataNotFoundException extends DbException
     /**
      * DbException constructor.
      * @access public
-     * @param  string $message
-     * @param  string $table
-     * @param  array $config
+     * @param string $message
+     * @param string $table
+     * @param array $config
      */
     public function __construct(string $message, string $table = '', array $config = [])
     {
         $this->message = $message;
-        $this->table   = $table;
+        $this->table = $table;
 
         $this->setData('Database Config', $config);
     }

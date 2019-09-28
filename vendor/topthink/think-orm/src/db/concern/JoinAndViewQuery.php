@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\db\concern;
 
@@ -26,10 +26,10 @@ trait JoinAndViewQuery
     /**
      * 查询SQL组装 join
      * @access public
-     * @param mixed  $join      关联的表名
-     * @param mixed  $condition 条件
-     * @param string $type      JOIN类型
-     * @param array  $bind      参数绑定
+     * @param mixed $join 关联的表名
+     * @param mixed $condition 条件
+     * @param string $type JOIN类型
+     * @param array $bind 参数绑定
      * @return $this
      */
     public function join($join, string $condition = null, string $type = 'INNER', array $bind = [])
@@ -48,9 +48,9 @@ trait JoinAndViewQuery
     /**
      * LEFT JOIN
      * @access public
-     * @param mixed $join      关联的表名
+     * @param mixed $join 关联的表名
      * @param mixed $condition 条件
-     * @param array $bind      参数绑定
+     * @param array $bind 参数绑定
      * @return $this
      */
     public function leftJoin($join, string $condition = null, array $bind = [])
@@ -61,9 +61,9 @@ trait JoinAndViewQuery
     /**
      * RIGHT JOIN
      * @access public
-     * @param mixed $join      关联的表名
+     * @param mixed $join 关联的表名
      * @param mixed $condition 条件
-     * @param array $bind      参数绑定
+     * @param array $bind 参数绑定
      * @return $this
      */
     public function rightJoin($join, string $condition = null, array $bind = [])
@@ -74,9 +74,9 @@ trait JoinAndViewQuery
     /**
      * FULL JOIN
      * @access public
-     * @param mixed $join      关联的表名
+     * @param mixed $join 关联的表名
      * @param mixed $condition 条件
-     * @param array $bind      参数绑定
+     * @param array $bind 参数绑定
      * @return $this
      */
     public function fullJoin($join, string $condition = null, array $bind = [])
@@ -88,8 +88,8 @@ trait JoinAndViewQuery
      * 获取Join表名及别名 支持
      * ['prefix_table或者子查询'=>'alias'] 'table alias'
      * @access protected
-     * @param array|string|Raw $join  JION表名
-     * @param string           $alias 别名
+     * @param array|string|Raw $join JION表名
+     * @param string $alias 别名
      * @return string|array
      */
     protected function getJoinTable($join, &$alias = null)
@@ -134,8 +134,8 @@ trait JoinAndViewQuery
     /**
      * 关联预载入 JOIN方式
      * @access protected
-     * @param array|string $with     关联方法名
-     * @param string       $joinType JOIN方式
+     * @param array|string $with 关联方法名
+     * @param string $joinType JOIN方式
      * @return $this
      */
     public function withJoin($with, string $joinType = '')
@@ -148,16 +148,16 @@ trait JoinAndViewQuery
 
         /** @var Model $class */
         $class = $this->model;
-        foreach ((array) $with as $key => $relation) {
+        foreach ((array)$with as $key => $relation) {
             $closure = null;
-            $field   = true;
+            $field = true;
 
             if ($relation instanceof Closure) {
                 // 支持闭包查询过滤关联条件
-                $closure  = $relation;
+                $closure = $relation;
                 $relation = $key;
             } elseif (is_array($relation)) {
-                $field    = $relation;
+                $field = $relation;
                 $relation = $key;
             } elseif (is_string($relation) && strpos($relation, '.')) {
                 $relation = strstr($relation, '.', true);
@@ -165,7 +165,7 @@ trait JoinAndViewQuery
 
             /** @var Relation $model */
             $relation = Str::camel($relation);
-            $model    = $class->$relation();
+            $model = $class->$relation();
 
             if ($model instanceof OneToOne) {
                 $model->eagerly($this, $relation, $field, $joinType, $closure, $first);
@@ -186,11 +186,11 @@ trait JoinAndViewQuery
     /**
      * 指定JOIN查询字段
      * @access public
-     * @param string|array $join  数据表
+     * @param string|array $join 数据表
      * @param string|array $field 查询字段
-     * @param string       $on    JOIN条件
-     * @param string       $type  JOIN类型
-     * @param array        $bind  参数绑定
+     * @param string $on JOIN条件
+     * @param string $type JOIN类型
+     * @param array $bind 参数绑定
      * @return $this
      */
     public function view($join, $field = true, $on = null, string $type = 'INNER', array $bind = [])
@@ -198,7 +198,7 @@ trait JoinAndViewQuery
         $this->options['view'] = true;
 
         $fields = [];
-        $table  = $this->getJoinTable($join, $alias);
+        $table = $this->getJoinTable($join, $alias);
 
         if (true === $field) {
             $fields = $alias . '.*';

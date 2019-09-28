@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\db\concern;
 
@@ -22,9 +22,9 @@ trait AggregateQuery
     /**
      * 聚合查询
      * @access protected
-     * @param string     $aggregate 聚合方法
-     * @param string|Raw $field     字段名
-     * @param bool       $force     强制转为数字类型
+     * @param string $aggregate 聚合方法
+     * @param string|Raw $field 字段名
+     * @param bool $force 强制转为数字类型
      * @return mixed
      */
     protected function aggregate(string $aggregate, $field, bool $force = false)
@@ -43,7 +43,7 @@ trait AggregateQuery
         if (!empty($this->options['group'])) {
             // 支持GROUP
             $options = $this->getOptions();
-            $subSql  = $this->options($options)
+            $subSql = $this->options($options)
                 ->field('count(' . $field . ') AS think_count')
                 ->bind($this->bind)
                 ->buildSql();
@@ -55,7 +55,7 @@ trait AggregateQuery
             $count = $this->aggregate('COUNT', $field);
         }
 
-        return (int) $count;
+        return (int)$count;
     }
 
     /**
@@ -73,7 +73,7 @@ trait AggregateQuery
      * MIN查询
      * @access public
      * @param string|Raw $field 字段名
-     * @param bool       $force 强制转为数字类型
+     * @param bool $force 强制转为数字类型
      * @return mixed
      */
     public function min($field, bool $force = true)
@@ -85,7 +85,7 @@ trait AggregateQuery
      * MAX查询
      * @access public
      * @param string|Raw $field 字段名
-     * @param bool       $force 强制转为数字类型
+     * @param bool $force 强制转为数字类型
      * @return mixed
      */
     public function max($field, bool $force = true)

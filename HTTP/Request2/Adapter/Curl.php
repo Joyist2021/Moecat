@@ -56,127 +56,127 @@ require_once 'HTTP/Request2/Adapter.php';
  */
 class HTTP_Request2_Adapter_Curl extends HTTP_Request2_Adapter
 {
-   /**
-    * Mapping of header names to cURL options
-    * @var  array
-    */
+    /**
+     * Mapping of header names to cURL options
+     * @var  array
+     */
     protected static $headerMap = array(
         'accept-encoding' => CURLOPT_ENCODING,
-        'cookie'          => CURLOPT_COOKIE,
-        'referer'         => CURLOPT_REFERER,
-        'user-agent'      => CURLOPT_USERAGENT
+        'cookie' => CURLOPT_COOKIE,
+        'referer' => CURLOPT_REFERER,
+        'user-agent' => CURLOPT_USERAGENT
     );
 
-   /**
-    * Mapping of SSL context options to cURL options
-    * @var  array
-    */
+    /**
+     * Mapping of SSL context options to cURL options
+     * @var  array
+     */
     protected static $sslContextMap = array(
         'ssl_verify_peer' => CURLOPT_SSL_VERIFYPEER,
-        'ssl_cafile'      => CURLOPT_CAINFO,
-        'ssl_capath'      => CURLOPT_CAPATH,
-        'ssl_local_cert'  => CURLOPT_SSLCERT,
-        'ssl_passphrase'  => CURLOPT_SSLCERTPASSWD
-   );
-
-   /**
-    * Mapping of CURLE_* constants to Exception subclasses and error codes
-    * @var  array
-    */
-    protected static $errorMap = array(
-        CURLE_UNSUPPORTED_PROTOCOL  => array('HTTP_Request2_MessageException',
-                                             HTTP_Request2_Exception::NON_HTTP_REDIRECT),
-        CURLE_COULDNT_RESOLVE_PROXY => array('HTTP_Request2_ConnectionException'),
-        CURLE_COULDNT_RESOLVE_HOST  => array('HTTP_Request2_ConnectionException'),
-        CURLE_COULDNT_CONNECT       => array('HTTP_Request2_ConnectionException'),
-        // error returned from write callback
-        CURLE_WRITE_ERROR           => array('HTTP_Request2_MessageException',
-                                             HTTP_Request2_Exception::NON_HTTP_REDIRECT),
-        CURLE_OPERATION_TIMEOUTED   => array('HTTP_Request2_MessageException',
-                                             HTTP_Request2_Exception::TIMEOUT),
-        CURLE_HTTP_RANGE_ERROR      => array('HTTP_Request2_MessageException'),
-        CURLE_SSL_CONNECT_ERROR     => array('HTTP_Request2_ConnectionException'),
-        CURLE_LIBRARY_NOT_FOUND     => array('HTTP_Request2_LogicException',
-                                             HTTP_Request2_Exception::MISCONFIGURATION),
-        CURLE_FUNCTION_NOT_FOUND    => array('HTTP_Request2_LogicException',
-                                             HTTP_Request2_Exception::MISCONFIGURATION),
-        CURLE_ABORTED_BY_CALLBACK   => array('HTTP_Request2_MessageException',
-                                             HTTP_Request2_Exception::NON_HTTP_REDIRECT),
-        CURLE_TOO_MANY_REDIRECTS    => array('HTTP_Request2_MessageException',
-                                             HTTP_Request2_Exception::TOO_MANY_REDIRECTS),
-        CURLE_SSL_PEER_CERTIFICATE  => array('HTTP_Request2_ConnectionException'),
-        CURLE_GOT_NOTHING           => array('HTTP_Request2_MessageException'),
-        CURLE_SSL_ENGINE_NOTFOUND   => array('HTTP_Request2_LogicException',
-                                             HTTP_Request2_Exception::MISCONFIGURATION),
-        CURLE_SSL_ENGINE_SETFAILED  => array('HTTP_Request2_LogicException',
-                                             HTTP_Request2_Exception::MISCONFIGURATION),
-        CURLE_SEND_ERROR            => array('HTTP_Request2_MessageException'),
-        CURLE_RECV_ERROR            => array('HTTP_Request2_MessageException'),
-        CURLE_SSL_CERTPROBLEM       => array('HTTP_Request2_LogicException',
-                                             HTTP_Request2_Exception::INVALID_ARGUMENT),
-        CURLE_SSL_CIPHER            => array('HTTP_Request2_ConnectionException'),
-        CURLE_SSL_CACERT            => array('HTTP_Request2_ConnectionException'),
-        CURLE_BAD_CONTENT_ENCODING  => array('HTTP_Request2_MessageException'),
+        'ssl_cafile' => CURLOPT_CAINFO,
+        'ssl_capath' => CURLOPT_CAPATH,
+        'ssl_local_cert' => CURLOPT_SSLCERT,
+        'ssl_passphrase' => CURLOPT_SSLCERTPASSWD
     );
 
-   /**
-    * Response being received
-    * @var  HTTP_Request2_Response
-    */
+    /**
+     * Mapping of CURLE_* constants to Exception subclasses and error codes
+     * @var  array
+     */
+    protected static $errorMap = array(
+        CURLE_UNSUPPORTED_PROTOCOL => array('HTTP_Request2_MessageException',
+            HTTP_Request2_Exception::NON_HTTP_REDIRECT),
+        CURLE_COULDNT_RESOLVE_PROXY => array('HTTP_Request2_ConnectionException'),
+        CURLE_COULDNT_RESOLVE_HOST => array('HTTP_Request2_ConnectionException'),
+        CURLE_COULDNT_CONNECT => array('HTTP_Request2_ConnectionException'),
+        // error returned from write callback
+        CURLE_WRITE_ERROR => array('HTTP_Request2_MessageException',
+            HTTP_Request2_Exception::NON_HTTP_REDIRECT),
+        CURLE_OPERATION_TIMEOUTED => array('HTTP_Request2_MessageException',
+            HTTP_Request2_Exception::TIMEOUT),
+        CURLE_HTTP_RANGE_ERROR => array('HTTP_Request2_MessageException'),
+        CURLE_SSL_CONNECT_ERROR => array('HTTP_Request2_ConnectionException'),
+        CURLE_LIBRARY_NOT_FOUND => array('HTTP_Request2_LogicException',
+            HTTP_Request2_Exception::MISCONFIGURATION),
+        CURLE_FUNCTION_NOT_FOUND => array('HTTP_Request2_LogicException',
+            HTTP_Request2_Exception::MISCONFIGURATION),
+        CURLE_ABORTED_BY_CALLBACK => array('HTTP_Request2_MessageException',
+            HTTP_Request2_Exception::NON_HTTP_REDIRECT),
+        CURLE_TOO_MANY_REDIRECTS => array('HTTP_Request2_MessageException',
+            HTTP_Request2_Exception::TOO_MANY_REDIRECTS),
+        CURLE_SSL_PEER_CERTIFICATE => array('HTTP_Request2_ConnectionException'),
+        CURLE_GOT_NOTHING => array('HTTP_Request2_MessageException'),
+        CURLE_SSL_ENGINE_NOTFOUND => array('HTTP_Request2_LogicException',
+            HTTP_Request2_Exception::MISCONFIGURATION),
+        CURLE_SSL_ENGINE_SETFAILED => array('HTTP_Request2_LogicException',
+            HTTP_Request2_Exception::MISCONFIGURATION),
+        CURLE_SEND_ERROR => array('HTTP_Request2_MessageException'),
+        CURLE_RECV_ERROR => array('HTTP_Request2_MessageException'),
+        CURLE_SSL_CERTPROBLEM => array('HTTP_Request2_LogicException',
+            HTTP_Request2_Exception::INVALID_ARGUMENT),
+        CURLE_SSL_CIPHER => array('HTTP_Request2_ConnectionException'),
+        CURLE_SSL_CACERT => array('HTTP_Request2_ConnectionException'),
+        CURLE_BAD_CONTENT_ENCODING => array('HTTP_Request2_MessageException'),
+    );
+
+    /**
+     * Response being received
+     * @var  HTTP_Request2_Response
+     */
     protected $response;
 
-   /**
-    * Whether 'sentHeaders' event was sent to observers
-    * @var  boolean
-    */
+    /**
+     * Whether 'sentHeaders' event was sent to observers
+     * @var  boolean
+     */
     protected $eventSentHeaders = false;
 
-   /**
-    * Whether 'receivedHeaders' event was sent to observers
-    * @var boolean
-    */
+    /**
+     * Whether 'receivedHeaders' event was sent to observers
+     * @var boolean
+     */
     protected $eventReceivedHeaders = false;
 
-   /**
-    * Position within request body
-    * @var  integer
-    * @see  callbackReadBody()
-    */
+    /**
+     * Position within request body
+     * @var  integer
+     * @see  callbackReadBody()
+     */
     protected $position = 0;
 
-   /**
-    * Information about last transfer, as returned by curl_getinfo()
-    * @var  array
-    */
+    /**
+     * Information about last transfer, as returned by curl_getinfo()
+     * @var  array
+     */
     protected $lastInfo;
 
-   /**
-    * Creates a subclass of HTTP_Request2_Exception from curl error data
-    *
-    * @param resource curl handle
-    * @return HTTP_Request2_Exception
-    */
+    /**
+     * Creates a subclass of HTTP_Request2_Exception from curl error data
+     *
+     * @param resource curl handle
+     * @return HTTP_Request2_Exception
+     */
     protected static function wrapCurlError($ch)
     {
         $nativeCode = curl_errno($ch);
-        $message    = 'Curl error: ' . curl_error($ch);
+        $message = 'Curl error: ' . curl_error($ch);
         if (!isset(self::$errorMap[$nativeCode])) {
             return new HTTP_Request2_Exception($message, 0, $nativeCode);
         } else {
             $class = self::$errorMap[$nativeCode][0];
-            $code  = empty(self::$errorMap[$nativeCode][1])
-                     ? 0 : self::$errorMap[$nativeCode][1];
+            $code = empty(self::$errorMap[$nativeCode][1])
+                ? 0 : self::$errorMap[$nativeCode][1];
             return new $class($message, $code, $nativeCode);
         }
     }
 
-   /**
-    * Sends request to the remote server and returns its response
-    *
-    * @param    HTTP_Request2
-    * @return   HTTP_Request2_Response
-    * @throws   HTTP_Request2_Exception
-    */
+    /**
+     * Sends request to the remote server and returns its response
+     *
+     * @param HTTP_Request2
+     * @return   HTTP_Request2_Response
+     * @throws   HTTP_Request2_Exception
+     */
     public function sendRequest(HTTP_Request2 $request)
     {
         if (!extension_loaded('curl')) {
@@ -185,10 +185,10 @@ class HTTP_Request2_Adapter_Curl extends HTTP_Request2_Adapter
             );
         }
 
-        $this->request              = $request;
-        $this->response             = null;
-        $this->position             = 0;
-        $this->eventSentHeaders     = false;
+        $this->request = $request;
+        $this->response = null;
+        $this->position = 0;
+        $this->eventSentHeaders = false;
         $this->eventReceivedHeaders = false;
 
         try {
@@ -219,22 +219,22 @@ class HTTP_Request2_Adapter_Curl extends HTTP_Request2_Adapter
         return $response;
     }
 
-   /**
-    * Returns information about last transfer
-    *
-    * @return   array   associative array as returned by curl_getinfo()
-    */
+    /**
+     * Returns information about last transfer
+     *
+     * @return   array   associative array as returned by curl_getinfo()
+     */
     public function getInfo()
     {
         return $this->lastInfo;
     }
 
-   /**
-    * Creates a new cURL handle and populates it with data from the request
-    *
-    * @return   resource    a cURL handle, as created by curl_init()
-    * @throws   HTTP_Request2_LogicException
-    */
+    /**
+     * Creates a new cURL handle and populates it with data from the request
+     *
+     * @return   resource    a cURL handle, as created by curl_init()
+     * @throws   HTTP_Request2_LogicException
+     */
     protected function createCurlHandle()
     {
         $ch = curl_init();
@@ -242,15 +242,15 @@ class HTTP_Request2_Adapter_Curl extends HTTP_Request2_Adapter
         curl_setopt_array($ch, array(
             // setup write callbacks
             CURLOPT_HEADERFUNCTION => array($this, 'callbackWriteHeader'),
-            CURLOPT_WRITEFUNCTION  => array($this, 'callbackWriteBody'),
+            CURLOPT_WRITEFUNCTION => array($this, 'callbackWriteBody'),
             // buffer size
-            CURLOPT_BUFFERSIZE     => $this->request->getConfig('buffer_size'),
+            CURLOPT_BUFFERSIZE => $this->request->getConfig('buffer_size'),
             // connection timeout
             CURLOPT_CONNECTTIMEOUT => $this->request->getConfig('connect_timeout'),
             // save full outgoing headers, in case someone is interested
-            CURLINFO_HEADER_OUT    => true,
+            CURLINFO_HEADER_OUT => true,
             // request url
-            CURLOPT_URL            => $this->request->getUrl()->getUrl()
+            CURLOPT_URL => $this->request->getUrl()->getUrl()
         ));
 
         // set up redirects
@@ -313,7 +313,7 @@ class HTTP_Request2_Adapter_Curl extends HTTP_Request2_Adapter
             curl_setopt($ch, CURLOPT_PROXY, $host . ':' . $port);
             if ($user = $this->request->getConfig('proxy_user')) {
                 curl_setopt($ch, CURLOPT_PROXYUSERPWD, $user . ':' .
-                            $this->request->getConfig('proxy_password'));
+                    $this->request->getConfig('proxy_password'));
                 switch ($this->request->getConfig('proxy_auth_scheme')) {
                     case HTTP_Request2::AUTH_BASIC:
                         curl_setopt($ch, CURLOPT_PROXYAUTH, CURLAUTH_BASIC);
@@ -340,7 +340,7 @@ class HTTP_Request2_Adapter_Curl extends HTTP_Request2_Adapter
         if (0 == strcasecmp($this->request->getUrl()->getScheme(), 'https')) {
             foreach ($this->request->getConfig() as $name => $value) {
                 if ('ssl_verify_host' == $name && null !== $value) {
-                    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $value? 2: 0);
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $value ? 2 : 0);
                 } elseif (isset(self::$sslContextMap[$name]) && null !== $value) {
                     curl_setopt($ch, self::$sslContextMap[$name], $value);
                 }
@@ -356,7 +356,7 @@ class HTTP_Request2_Adapter_Curl extends HTTP_Request2_Adapter
         if (($jar = $this->request->getCookieJar())
             && ($cookies = $jar->getMatching($this->request->getUrl(), true))
         ) {
-            $headers['cookie'] = (empty($headers['cookie'])? '': $headers['cookie'] . '; ') . $cookies;
+            $headers['cookie'] = (empty($headers['cookie']) ? '' : $headers['cookie'] . '; ') . $cookies;
         }
 
         // set headers having special cURL keys
@@ -376,23 +376,23 @@ class HTTP_Request2_Adapter_Curl extends HTTP_Request2_Adapter
         $headersFmt = array();
         foreach ($headers as $name => $value) {
             $canonicalName = implode('-', array_map('ucfirst', explode('-', $name)));
-            $headersFmt[]  = $canonicalName . ': ' . $value;
+            $headersFmt[] = $canonicalName . ': ' . $value;
         }
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headersFmt);
 
         return $ch;
     }
 
-   /**
-    * Workaround for PHP bug #47204 that prevents rewinding request body
-    *
-    * The workaround consists of reading the entire request body into memory
-    * and setting it as CURLOPT_POSTFIELDS, so it isn't recommended for large
-    * file uploads, use Socket adapter instead.
-    *
-    * @param    resource    cURL handle
-    * @param    array       Request headers
-    */
+    /**
+     * Workaround for PHP bug #47204 that prevents rewinding request body
+     *
+     * The workaround consists of reading the entire request body into memory
+     * and setting it as CURLOPT_POSTFIELDS, so it isn't recommended for large
+     * file uploads, use Socket adapter instead.
+     *
+     * @param resource    cURL handle
+     * @param array       Request headers
+     */
     protected function workaroundPhpBug47204($ch, &$headers)
     {
         // no redirects, no digest auth -> probably no rewind needed
@@ -402,7 +402,7 @@ class HTTP_Request2_Adapter_Curl extends HTTP_Request2_Adapter
         ) {
             curl_setopt($ch, CURLOPT_READFUNCTION, array($this, 'callbackReadBody'));
 
-        // rewind may be needed, read the whole body into memory
+            // rewind may be needed, read the whole body into memory
         } else {
             if ($this->requestBody instanceof HTTP_Request2_MultipartBody) {
                 $this->requestBody = $this->requestBody->__toString();
@@ -420,14 +420,14 @@ class HTTP_Request2_Adapter_Curl extends HTTP_Request2_Adapter
         }
     }
 
-   /**
-    * Callback function called by cURL for reading the request body
-    *
-    * @param    resource    cURL handle
-    * @param    resource    file descriptor (not used)
-    * @param    integer     maximum length of data to return
-    * @return   string      part of the request body, up to $length bytes
-    */
+    /**
+     * Callback function called by cURL for reading the request body
+     *
+     * @param resource    cURL handle
+     * @param resource    file descriptor (not used)
+     * @param integer     maximum length of data to return
+     * @return   string      part of the request body, up to $length bytes
+     */
     protected function callbackReadBody($ch, $fd, $length)
     {
         if (!$this->eventSentHeaders) {
@@ -453,14 +453,14 @@ class HTTP_Request2_Adapter_Curl extends HTTP_Request2_Adapter
         return $string;
     }
 
-   /**
-    * Callback function called by cURL for saving the response headers
-    *
-    * @param    resource    cURL handle
-    * @param    string      response header (with trailing CRLF)
-    * @return   integer     number of bytes saved
-    * @see      HTTP_Request2_Response::parseHeaderLine()
-    */
+    /**
+     * Callback function called by cURL for saving the response headers
+     *
+     * @param resource    cURL handle
+     * @param string      response header (with trailing CRLF)
+     * @return   integer     number of bytes saved
+     * @see      HTTP_Request2_Response::parseHeaderLine()
+     */
     protected function callbackWriteHeader($ch, $string)
     {
         // we may receive a second set of headers if doing e.g. digest auth
@@ -482,7 +482,7 @@ class HTTP_Request2_Adapter_Curl extends HTTP_Request2_Adapter
                 $this->position = $upload;
             }
             if ($upload && (!$this->eventSentHeaders
-                            || $this->response->getStatus() >= 200)
+                    || $this->response->getStatus() >= 200)
             ) {
                 $this->request->setLastEvent('sentBody', $upload);
             }
@@ -490,7 +490,7 @@ class HTTP_Request2_Adapter_Curl extends HTTP_Request2_Adapter
             // we'll need a new response object
             if ($this->eventReceivedHeaders) {
                 $this->eventReceivedHeaders = false;
-                $this->response             = null;
+                $this->response = null;
             }
         }
         if (empty($this->response)) {
@@ -529,14 +529,14 @@ class HTTP_Request2_Adapter_Curl extends HTTP_Request2_Adapter
         return strlen($string);
     }
 
-   /**
-    * Callback function called by cURL for saving the response body
-    *
-    * @param    resource    cURL handle (not used)
-    * @param    string      part of the response body
-    * @return   integer     number of bytes saved
-    * @see      HTTP_Request2_Response::appendBody()
-    */
+    /**
+     * Callback function called by cURL for saving the response body
+     *
+     * @param resource    cURL handle (not used)
+     * @param string      part of the response body
+     * @return   integer     number of bytes saved
+     * @see      HTTP_Request2_Response::appendBody()
+     */
     protected function callbackWriteBody($ch, $string)
     {
         // cURL calls WRITEFUNCTION callback without calling HEADERFUNCTION if
@@ -554,4 +554,5 @@ class HTTP_Request2_Adapter_Curl extends HTTP_Request2_Adapter
         return strlen($string);
     }
 }
+
 ?>

@@ -5,7 +5,7 @@ dbconn();
 loggedinorreturn(true);
 
 //if($_GET)
-sql_query("UPDATE users SET logouttime = ".sqlesc(TIMENOW)." WHERE id =".sqlesc(0+$CURUSER["id"]));
+sql_query("UPDATE users SET logouttime = " . sqlesc(TIMENOW) . " WHERE id =" . sqlesc(0 + $CURUSER["id"]));
 
 
 //if($_SERVER['REQUEST_URI']=='/logout.php')

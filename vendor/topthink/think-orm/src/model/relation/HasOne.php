@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\model\relation;
 
@@ -25,18 +25,18 @@ class HasOne extends OneToOne
     /**
      * 架构函数
      * @access public
-     * @param  Model  $parent     上级模型对象
-     * @param  string $model      模型名
-     * @param  string $foreignKey 关联外键
-     * @param  string $localKey   当前模型主键
+     * @param Model $parent 上级模型对象
+     * @param string $model 模型名
+     * @param string $foreignKey 关联外键
+     * @param string $localKey 当前模型主键
      */
     public function __construct(Model $parent, string $model, string $foreignKey, string $localKey)
     {
-        $this->parent     = $parent;
-        $this->model      = $model;
+        $this->parent = $parent;
+        $this->model = $model;
         $this->foreignKey = $foreignKey;
-        $this->localKey   = $localKey;
-        $this->query      = (new $model)->db();
+        $this->localKey = $localKey;
+        $this->query = (new $model)->db();
 
         if (get_class($parent) == $model) {
             $this->selfRelation = true;
@@ -46,8 +46,8 @@ class HasOne extends OneToOne
     /**
      * 延迟获取关联数据
      * @access public
-     * @param  array   $subRelation 子关联名
-     * @param  Closure $closure     闭包查询条件
+     * @param array $subRelation 子关联名
+     * @param Closure $closure 闭包查询条件
      * @return Model
      */
     public function getRelation(array $subRelation = [], Closure $closure = null)
@@ -75,10 +75,10 @@ class HasOne extends OneToOne
     /**
      * 创建关联统计子查询
      * @access public
-     * @param  Closure $closure 闭包
-     * @param  string  $aggregate 聚合查询方法
-     * @param  string  $field 字段
-     * @param  string  $name 统计字段别名
+     * @param Closure $closure 闭包
+     * @param string $aggregate 聚合查询方法
+     * @param string $field 字段
+     * @param string $name 统计字段别名
      * @return string
      */
     public function getRelationCountQuery(Closure $closure = null, string $aggregate = 'count', string $field = '*', string &$name = null): string
@@ -96,11 +96,11 @@ class HasOne extends OneToOne
     /**
      * 关联统计
      * @access public
-     * @param  Model   $result  数据对象
-     * @param  Closure $closure 闭包
-     * @param  string  $aggregate 聚合查询方法
-     * @param  string  $field 字段
-     * @param  string  $name 统计字段别名
+     * @param Model $result 数据对象
+     * @param Closure $closure 闭包
+     * @param string $aggregate 聚合查询方法
+     * @param string $field 字段
+     * @param string $name 统计字段别名
      * @return integer
      */
     public function relationCount(Model $result, Closure $closure = null, string $aggregate = 'count', string $field = '*', string &$name = null)
@@ -123,18 +123,18 @@ class HasOne extends OneToOne
     /**
      * 根据关联条件查询当前模型
      * @access public
-     * @param  string  $operator 比较操作符
-     * @param  integer $count    个数
-     * @param  string  $id       关联表的统计字段
-     * @param  string  $joinType JOIN类型
+     * @param string $operator 比较操作符
+     * @param integer $count 个数
+     * @param string $id 关联表的统计字段
+     * @param string $joinType JOIN类型
      * @return Query
      */
     public function has(string $operator = '>=', int $count = 1, string $id = '*', string $joinType = ''): Query
     {
-        $table      = $this->query->getTable();
-        $model      = class_basename($this->parent);
-        $relation   = class_basename($this->model);
-        $localKey   = $this->localKey;
+        $table = $this->query->getTable();
+        $model = class_basename($this->parent);
+        $relation = class_basename($this->model);
+        $localKey = $this->localKey;
         $foreignKey = $this->foreignKey;
 
         return $this->parent->db()
@@ -149,15 +149,15 @@ class HasOne extends OneToOne
     /**
      * 根据关联条件查询当前模型
      * @access public
-     * @param  mixed  $where 查询条件（数组或者闭包）
-     * @param  mixed  $fields   字段
-     * @param  string $joinType JOIN类型
+     * @param mixed $where 查询条件（数组或者闭包）
+     * @param mixed $fields 字段
+     * @param string $joinType JOIN类型
      * @return Query
      */
     public function hasWhere($where = [], $fields = null, string $joinType = ''): Query
     {
-        $table    = $this->query->getTable();
-        $model    = class_basename($this->parent);
+        $table = $this->query->getTable();
+        $model = class_basename($this->parent);
         $relation = class_basename($this->model);
 
         if (is_array($where)) {
@@ -181,15 +181,15 @@ class HasOne extends OneToOne
     /**
      * 预载入关联查询（数据集）
      * @access protected
-     * @param  array   $resultSet   数据集
-     * @param  string  $relation    当前关联名
-     * @param  array   $subRelation 子关联名
-     * @param  Closure $closure     闭包
+     * @param array $resultSet 数据集
+     * @param string $relation 当前关联名
+     * @param array $subRelation 子关联名
+     * @param Closure $closure 闭包
      * @return void
      */
     protected function eagerlySet(array &$resultSet, string $relation, array $subRelation = [], Closure $closure = null): void
     {
-        $localKey   = $this->localKey;
+        $localKey = $this->localKey;
         $foreignKey = $this->foreignKey;
 
         $range = [];
@@ -235,15 +235,15 @@ class HasOne extends OneToOne
     /**
      * 预载入关联查询（数据）
      * @access protected
-     * @param  Model   $result      数据对象
-     * @param  string  $relation    当前关联名
-     * @param  array   $subRelation 子关联名
-     * @param  Closure $closure     闭包
+     * @param Model $result 数据对象
+     * @param string $relation 当前关联名
+     * @param array $subRelation 子关联名
+     * @param Closure $closure 闭包
      * @return void
      */
     protected function eagerlyOne(Model $result, string $relation, array $subRelation = [], Closure $closure = null): void
     {
-        $localKey   = $this->localKey;
+        $localKey = $this->localKey;
         $foreignKey = $this->foreignKey;
 
         $this->query->removeWhereField($foreignKey);

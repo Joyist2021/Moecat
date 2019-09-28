@@ -6,7 +6,8 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
+
 namespace think\db;
 
 use MongoDB\Driver\BulkWrite;
@@ -30,7 +31,7 @@ class Mongo extends BaseQuery
     /**
      * 执行查询 返回数据集
      * @access public
-     * @param  MongoQuery     $query 查询对象
+     * @param MongoQuery $query 查询对象
      * @return mixed
      * @throws AuthenticationException
      * @throws InvalidArgumentException
@@ -45,10 +46,10 @@ class Mongo extends BaseQuery
     /**
      * 执行指令 返回数据集
      * @access public
-     * @param  Command        $command 指令
-     * @param  string         $dbName
-     * @param  ReadPreference $readPreference readPreference
-     * @param  string|array   $typeMap 指定返回的typeMap
+     * @param Command $command 指令
+     * @param string $dbName
+     * @param ReadPreference $readPreference readPreference
+     * @param string|array $typeMap 指定返回的typeMap
      * @return mixed
      * @throws AuthenticationException
      * @throws InvalidArgumentException
@@ -63,7 +64,7 @@ class Mongo extends BaseQuery
     /**
      * 执行语句
      * @access public
-     * @param  BulkWrite     $bulk
+     * @param BulkWrite $bulk
      * @return int
      * @throws AuthenticationException
      * @throws InvalidArgumentException
@@ -79,9 +80,9 @@ class Mongo extends BaseQuery
     /**
      * 执行command
      * @access public
-     * @param  string|array|object $command 指令
-     * @param  mixed               $extra 额外参数
-     * @param  string              $db 数据库名
+     * @param string|array|object $command 指令
+     * @param mixed $extra 额外参数
+     * @param string $db 数据库名
      * @return array
      */
     public function cmd($command, $extra = null, string $db = ''): array
@@ -92,7 +93,7 @@ class Mongo extends BaseQuery
     /**
      * 指定distinct查询
      * @access public
-     * @param  string $field 字段名
+     * @param string $field 字段名
      * @return array
      */
     public function getDistinct(string $field)
@@ -104,7 +105,7 @@ class Mongo extends BaseQuery
     /**
      * 获取数据库的所有collection
      * @access public
-     * @param  string  $db 数据库名称 留空为当前数据库
+     * @param string $db 数据库名称 留空为当前数据库
      * @throws Exception
      */
     public function listCollections(string $db = '')
@@ -135,9 +136,9 @@ class Mongo extends BaseQuery
     /**
      * 聚合查询
      * @access public
-     * @param  string $aggregate 聚合指令
-     * @param  string $field     字段名
-     * @param  bool   $force   强制转为数字类型
+     * @param string $aggregate 聚合指令
+     * @param string $field 字段名
+     * @param bool $force 强制转为数字类型
      * @return mixed
      */
     public function aggregate(string $aggregate, $field, bool $force = false)
@@ -158,8 +159,8 @@ class Mongo extends BaseQuery
     /**
      * 多聚合操作
      *
-     * @param  array $aggregate 聚合指令, 可以聚合多个参数, 如 ['sum' => 'field1', 'avg' => 'field2']
-     * @param  array $groupBy 类似mysql里面的group字段, 可以传入多个字段, 如 ['field_a', 'field_b', 'field_c']
+     * @param array $aggregate 聚合指令, 可以聚合多个参数, 如 ['sum' => 'field1', 'avg' => 'field2']
+     * @param array $groupBy 类似mysql里面的group字段, 可以传入多个字段, 如 ['field_a', 'field_b', 'field_c']
      * @return array 查询结果
      */
     public function multiAggregate(array $aggregate, array $groupBy): array
@@ -183,10 +184,10 @@ class Mongo extends BaseQuery
     /**
      * 字段值增长
      * @access public
-     * @param string  $field 字段名
-     * @param float   $step  增长值
+     * @param string $field 字段名
+     * @param float $step 增长值
      * @param integer $lazyTime 延时时间(s)
-     * @param string  $op inc/dec
+     * @param string $op inc/dec
      * @return $this
      */
     public function inc(string $field, float $step = 1, int $lazyTime = 0, string $op = 'inc')
@@ -211,9 +212,9 @@ class Mongo extends BaseQuery
     /**
      * 字段值减少
      * @access public
-     * @param  string  $field 字段名
-     * @param  float   $step  减少值
-     * @param  integer $lazyTime 延时时间(s)
+     * @param string $field 字段名
+     * @param float $step 减少值
+     * @param integer $lazyTime 延时时间(s)
      * @return $this
      */
     public function dec(string $field, float $step = 1, int $lazyTime = 0)
@@ -224,7 +225,7 @@ class Mongo extends BaseQuery
     /**
      * 指定当前操作的collection
      * @access public
-     * @param  string $collection
+     * @param string $collection
      * @return $this
      */
     public function collection(string $collection)
@@ -372,8 +373,8 @@ class Mongo extends BaseQuery
     /**
      * 设置返回字段
      * @access public
-     * @param  mixed $field 字段信息
-     * @param  bool  $except 是否排除
+     * @param mixed $field 字段信息
+     * @param bool $except 是否排除
      * @return $this
      */
     public function field($field, bool $except = false)
@@ -438,7 +439,7 @@ class Mongo extends BaseQuery
             $offset = 0;
         }
 
-        $this->options['skip']  = $offset;
+        $this->options['skip'] = $offset;
         $this->options['limit'] = $length;
 
         return $this;
@@ -447,8 +448,8 @@ class Mongo extends BaseQuery
     /**
      * 设置sort
      * @access public
-     * @param  array|string $field
-     * @param  string       $order
+     * @param array|string $field
+     * @param string $order
      * @return $this
      */
     public function order($field, string $order = '')
@@ -464,7 +465,7 @@ class Mongo extends BaseQuery
     /**
      * 设置tailable
      * @access public
-     * @param  bool $tailable
+     * @param bool $tailable
      * @return $this
      */
     public function tailable(bool $tailable)
@@ -476,7 +477,7 @@ class Mongo extends BaseQuery
     /**
      * 设置writeConcern对象
      * @access public
-     * @param  WriteConcern $writeConcern
+     * @param WriteConcern $writeConcern
      * @return $this
      */
     public function writeConcern(WriteConcern $writeConcern)
@@ -561,11 +562,11 @@ class Mongo extends BaseQuery
         if (isset($options['page'])) {
             // 根据页数计算limit
             list($page, $listRows) = $options['page'];
-            $page                  = $page > 0 ? $page : 1;
-            $listRows              = $listRows > 0 ? $listRows : (is_numeric($options['limit']) ? $options['limit'] : 20);
-            $offset                = $listRows * ($page - 1);
-            $options['skip']       = intval($offset);
-            $options['limit']      = intval($listRows);
+            $page = $page > 0 ? $page : 1;
+            $listRows = $listRows > 0 ? $listRows : (is_numeric($options['limit']) ? $options['limit'] : 20);
+            $offset = $listRows * ($page - 1);
+            $options['skip'] = intval($offset);
+            $options['limit'] = intval($listRows);
         }
 
         $this->options = $options;

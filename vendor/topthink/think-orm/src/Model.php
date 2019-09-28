@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think;
 
@@ -166,7 +166,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
 
         if (!empty($this->data)) {
             // 废弃字段
-            foreach ((array) $this->disuse as $key) {
+            foreach ((array)$this->disuse as $key) {
                 if (array_key_exists($key, $this->data)) {
                     unset($this->data[$key]);
                 }
@@ -178,7 +178,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
 
         if (empty($this->name)) {
             // 当前模型名
-            $name       = str_replace('\\', '/', static::class);
+            $name = str_replace('\\', '/', static::class);
             $this->name = basename($name);
         }
 
@@ -203,7 +203,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
     /**
      * 创建新的模型实例
      * @access public
-     * @param array $data  数据
+     * @param array $data 数据
      * @param mixed $where 更新条件
      * @return Model
      */
@@ -236,7 +236,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
      * 设置当前模型的数据库查询对象
      * @access public
      * @param Query $query 查询对象实例
-     * @param bool  $clear 是否需要清空查询条件
+     * @param bool $clear 是否需要清空查询条件
      * @return $this
      */
     public function setQuery(Query $query, bool $clear = true)
@@ -395,7 +395,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
     public function refresh(bool $relation = false)
     {
         if ($this->exists) {
-            $this->data   = $this->db()->find($this->getKey())->getData();
+            $this->data = $this->db()->find($this->getKey())->getData();
             $this->origin = $this->data;
 
             if ($relation) {
@@ -460,7 +460,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
     /**
      * 保存当前数据对象
      * @access public
-     * @param array  $data     数据
+     * @param array $data 数据
      * @param string $sequence 自增序列名
      * @return bool
      */
@@ -483,8 +483,8 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
         $this->trigger('AfterWrite');
 
         // 重新记录原始数据
-        $this->origin   = $this->data;
-        $this->set      = [];
+        $this->origin = $this->data;
+        $this->set = [];
         $this->lazySave = false;
 
         return true;
@@ -553,7 +553,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
 
         if ($this->autoWriteTimestamp && $this->updateTime && !isset($data[$this->updateTime])) {
             // 自动写入更新时间
-            $data[$this->updateTime]       = $this->autoWriteTimestamp($this->updateTime);
+            $data[$this->updateTime] = $this->autoWriteTimestamp($this->updateTime);
             $this->data[$this->updateTime] = $data[$this->updateTime];
         }
 
@@ -577,7 +577,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
         $db->startTrans();
 
         try {
-            $where  = $this->getWhere();
+            $where = $this->getWhere();
             $result = $db->where($where)
                 ->strict(false)
                 ->field($allowFields)
@@ -692,7 +692,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
      * 保存多个数据到当前数据对象
      * @access public
      * @param iterable $dataSet 数据
-     * @param boolean  $replace 是否自动识别更新和写入
+     * @param boolean $replace 是否自动识别更新和写入
      * @return Collection
      * @throws \Exception
      */
@@ -757,7 +757,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
 
             $this->trigger('AfterDelete');
 
-            $this->exists   = false;
+            $this->exists = false;
             $this->lazySave = false;
 
             return true;
@@ -770,9 +770,9 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
     /**
      * 写入数据
      * @access public
-     * @param array $data       数据数组
+     * @param array $data 数据数组
      * @param array $allowField 允许字段
-     * @param bool  $replace    使用Replace
+     * @param bool $replace 使用Replace
      * @return static
      */
     public static function create(array $data, array $allowField = [], bool $replace = false): Model
@@ -791,8 +791,8 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
     /**
      * 更新数据
      * @access public
-     * @param array $data       数据数组
-     * @param mixed $where      更新条件
+     * @param array $data 数据数组
+     * @param mixed $where 更新条件
      * @param array $allowField 允许字段
      * @return static
      */
@@ -816,8 +816,8 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
     /**
      * 删除记录
      * @access public
-     * @param mixed $data  主键列表 支持闭包查询条件
-     * @param bool  $force 是否强制删除
+     * @param mixed $data 主键列表 支持闭包查询条件
+     * @param bool $force 是否强制删除
      * @return bool
      */
     public static function destroy($data, bool $force = false): bool
@@ -869,8 +869,8 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
     /**
      * 修改器 设置数据对象的值
      * @access public
-     * @param string $name  名称
-     * @param mixed  $value 值
+     * @param string $name 名称
+     * @param mixed $value 值
      * @return void
      */
     public function __set(string $name, $value): void

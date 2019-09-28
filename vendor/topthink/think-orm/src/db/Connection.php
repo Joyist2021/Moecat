@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\db;
 
@@ -229,7 +229,7 @@ abstract class Connection
     /**
      * 连接数据库方法
      * @access public
-     * @param array   $config  接参数
+     * @param array $config 接参数
      * @param integer $linkNum 连接序号
      * @return mixed
      * @throws Exception
@@ -275,7 +275,7 @@ abstract class Connection
     /**
      * 插入记录
      * @access public
-     * @param BaseQuery   $query        查询对象
+     * @param BaseQuery $query 查询对象
      * @param boolean $getLastInsID 返回自增主键
      * @return mixed
      */
@@ -284,8 +284,8 @@ abstract class Connection
     /**
      * 批量插入记录
      * @access public
-     * @param BaseQuery   $query   查询对象
-     * @param mixed   $dataSet 数据集
+     * @param BaseQuery $query 查询对象
+     * @param mixed $dataSet 数据集
      * @return integer
      * @throws \Exception
      * @throws \Throwable
@@ -315,10 +315,10 @@ abstract class Connection
     /**
      * 得到某个字段的值
      * @access public
-     * @param BaseQuery  $query   查询对象
-     * @param string $field   字段名
-     * @param mixed  $default 默认值
-     * @param bool   $one     返回一个值
+     * @param BaseQuery $query 查询对象
+     * @param string $field 字段名
+     * @param mixed $default 默认值
+     * @param bool $one 返回一个值
      * @return mixed
      */
     abstract public function value(BaseQuery $query, string $field, $default = null);
@@ -326,9 +326,9 @@ abstract class Connection
     /**
      * 得到某个列的数组
      * @access public
-     * @param BaseQuery  $query  查询对象
+     * @param BaseQuery $query 查询对象
      * @param string $column 字段名 多个字段用逗号分隔
-     * @param string $key    索引
+     * @param string $key 索引
      * @return array
      */
     abstract public function column(BaseQuery $query, string $column, string $key = ''): array;
@@ -386,7 +386,7 @@ abstract class Connection
     /**
      * 获取最近插入的ID
      * @access public
-     * @param BaseQuery  $query  查询对象
+     * @param BaseQuery $query 查询对象
      * @param string $sequence 自增序列名
      * @return mixed
      */
@@ -403,7 +403,7 @@ abstract class Connection
     /**
      * 记录SQL日志
      * @access protected
-     * @param string $log  SQL日志信息
+     * @param string $log SQL日志信息
      * @param string $type 日志类型
      * @return void
      */
@@ -475,9 +475,9 @@ abstract class Connection
      * 延时更新检查 返回false表示需要延时
      * 否则返回实际写入的数值
      * @access public
-     * @param string  $type     自增或者自减
-     * @param string  $guid     写入标识
-     * @param float   $step     写入步进值
+     * @param string $type 自增或者自减
+     * @param string $guid 写入标识
+     * @param float $step 写入步进值
      * @param integer $lazyTime 延时时间(s)
      * @return false|integer
      */

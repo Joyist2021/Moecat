@@ -1,15 +1,14 @@
 <?php
 require "include/bittorrent.php";
- 
- 
+
+
 dbconn();
 loggedinorreturn();
 
- 
 
-$HTMLOUT ="";
+$HTMLOUT = "";
 
-$HTMLOUT .="<a href='./bet.php'><img src='betting.png' alt='Bet' title='Betting' width='400' height='125' /></a>
+$HTMLOUT .= "<a href='./bet.php'><img src='betting.png' alt='Bet' title='Betting' width='400' height='125' /></a>
 <h1>博彩频道</h1>
 <table class='main' cellspacing='0' cellpadding='5' border='0'>
 <tr>
@@ -18,11 +17,11 @@ $HTMLOUT .="<a href='./bet.php'><img src='betting.png' alt='Bet' title='Betting'
 <td align='center' class='navigation'><a href='./bet_coupon.php'>我的押注</a></td>
 <td align='center' class='navigation'><a href='./bet_bonustop.php'>用户排名</font></a></td>
 <td align='center' class='navigation'><a href='./bet_info.php' class='faqlink'>系统帮助</a></td>";
-if( $CURUSER['class'] >= UC_POWER_USER)//if( $CURUSER['class'] >= UC_MODERATOR ||get_bet_moderators_is() )
+if ($CURUSER['class'] >= UC_POWER_USER)//if( $CURUSER['class'] >= UC_MODERATOR ||get_bet_moderators_is() )
 {
-$HTMLOUT .= "<td align='center' class='navigation'><a href='/bet_admin.php'>管理竞猜</a></td>";
+    $HTMLOUT .= "<td align='center' class='navigation'><a href='/bet_admin.php'>管理竞猜</a></td>";
 }
-$HTMLOUT .="
+$HTMLOUT .= "
 </tr>
 </table>
 <br />
@@ -51,9 +50,11 @@ $HTMLOUT .="
 <table width='100%' border='1' cellspacing='0' cellpadding='10'>
 <tr><td class='text'>
 <b>当前管理志愿者:</b><br /><br />
-".get_bet_moderators(true)."
+" . get_bet_moderators(true) . "
 </td></tr></table>
 </td></tr></table>";
 //
-stdhead('Betting');print  $HTMLOUT ; stdfoot();
+stdhead('Betting');
+print  $HTMLOUT;
+stdfoot();
 ?>

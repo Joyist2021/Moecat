@@ -65,26 +65,26 @@ class Bootstrap extends Paginator
         }
 
         $block = [
-            'first'  => null,
+            'first' => null,
             'slider' => null,
-            'last'   => null,
+            'last' => null,
         ];
 
-        $side   = 3;
+        $side = 3;
         $window = $side * 2;
 
         if ($this->lastPage < $window + 6) {
             $block['first'] = $this->getUrlRange(1, $this->lastPage);
         } elseif ($this->currentPage <= $window) {
             $block['first'] = $this->getUrlRange(1, $window + 2);
-            $block['last']  = $this->getUrlRange($this->lastPage - 1, $this->lastPage);
+            $block['last'] = $this->getUrlRange($this->lastPage - 1, $this->lastPage);
         } elseif ($this->currentPage > ($this->lastPage - $window)) {
             $block['first'] = $this->getUrlRange(1, 2);
-            $block['last']  = $this->getUrlRange($this->lastPage - ($window + 2), $this->lastPage);
+            $block['last'] = $this->getUrlRange($this->lastPage - ($window + 2), $this->lastPage);
         } else {
-            $block['first']  = $this->getUrlRange(1, 2);
+            $block['first'] = $this->getUrlRange(1, 2);
             $block['slider'] = $this->getUrlRange($this->currentPage - $side, $this->currentPage + $side);
-            $block['last']   = $this->getUrlRange($this->lastPage - 1, $this->lastPage);
+            $block['last'] = $this->getUrlRange($this->lastPage - 1, $this->lastPage);
         }
 
         $html = '';
@@ -133,8 +133,8 @@ class Bootstrap extends Paginator
     /**
      * 生成一个可点击的按钮
      *
-     * @param  string $url
-     * @param  string $page
+     * @param string $url
+     * @param string $page
      * @return string
      */
     protected function getAvailablePageWrapper(string $url, string $page): string
@@ -145,7 +145,7 @@ class Bootstrap extends Paginator
     /**
      * 生成一个禁用的按钮
      *
-     * @param  string $text
+     * @param string $text
      * @return string
      */
     protected function getDisabledTextWrapper(string $text): string
@@ -156,7 +156,7 @@ class Bootstrap extends Paginator
     /**
      * 生成一个激活的按钮
      *
-     * @param  string $text
+     * @param string $text
      * @return string
      */
     protected function getActivePageWrapper(string $text): string
@@ -177,7 +177,7 @@ class Bootstrap extends Paginator
     /**
      * 批量生成页码按钮.
      *
-     * @param  array $urls
+     * @param array $urls
      * @return string
      */
     protected function getUrlLinks(array $urls): string
@@ -194,8 +194,8 @@ class Bootstrap extends Paginator
     /**
      * 生成普通页码按钮
      *
-     * @param  string $url
-     * @param  string    $page
+     * @param string $url
+     * @param string $page
      * @return string
      */
     protected function getPageLinkWrapper(string $url, string $page): string

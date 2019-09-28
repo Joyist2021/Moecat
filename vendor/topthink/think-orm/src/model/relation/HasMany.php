@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\model\relation;
 
@@ -27,18 +27,18 @@ class HasMany extends Relation
     /**
      * 架构函数
      * @access public
-     * @param  Model  $parent     上级模型对象
-     * @param  string $model      模型名
-     * @param  string $foreignKey 关联外键
-     * @param  string $localKey   当前模型主键
+     * @param Model $parent 上级模型对象
+     * @param string $model 模型名
+     * @param string $foreignKey 关联外键
+     * @param string $localKey 当前模型主键
      */
     public function __construct(Model $parent, string $model, string $foreignKey, string $localKey)
     {
-        $this->parent     = $parent;
-        $this->model      = $model;
+        $this->parent = $parent;
+        $this->model = $model;
         $this->foreignKey = $foreignKey;
-        $this->localKey   = $localKey;
-        $this->query      = (new $model)->db();
+        $this->localKey = $localKey;
+        $this->query = (new $model)->db();
 
         if (get_class($parent) == $model) {
             $this->selfRelation = true;
@@ -48,8 +48,8 @@ class HasMany extends Relation
     /**
      * 延迟获取关联数据
      * @access public
-     * @param  array   $subRelation 子关联名
-     * @param  Closure $closure     闭包查询条件
+     * @param array $subRelation 子关联名
+     * @param Closure $closure 闭包查询条件
      * @return Collection
      */
     public function getRelation(array $subRelation = [], Closure $closure = null): Collection
@@ -72,16 +72,16 @@ class HasMany extends Relation
     /**
      * 预载入关联查询
      * @access public
-     * @param  array   $resultSet   数据集
-     * @param  string  $relation    当前关联名
-     * @param  array   $subRelation 子关联名
-     * @param  Closure $closure     闭包
+     * @param array $resultSet 数据集
+     * @param string $relation 当前关联名
+     * @param array $subRelation 子关联名
+     * @param Closure $closure 闭包
      * @return void
      */
     public function eagerlyResultSet(array &$resultSet, string $relation, array $subRelation, Closure $closure = null): void
     {
         $localKey = $this->localKey;
-        $range    = [];
+        $range = [];
 
         foreach ($resultSet as $result) {
             // 获取关联外键列表
@@ -113,10 +113,10 @@ class HasMany extends Relation
     /**
      * 预载入关联查询
      * @access public
-     * @param  Model   $result      数据对象
-     * @param  string  $relation    当前关联名
-     * @param  array   $subRelation 子关联名
-     * @param  Closure $closure     闭包
+     * @param Model $result 数据对象
+     * @param string $relation 当前关联名
+     * @param array $subRelation 子关联名
+     * @param Closure $closure 闭包
      * @return void
      */
     public function eagerlyResult(Model $result, string $relation, array $subRelation = [], Closure $closure = null): void
@@ -124,7 +124,7 @@ class HasMany extends Relation
         $localKey = $this->localKey;
 
         if (isset($result->$localKey)) {
-            $pk   = $result->$localKey;
+            $pk = $result->$localKey;
             $data = $this->eagerlyOneToMany([
                 [$this->foreignKey, '=', $pk],
             ], $relation, $subRelation, $closure);
@@ -141,11 +141,11 @@ class HasMany extends Relation
     /**
      * 关联统计
      * @access public
-     * @param  Model   $result  数据对象
-     * @param  Closure $closure 闭包
-     * @param  string  $aggregate 聚合查询方法
-     * @param  string  $field 字段
-     * @param  string  $name 统计字段别名
+     * @param Model $result 数据对象
+     * @param Closure $closure 闭包
+     * @param string $aggregate 聚合查询方法
+     * @param string $field 字段
+     * @param string $name 统计字段别名
      * @return integer
      */
     public function relationCount(Model $result, Closure $closure = null, string $aggregate = 'count', string $field = '*', string &$name = null)
@@ -168,10 +168,10 @@ class HasMany extends Relation
     /**
      * 创建关联统计子查询
      * @access public
-     * @param  Closure $closure 闭包
-     * @param  string  $aggregate 聚合查询方法
-     * @param  string  $field 字段
-     * @param  string  $name 统计字段别名
+     * @param Closure $closure 闭包
+     * @param string $aggregate 聚合查询方法
+     * @param string $field 字段
+     * @param string $name 统计字段别名
      * @return string
      */
     public function getRelationCountQuery(Closure $closure = null, string $aggregate = 'count', string $field = '*', string &$name = null): string
@@ -189,10 +189,10 @@ class HasMany extends Relation
     /**
      * 一对多 关联模型预查询
      * @access public
-     * @param  array   $where       关联预查询条件
-     * @param  string  $relation    关联名
-     * @param  array   $subRelation 子关联
-     * @param  Closure $closure
+     * @param array $where 关联预查询条件
+     * @param string $relation 关联名
+     * @param array $subRelation 子关联
+     * @param Closure $closure
      * @return array
      */
     protected function eagerlyOneToMany(array $where, string $relation, array $subRelation = [], Closure $closure = null): array
@@ -228,8 +228,8 @@ class HasMany extends Relation
     /**
      * 保存（新增）当前关联数据对象
      * @access public
-     * @param  mixed   $data 数据 可以使用数组 关联模型对象
-     * @param  boolean $replace 是否自动识别更新和写入
+     * @param mixed $data 数据 可以使用数组 关联模型对象
+     * @param boolean $replace 是否自动识别更新和写入
      * @return Model|false
      */
     public function save($data, bool $replace = true)
@@ -259,8 +259,8 @@ class HasMany extends Relation
     /**
      * 批量保存当前关联数据对象
      * @access public
-     * @param  iterable $dataSet 数据集
-     * @param  boolean  $replace 是否自动识别更新和写入
+     * @param iterable $dataSet 数据集
+     * @param boolean $replace 是否自动识别更新和写入
      * @return array|false
      */
     public function saveAll(iterable $dataSet, bool $replace = true)
@@ -277,17 +277,17 @@ class HasMany extends Relation
     /**
      * 根据关联条件查询当前模型
      * @access public
-     * @param  string  $operator 比较操作符
-     * @param  integer $count    个数
-     * @param  string  $id       关联表的统计字段
-     * @param  string  $joinType JOIN类型
+     * @param string $operator 比较操作符
+     * @param integer $count 个数
+     * @param string $id 关联表的统计字段
+     * @param string $joinType JOIN类型
      * @return Query
      */
     public function has(string $operator = '>=', int $count = 1, string $id = '*', string $joinType = 'INNER'): Query
     {
         $table = $this->query->getTable();
 
-        $model    = class_basename($this->parent);
+        $model = class_basename($this->parent);
         $relation = class_basename($this->model);
 
         if ('*' != $id) {
@@ -305,15 +305,15 @@ class HasMany extends Relation
     /**
      * 根据关联条件查询当前模型
      * @access public
-     * @param  mixed  $where 查询条件（数组或者闭包）
-     * @param  mixed  $fields 字段
-     * @param  string $joinType JOIN类型
+     * @param mixed $where 查询条件（数组或者闭包）
+     * @param mixed $fields 字段
+     * @param string $joinType JOIN类型
      * @return Query
      */
     public function hasWhere($where = [], $fields = null, string $joinType = ''): Query
     {
-        $table    = $this->query->getTable();
-        $model    = class_basename($this->parent);
+        $table = $this->query->getTable();
+        $model = class_basename($this->parent);
         $relation = class_basename($this->model);
 
         if (is_array($where)) {

@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\db;
 
@@ -41,20 +41,20 @@ class Fetch
     /**
      * 创建一个查询SQL获取对象
      *
-     * @param  Query    $query      查询对象
+     * @param Query $query 查询对象
      */
     public function __construct(Query $query)
     {
-        $this->query      = $query;
+        $this->query = $query;
         $this->connection = $query->getConnection();
-        $this->builder    = $this->connection->getBuilder();
+        $this->builder = $this->connection->getBuilder();
     }
 
     /**
      * 聚合查询
      * @access protected
-     * @param  string $aggregate    聚合方法
-     * @param  string $field        字段名
+     * @param string $aggregate 聚合方法
+     * @param string $field 字段名
      * @return string
      */
     protected function aggregate(string $aggregate, string $field): string
@@ -69,8 +69,8 @@ class Fetch
     /**
      * 得到某个字段的值
      * @access public
-     * @param  string $field   字段名
-     * @param  mixed  $default 默认值
+     * @param string $field 字段名
+     * @param mixed $default 默认值
      * @return string
      */
     public function value(string $field, $default = null, bool $one = true): string
@@ -81,7 +81,7 @@ class Fetch
             $this->query->removeOption('field');
         }
 
-        $this->query->setOption('field', (array) $field);
+        $this->query->setOption('field', (array)$field);
 
         // 生成查询SQL
         $sql = $this->builder->select($this->query, $one);
@@ -98,8 +98,8 @@ class Fetch
     /**
      * 得到某个列的数组
      * @access public
-     * @param  string $field 字段名 多个字段用逗号分隔
-     * @param  string $key   索引
+     * @param string $field 字段名 多个字段用逗号分隔
+     * @param string $key 索引
      * @return string
      */
     public function column(string $field, string $key = ''): string
@@ -133,7 +133,7 @@ class Fetch
     /**
      * 插入记录
      * @access public
-     * @param  array $data 数据
+     * @param array $data 数据
      * @return string
      */
     public function insert(array $data = []): string
@@ -152,7 +152,7 @@ class Fetch
     /**
      * 插入记录并获取自增ID
      * @access public
-     * @param  array $data 数据
+     * @param array $data 数据
      * @return string
      */
     public function insertGetId(array $data = []): string
@@ -163,8 +163,8 @@ class Fetch
     /**
      * 保存数据 自动判断insert或者update
      * @access public
-     * @param  array $data        数据
-     * @param  bool  $forceInsert 是否强制insert
+     * @param array $data 数据
+     * @param bool $forceInsert 是否强制insert
      * @return string
      */
     public function save(array $data = [], bool $forceInsert = false): string
@@ -189,8 +189,8 @@ class Fetch
     /**
      * 批量插入记录
      * @access public
-     * @param  array     $dataSet 数据集
-     * @param  integer   $limit   每次写入数据限制
+     * @param array $dataSet 数据集
+     * @param integer $limit 每次写入数据限制
      * @return string
      */
     public function insertAll(array $dataSet = [], int $limit = null): string
@@ -206,10 +206,10 @@ class Fetch
         }
 
         if ($limit) {
-            $array    = array_chunk($dataSet, $limit, true);
+            $array = array_chunk($dataSet, $limit, true);
             $fetchSql = [];
             foreach ($array as $item) {
-                $sql  = $this->builder->insertAll($this->query, $item);
+                $sql = $this->builder->insertAll($this->query, $item);
                 $bind = $this->query->getBind();
 
                 $fetchSql[] = $this->connection->getRealSql($sql, $bind);
@@ -226,8 +226,8 @@ class Fetch
     /**
      * 通过Select方式插入记录
      * @access public
-     * @param  array    $fields 要插入的数据表字段名
-     * @param  string   $table  要插入的数据表名
+     * @param array $fields 要插入的数据表字段名
+     * @param string $table 要插入的数据表名
      * @return string
      */
     public function selectInsert(array $fields, string $table): string
@@ -242,7 +242,7 @@ class Fetch
     /**
      * 更新记录
      * @access public
-     * @param  mixed $data 数据
+     * @param mixed $data 数据
      * @return string
      */
     public function update(array $data = []): string
@@ -289,7 +289,7 @@ class Fetch
     /**
      * 删除记录
      * @access public
-     * @param  mixed $data 表达式 true 表示强制删除
+     * @param mixed $data 表达式 true 表示强制删除
      * @return string
      */
     public function delete($data = null): string
@@ -322,7 +322,7 @@ class Fetch
     /**
      * 查找记录 返回SQL
      * @access public
-     * @param  mixed $data
+     * @param mixed $data
      * @return string
      */
     public function select($data = null): string
@@ -343,7 +343,7 @@ class Fetch
     /**
      * 查找单条记录 返回SQL语句
      * @access public
-     * @param  mixed $data
+     * @param mixed $data
      * @return string
      */
     public function find($data = null): string
@@ -365,7 +365,7 @@ class Fetch
     /**
      * 查找多条记录 如果不存在则抛出异常
      * @access public
-     * @param  mixed $data
+     * @param mixed $data
      * @return string
      */
     public function selectOrFail($data = null): string
@@ -376,7 +376,7 @@ class Fetch
     /**
      * 查找单条记录 如果不存在则抛出异常
      * @access public
-     * @param  mixed $data
+     * @param mixed $data
      * @return string
      */
     public function findOrFail($data = null): string
@@ -387,7 +387,7 @@ class Fetch
     /**
      * 查找单条记录 不存在返回空数据（或者空模型）
      * @access public
-     * @param  mixed $data 数据
+     * @param mixed $data 数据
      * @return string
      */
     public function findOrEmpty($data = null)
@@ -398,7 +398,7 @@ class Fetch
     /**
      * 获取实际的SQL语句
      * @access public
-     * @param  string $sql
+     * @param string $sql
      * @return string
      */
     public function fetch(string $sql): string
@@ -411,7 +411,7 @@ class Fetch
     /**
      * COUNT查询
      * @access public
-     * @param  string $field 字段名
+     * @param string $field 字段名
      * @return string
      */
     public function count(string $field = '*'): string
@@ -420,7 +420,7 @@ class Fetch
 
         if (!empty($options['group'])) {
             // 支持GROUP
-            $bind   = $this->query->getBind();
+            $bind = $this->query->getBind();
             $subSql = $this->query->options($options)->field('count(' . $field . ') AS think_count')->bind($bind)->buildSql();
 
             $query = $this->query->newQuery()->table([$subSql => '_group_count_']);
@@ -434,7 +434,7 @@ class Fetch
     /**
      * SUM查询
      * @access public
-     * @param  string $field 字段名
+     * @param string $field 字段名
      * @return string
      */
     public function sum(string $field): string
@@ -445,7 +445,7 @@ class Fetch
     /**
      * MIN查询
      * @access public
-     * @param  string $field    字段名
+     * @param string $field 字段名
      * @return string
      */
     public function min(string $field): string
@@ -456,7 +456,7 @@ class Fetch
     /**
      * MAX查询
      * @access public
-     * @param  string $field    字段名
+     * @param string $field 字段名
      * @return string
      */
     public function max(string $field): string
@@ -467,7 +467,7 @@ class Fetch
     /**
      * AVG查询
      * @access public
-     * @param  string $field 字段名
+     * @param string $field 字段名
      * @return string
      */
     public function avg(string $field): string

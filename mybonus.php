@@ -15,153 +15,153 @@ function bonusarray($option)
     $bonus = array();
     switch ($option) {
         case 1:
-            {//1.0 GB Uploaded
-                $bonus['points'] = $onegbupload_bonus;
-                $bonus['art'] = 'traffic';
-                $bonus['menge'] = 10737418240;
-                $bonus['name'] = $lang_mybonus['text_uploaded_one'] . "(10.0 GB)";
-                $bonus['description'] = $lang_mybonus['text_uploaded_note'];
-                break;
-            }
+        {//1.0 GB Uploaded
+            $bonus['points'] = $onegbupload_bonus;
+            $bonus['art'] = 'traffic';
+            $bonus['menge'] = 10737418240;
+            $bonus['name'] = $lang_mybonus['text_uploaded_one'] . "(10.0 GB)";
+            $bonus['description'] = $lang_mybonus['text_uploaded_note'];
+            break;
+        }
         case 2:
-            {//5.0 GB Uploaded
-                $bonus['points'] = $fivegbupload_bonus;
-                $bonus['art'] = 'traffic';
-                $bonus['menge'] = 53687091200;
-                $bonus['name'] = $lang_mybonus['text_uploaded_two'] . "(50.0 GB)";
-                $bonus['description'] = $lang_mybonus['text_uploaded_note'];
-                break;
-            }
+        {//5.0 GB Uploaded
+            $bonus['points'] = $fivegbupload_bonus;
+            $bonus['art'] = 'traffic';
+            $bonus['menge'] = 53687091200;
+            $bonus['name'] = $lang_mybonus['text_uploaded_two'] . "(50.0 GB)";
+            $bonus['description'] = $lang_mybonus['text_uploaded_note'];
+            break;
+        }
         case 3:
-            {//10.0 GB Uploaded
-                $bonus['points'] = $tengbupload_bonus;
-                $bonus['art'] = 'traffic';
-                $bonus['menge'] = 107374182400;
-                $bonus['name'] = $lang_mybonus['text_uploaded_three'] . "(100.0 GB)";
-                $bonus['description'] = $lang_mybonus['text_uploaded_note'];
-                break;
-            }
+        {//10.0 GB Uploaded
+            $bonus['points'] = $tengbupload_bonus;
+            $bonus['art'] = 'traffic';
+            $bonus['menge'] = 107374182400;
+            $bonus['name'] = $lang_mybonus['text_uploaded_three'] . "(100.0 GB)";
+            $bonus['description'] = $lang_mybonus['text_uploaded_note'];
+            break;
+        }
         case 4:
-            {//Invite
-                $bonus['points'] = $oneinvite_bonus;
-                $bonus['art'] = 'invite';
-                $bonus['menge'] = 1;
-                $bonus['name'] = $lang_mybonus['text_buy_invite'];
+        {//Invite
+            $bonus['points'] = $oneinvite_bonus;
+            $bonus['art'] = 'invite';
+            $bonus['menge'] = 1;
+            $bonus['name'] = $lang_mybonus['text_buy_invite'];
 
-                $invitesall = get_row_count("invites", "WHERE 1");
-                $invitespast24h = get_row_count("invites", "WHERE time_invited >" . sqlesc(date("Y-m-d H:i:s", (TIMENOW - 24 * 60 * 60))));
-                $inviterpast24h = get_row_count("users", "WHERE invited_by !='' AND added >" . sqlesc(date("Y-m-d H:i:s", (TIMENOW - 24 * 60 * 60))));
-                $inviterpastcanuse = get_row_count("invites", "WHERE time_invited >" . sqlesc(date("Y-m-d H:i:s", (TIMENOW + $invite_timeout * 60 * 60))));
-                $bonus['description'] = $lang_mybonus['text_buy_invite_note'] . "<br />当前共有契约书" . ($invitesall - $inviterpastcanuse) . "份，24小时内生成的契约书" . ($invitespast24h - $inviterpastcanuse) . "份，召唤出魔法少女" . $inviterpast24h . "名。";
-                break;
-            }
+            $invitesall = get_row_count("invites", "WHERE 1");
+            $invitespast24h = get_row_count("invites", "WHERE time_invited >" . sqlesc(date("Y-m-d H:i:s", (TIMENOW - 24 * 60 * 60))));
+            $inviterpast24h = get_row_count("users", "WHERE invited_by !='' AND added >" . sqlesc(date("Y-m-d H:i:s", (TIMENOW - 24 * 60 * 60))));
+            $inviterpastcanuse = get_row_count("invites", "WHERE time_invited >" . sqlesc(date("Y-m-d H:i:s", (TIMENOW + $invite_timeout * 60 * 60))));
+            $bonus['description'] = $lang_mybonus['text_buy_invite_note'] . "<br />当前共有契约书" . ($invitesall - $inviterpastcanuse) . "份，24小时内生成的契约书" . ($invitespast24h - $inviterpastcanuse) . "份，召唤出魔法少女" . $inviterpast24h . "名。";
+            break;
+        }
         case 5:
-            {//Custom Title
-                if ($CURUSER['title'] == '')
-                    $bonus['points'] = $customtitle_bonus / 2;
-                else
-                    $bonus['points'] = $customtitle_bonus;
-                $bonus['art'] = 'title';
-                $bonus['menge'] = 0;
-                $bonus['name'] = $lang_mybonus['text_custom_title'];
-                $bonus['description'] = $lang_mybonus['text_custom_title_note'];
-                break;
-            }
+        {//Custom Title
+            if ($CURUSER['title'] == '')
+                $bonus['points'] = $customtitle_bonus / 2;
+            else
+                $bonus['points'] = $customtitle_bonus;
+            $bonus['art'] = 'title';
+            $bonus['menge'] = 0;
+            $bonus['name'] = $lang_mybonus['text_custom_title'];
+            $bonus['description'] = $lang_mybonus['text_custom_title_note'];
+            break;
+        }
         case 6:
-            {//VIP Status
+        {//VIP Status
 
-                if ($CURUSER['vip_until'] == '0000-00-00 00:00:00')
-                    $bonus['points'] = $vipstatus_bonus / 2;
-                else
-                    $bonus['points'] = $vipstatus_bonus;
-                $bonus['art'] = 'class';
-                $bonus['menge'] = 0;
-                $bonus['name'] = $lang_mybonus['text_vip_status'];
-                $bonus['description'] = $lang_mybonus['text_vip_status_note'];
-                break;
-            }
+            if ($CURUSER['vip_until'] == '0000-00-00 00:00:00')
+                $bonus['points'] = $vipstatus_bonus / 2;
+            else
+                $bonus['points'] = $vipstatus_bonus;
+            $bonus['art'] = 'class';
+            $bonus['menge'] = 0;
+            $bonus['name'] = $lang_mybonus['text_vip_status'];
+            $bonus['description'] = $lang_mybonus['text_vip_status_note'];
+            break;
+        }
         case 7:
-            {//Bonus Gift
-                $bonus['points'] = 100;
-                $bonus['art'] = 'gift_1';
-                $bonus['menge'] = 0;
-                $bonus['name'] = $lang_mybonus['text_bonus_gift'];
-                $bonus['description'] = $lang_mybonus['text_bonus_gift_note'];
-                if ($basictax_bonus || $taxpercentage_bonus) {
-                    $onehundredaftertax = 100 - $taxpercentage_bonus - $basictax_bonus;
-                    $bonus['description'] .= "<br /><br />" . $lang_mybonus['text_system_charges_receiver'] . "<b>" . ($basictax_bonus ? $basictax_bonus . $lang_mybonus['text_tax_bonus_point'] . add_s($basictax_bonus) . ($taxpercentage_bonus ? $lang_mybonus['text_tax_plus'] : "") : "") . ($taxpercentage_bonus ? $taxpercentage_bonus . $lang_mybonus['text_percent_of_transfered_amount'] : "") . "</b>" . $lang_mybonus['text_as_tax'] . $onehundredaftertax . $lang_mybonus['text_tax_example_note'];
-                }
-                break;
+        {//Bonus Gift
+            $bonus['points'] = 100;
+            $bonus['art'] = 'gift_1';
+            $bonus['menge'] = 0;
+            $bonus['name'] = $lang_mybonus['text_bonus_gift'];
+            $bonus['description'] = $lang_mybonus['text_bonus_gift_note'];
+            if ($basictax_bonus || $taxpercentage_bonus) {
+                $onehundredaftertax = 100 - $taxpercentage_bonus - $basictax_bonus;
+                $bonus['description'] .= "<br /><br />" . $lang_mybonus['text_system_charges_receiver'] . "<b>" . ($basictax_bonus ? $basictax_bonus . $lang_mybonus['text_tax_bonus_point'] . add_s($basictax_bonus) . ($taxpercentage_bonus ? $lang_mybonus['text_tax_plus'] : "") : "") . ($taxpercentage_bonus ? $taxpercentage_bonus . $lang_mybonus['text_percent_of_transfered_amount'] : "") . "</b>" . $lang_mybonus['text_as_tax'] . $onehundredaftertax . $lang_mybonus['text_tax_example_note'];
             }
+            break;
+        }
         case 8:
-            {
-                $bonus['points'] = $bonusnoadpoint_advertisement;
-                $bonus['art'] = 'noad';
-                $bonus['menge'] = $bonusnoadtime_advertisement * 86400;
-                $bonus['name'] = $bonusnoadtime_advertisement . $lang_mybonus['text_no_advertisements'];
-                $bonus['description'] = $lang_mybonus['text_no_advertisements_note'];
-                break;
-            }
+        {
+            $bonus['points'] = $bonusnoadpoint_advertisement;
+            $bonus['art'] = 'noad';
+            $bonus['menge'] = $bonusnoadtime_advertisement * 86400;
+            $bonus['name'] = $bonusnoadtime_advertisement . $lang_mybonus['text_no_advertisements'];
+            $bonus['description'] = $lang_mybonus['text_no_advertisements_note'];
+            break;
+        }
         case 9:
-            {
-                $bonus['points'] = 1000;
-                $bonus['art'] = 'gift_2';
-                $bonus['menge'] = 0;
-                $bonus['name'] = $lang_mybonus['text_charity_giving'];
-                $bonus['description'] = $lang_mybonus['text_charity_giving_note'];
-                break;
-            }
+        {
+            $bonus['points'] = 1000;
+            $bonus['art'] = 'gift_2';
+            $bonus['menge'] = 0;
+            $bonus['name'] = $lang_mybonus['text_charity_giving'];
+            $bonus['description'] = $lang_mybonus['text_charity_giving_note'];
+            break;
+        }
         case 10:
-            {
-                $bonus['points'] = $namecolour_bonus;
-                $bonus['art'] = 'namecolour';
-                $bonus['menge'] = 0;
-                $bonus['name'] = "五彩法杖";
-                $bonus['description'] = "您的名字配将配以您指定的颜色显示。要改回正常颜色请输入「FFFFFF」(同样当作使用法杖一次)。 <br/>输入你想要的颜色的HEX代码或点击输入框选取颜色：<script type=\"text/javascript\" src=\"javascript/jscolor.js\"></script><input class=\"color\"  value = \"" . $CURUSER['namecolour'] . "\" type=\"text\" name=\"chcol\" style=\"width: 232px\" maxlength=\"6\" />";
-                break;
-            }
+        {
+            $bonus['points'] = $namecolour_bonus;
+            $bonus['art'] = 'namecolour';
+            $bonus['menge'] = 0;
+            $bonus['name'] = "五彩法杖";
+            $bonus['description'] = "您的名字配将配以您指定的颜色显示。要改回正常颜色请输入「FFFFFF」(同样当作使用法杖一次)。 <br/>输入你想要的颜色的HEX代码或点击输入框选取颜色：<script type=\"text/javascript\" src=\"javascript/jscolor.js\"></script><input class=\"color\"  value = \"" . $CURUSER['namecolour'] . "\" type=\"text\" name=\"chcol\" style=\"width: 232px\" maxlength=\"6\" />";
+            break;
+        }
         case 11:
-            {
-                $bonus['points'] = $namechange_bonus;
-                $bonus['art'] = 'namechange';
-                $bonus['menge'] = 0;
-                $bonus['name'] = "转生羽毛";
-                $bonus['description'] = "你可以用它来换取一个新的帐户名称。交易完成后，您现有的帐户名称将可被其他人使用。<br />
+        {
+            $bonus['points'] = $namechange_bonus;
+            $bonus['art'] = 'namechange';
+            $bonus['menge'] = 0;
+            $bonus['name'] = "转生羽毛";
+            $bonus['description'] = "你可以用它来换取一个新的帐户名称。交易完成后，您现有的帐户名称将可被其他人使用。<br />
 (注意：登入时需要输入用户名称，强烈建议您只使用您能于键盘输入的字符，以免令您无法登入。) <br />
 输入一个新的用户名称： <input  value = \"" . $CURUSER['username'] . "\" type=\"text\" name=\"newname\" style=\"width: 200px\" maxlength=\"20\"/>";
-                break;
-            }
+            break;
+        }
         case 12:
-            {
-                $bonus['points'] = 0;
-                $bonus['art'] = 'takeflush';
-                $bonus['menge'] = 0;
-                $bonus['name'] = "圣洁之水";
-                $bonus['description'] = "在软件非正常退出时，清理服务器上冗余记录，避免分享率低的用户出现下载多个资源的提示。<br />但是一般都用不到吧";
-                break;
-            }
+        {
+            $bonus['points'] = 0;
+            $bonus['art'] = 'takeflush';
+            $bonus['menge'] = 0;
+            $bonus['name'] = "圣洁之水";
+            $bonus['description'] = "在软件非正常退出时，清理服务器上冗余记录，避免分享率低的用户出现下载多个资源的提示。<br />但是一般都用不到吧";
+            break;
+        }
         case 13:
-            {//Invite
-                $bonus['menge'] = $CURUSER['invites'] < 5 && $CURUSER['invites'] > 0 ? $CURUSER['invites'] : 5;
-                $bonus['points'] = 10;
-                $bonus['unpoints'] = ($oneinvite_bonus * 3 / 10) * $bonus['menge'];
-                $bonus['art'] = 'uninvite';
-                $bonus['name'] = "契约解除*" . $bonus['menge'];
-                $bonus['description'] = "如果有足够的邀请名额，你可以用它来换取魔力值。交易完成后，你的邀请名额数会减少，魔力值则会增加。";
-                break;
-            }
+        {//Invite
+            $bonus['menge'] = $CURUSER['invites'] < 5 && $CURUSER['invites'] > 0 ? $CURUSER['invites'] : 5;
+            $bonus['points'] = 10;
+            $bonus['unpoints'] = ($oneinvite_bonus * 3 / 10) * $bonus['menge'];
+            $bonus['art'] = 'uninvite';
+            $bonus['name'] = "契约解除*" . $bonus['menge'];
+            $bonus['description'] = "如果有足够的邀请名额，你可以用它来换取魔力值。交易完成后，你的邀请名额数会减少，魔力值则会增加。";
+            break;
+        }
 
         case 14:
-            {
-                $bonus['points'] = $nohr2d_bonus;
-                $bonus['art'] = 'nohr2d';
-                $bonus['menge'] = 0;
-                $bonus['name'] = "免罪金牌";
-                $nohr2d = $_GET['nohr2d'] ? $_GET['nohr2d'] : get_single_value('snatched', 'torrentid', "WHERE userid=" . $CURUSER['id'] . " and hr='C'");
-                $bonus['description'] = "对一个<b>未达标</b>的H&R使用该道具将免除该H&R的考核，H&R编号：<input name=\"nohr2d\"  value = \"" . $nohr2d . "\" type=\"text\" style=\"width: 232px\" maxlength=\"6\" />";
+        {
+            $bonus['points'] = $nohr2d_bonus;
+            $bonus['art'] = 'nohr2d';
+            $bonus['menge'] = 0;
+            $bonus['name'] = "免罪金牌";
+            $nohr2d = $_GET['nohr2d'] ? $_GET['nohr2d'] : get_single_value('snatched', 'torrentid', "WHERE userid=" . $CURUSER['id'] . " and hr='C'");
+            $bonus['description'] = "对一个<b>未达标</b>的H&R使用该道具将免除该H&R的考核，H&R编号：<input name=\"nohr2d\"  value = \"" . $nohr2d . "\" type=\"text\" style=\"width: 232px\" maxlength=\"6\" />";
 
-                break;
-            }
+            break;
+        }
 
         default:
             break;
@@ -292,9 +292,9 @@ for ($i = 1; $i <= 14; $i++) {
                 else $ratio = 0;
             } else $ratio = $ratiolimit_bonus + 1; //Ratio always above limit
             if ($ratiolimit_bonus > 0 && $ratio > $ratiolimit_bonus) {
-                if($i == 10 || $i == 11 || $i == 12 || $i == 14){
+                if ($i == 10 || $i == 11 || $i == 12 || $i == 14) {
                     print("<td class=\"rowfollow\" align=\"center\"><input type=\"button\" name=\"btnsubmit\"  onclick=\"javascript:{this.disabled=true;this.form.submit()}\"  value=\"" . $lang_mybonus['submit_exchange'] . "\"  /></td>");
-                }else{
+                } else {
                     print("<td class=\"rowfollow\" align=\"center\"><input type=\"button\" name=\"btnsubmit\"  onclick=\"javascript:{this.disabled=true;this.form.submit()}\"  value=\"" . $lang_mybonus['text_ratio_too_high'] . "\" disabled=\"disabled\" /></td>");
                 }
             } else print("<td class=\"rowfollow\" align=\"center\"><input type=\"button\" name=\"btnsubmit\"  onclick=\"javascript:{this.disabled=true;this.form.submit()}\"  value=\"" . $lang_mybonus['submit_exchange'] . "\" /></td>");

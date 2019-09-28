@@ -88,12 +88,12 @@ class Net_URL2
      * Default options corresponds to how PHP handles $_GET.
      */
     private $_options = array(
-        self::OPTION_STRICT           => true,
-        self::OPTION_USE_BRACKETS     => true,
-        self::OPTION_ENCODE_KEYS      => true,
-        self::OPTION_SEPARATOR_INPUT  => '&',
+        self::OPTION_STRICT => true,
+        self::OPTION_USE_BRACKETS => true,
+        self::OPTION_ENCODE_KEYS => true,
+        self::OPTION_SEPARATOR_INPUT => '&',
         self::OPTION_SEPARATOR_OUTPUT => '&',
-        );
+    );
 
     /**
      * @var  string|bool
@@ -133,8 +133,8 @@ class Net_URL2
     /**
      * Constructor.
      *
-     * @param string $url     an absolute or relative URL
-     * @param array  $options an array of OPTION_xxx constants
+     * @param string $url an absolute or relative URL
+     * @param array $options an array of OPTION_xxx constants
      */
     public function __construct($url, array $options = array())
     {
@@ -147,8 +147,8 @@ class Net_URL2
         // The regular expression is copied verbatim from RFC 3986, appendix B.
         // The expression does not validate the URL but matches any string.
         preg_match('!^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?!',
-                   $url,
-                   $matches);
+            $url,
+            $matches);
 
         // "path" is always present (possibly as an empty string); the rest
         // are optional.
@@ -165,8 +165,8 @@ class Net_URL2
      * This method will magically set the value of a private variable ($var)
      * with the value passed as the args
      *
-     * @param  string $var      The private variable to set.
-     * @param  mixed  $arg      An argument of any type.
+     * @param string $var The private variable to set.
+     * @param mixed $arg An argument of any type.
      * @return void
      */
     public function __set($var, $arg)
@@ -176,14 +176,14 @@ class Net_URL2
             $this->$method($arg);
         }
     }
-    
+
     /**
      * Magic Getter.
      *
-     * This is the magic get method to retrieve the private variable 
+     * This is the magic get method to retrieve the private variable
      * that was set by either __set() or it's setter...
-     * 
-     * @param  string $var         The property name to retrieve.
+     *
+     * @param string $var The property name to retrieve.
      * @return mixed  $this->$var  Either a boolean false if the
      *                             property is not set or the value
      *                             of the private property.
@@ -194,10 +194,10 @@ class Net_URL2
         if (method_exists($this, $method)) {
             return $this->$method();
         }
-        
+
         return false;
     }
-    
+
     /**
      * Returns the scheme, e.g. "http" or "urn", or false if there is no
      * scheme specified, i.e. if this is a relative URL.
@@ -369,8 +369,8 @@ class Net_URL2
     public function setAuthority($authority)
     {
         $this->_userinfo = false;
-        $this->_host     = false;
-        $this->_port     = false;
+        $this->_host = false;
+        $this->_port = false;
         if (preg_match('@^(([^\@]*)\@)?([^:]+)(:(\d*))?$@', $authority, $reg)) {
             if ($reg[1]) {
                 $this->_userinfo = $reg[2];
@@ -464,16 +464,16 @@ class Net_URL2
     public function getQueryVariables()
     {
         $pattern = '/[' .
-                   preg_quote($this->getOption(self::OPTION_SEPARATOR_INPUT), '/') .
-                   ']/';
-        $parts   = preg_split($pattern, $this->_query, -1, PREG_SPLIT_NO_EMPTY);
-        $return  = array();
+            preg_quote($this->getOption(self::OPTION_SEPARATOR_INPUT), '/') .
+            ']/';
+        $parts = preg_split($pattern, $this->_query, -1, PREG_SPLIT_NO_EMPTY);
+        $return = array();
 
         foreach ($parts as $part) {
             if (strpos($part, '=') !== false) {
                 list($key, $value) = explode('=', $part, 2);
             } else {
-                $key   = $part;
+                $key = $part;
                 $value = null;
             }
 
@@ -500,9 +500,9 @@ class Net_URL2
                     $return[$key][$idx] = $value;
                 }
             } elseif (!$this->getOption(self::OPTION_USE_BRACKETS)
-                      && !empty($return[$key])
+                && !empty($return[$key])
             ) {
-                $return[$key]   = (array) $return[$key];
+                $return[$key] = (array)$return[$key];
                 $return[$key][] = $value;
             } else {
                 $return[$key] = $value;
@@ -542,15 +542,15 @@ class Net_URL2
                 }
             }
             $this->_query = implode($this->getOption(self::OPTION_SEPARATOR_OUTPUT),
-                                    $parts);
+                $parts);
         }
     }
 
     /**
      * Sets the specified variable in the query string.
      *
-     * @param string $name  variable name
-     * @param mixed  $value variable value
+     * @param string $name variable name
+     * @param mixed $value variable value
      *
      * @return  array
      */
@@ -602,7 +602,7 @@ class Net_URL2
         if ($this->_fragment !== false) {
             $url .= '#' . $this->_fragment;
         }
-    
+
         return $url;
     }
 
@@ -617,7 +617,7 @@ class Net_URL2
         return $this->getURL();
     }
 
-    /** 
+    /**
      * Returns a normalized string representation of this URL. This is useful
      * for comparison of URLs.
      *
@@ -630,7 +630,7 @@ class Net_URL2
         return $url->getUrl();
     }
 
-    /** 
+    /**
      * Returns a normalized Net_URL2 instance.
      *
      * @return  Net_URL2
@@ -661,8 +661,8 @@ class Net_URL2
         foreach (array('_userinfo', '_host', '_path') as $part) {
             if ($this->$part) {
                 $this->$part = preg_replace('/%[0-9a-f]{2}/ie',
-                                            'strtoupper("\0")',
-                                            $this->$part);
+                    'strtoupper("\0")',
+                    $this->$part);
             }
         }
 
@@ -682,7 +682,7 @@ class Net_URL2
      */
     public function isAbsolute()
     {
-        return (bool) $this->_scheme;
+        return (bool)$this->_scheme;
     }
 
     /**
@@ -712,13 +712,13 @@ class Net_URL2
         if ($reference->_scheme !== false) {
             $target->_scheme = $reference->_scheme;
             $target->setAuthority($reference->getAuthority());
-            $target->_path  = self::removeDotSegments($reference->_path);
+            $target->_path = self::removeDotSegments($reference->_path);
             $target->_query = $reference->_query;
         } else {
             $authority = $reference->getAuthority();
             if ($authority !== false) {
                 $target->setAuthority($authority);
-                $target->_path  = self::removeDotSegments($reference->_path);
+                $target->_path = self::removeDotSegments($reference->_path);
                 $target->_query = $reference->_query;
             } else {
                 if ($reference->_path == '') {
@@ -770,7 +770,7 @@ class Net_URL2
 
         // Make sure not to be trapped in an infinite loop due to a bug in this
         // method
-        $j = 0; 
+        $j = 0;
         while ($path && $j++ < 100) {
             if (substr($path, 0, 2) == './') {
                 // Step 2.A
@@ -783,8 +783,8 @@ class Net_URL2
                 $path = '/' . substr($path, 3);
             } elseif (substr($path, 0, 4) == '/../' || $path == '/..') {
                 // Step 2.C
-                $path   = '/' . substr($path, 4);
-                $i      = strrpos($output, '/');
+                $path = '/' . substr($path, 4);
+                $i = strrpos($output, '/');
                 $output = $i === false ? '' : substr($output, 0, $i);
             } elseif ($path == '.' || $path == '..') {
                 // Step 2.D
@@ -816,16 +816,16 @@ class Net_URL2
      */
     public static function urlencode($string)
     {
-    	$encoded = rawurlencode($string);
-	// This is only necessary in PHP < 5.3.
-	$encoded = str_replace('%7E', '~', $encoded);
-	return $encoded;
+        $encoded = rawurlencode($string);
+        // This is only necessary in PHP < 5.3.
+        $encoded = str_replace('%7E', '~', $encoded);
+        return $encoded;
     }
 
     /**
      * Returns a Net_URL2 instance representing the canonical URL of the
      * currently executing PHP script.
-     * 
+     *
      * @return  string
      */
     public static function getCanonical()
@@ -838,7 +838,7 @@ class Net_URL2
         // Begin with a relative URL
         $url = new self($_SERVER['PHP_SELF']);
         $url->_scheme = isset($_SERVER['HTTPS']) ? 'https' : 'http';
-        $url->_host   = $_SERVER['SERVER_NAME'];
+        $url->_host = $_SERVER['SERVER_NAME'];
         $port = $_SERVER['SERVER_PORT'];
         if ($url->_scheme == 'http' && $port != 80 ||
             $url->_scheme == 'https' && $port != 443) {

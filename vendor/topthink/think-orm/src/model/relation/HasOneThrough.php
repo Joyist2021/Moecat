@@ -24,8 +24,8 @@ class HasOneThrough extends HasManyThrough
     /**
      * 延迟获取关联数据
      * @access public
-     * @param  array   $subRelation 子关联名
-     * @param  Closure $closure     闭包查询条件
+     * @param array $subRelation 子关联名
+     * @param Closure $closure 闭包查询条件
      * @return Model
      */
     public function getRelation(array $subRelation = [], Closure $closure = null)
@@ -48,15 +48,15 @@ class HasOneThrough extends HasManyThrough
     /**
      * 预载入关联查询（数据集）
      * @access protected
-     * @param  array   $resultSet   数据集
-     * @param  string  $relation    当前关联名
-     * @param  array   $subRelation 子关联名
-     * @param  Closure $closure     闭包
+     * @param array $resultSet 数据集
+     * @param string $relation 当前关联名
+     * @param array $subRelation 子关联名
+     * @param Closure $closure 闭包
      * @return void
      */
     public function eagerlyResultSet(array &$resultSet, string $relation, array $subRelation = [], Closure $closure = null): void
     {
-        $localKey   = $this->localKey;
+        $localKey = $this->localKey;
         $foreignKey = $this->foreignKey;
 
         $range = [];
@@ -97,15 +97,15 @@ class HasOneThrough extends HasManyThrough
     /**
      * 预载入关联查询（数据）
      * @access protected
-     * @param  Model   $result      数据对象
-     * @param  string  $relation    当前关联名
-     * @param  array   $subRelation 子关联名
-     * @param  Closure $closure     闭包
+     * @param Model $result 数据对象
+     * @param string $relation 当前关联名
+     * @param array $subRelation 子关联名
+     * @param Closure $closure 闭包
      * @return void
      */
     public function eagerlyResult(Model $result, string $relation, array $subRelation = [], Closure $closure = null): void
     {
-        $localKey   = $this->localKey;
+        $localKey = $this->localKey;
         $foreignKey = $this->foreignKey;
 
         $this->query->removeWhereField($foreignKey);
@@ -129,11 +129,11 @@ class HasOneThrough extends HasManyThrough
     /**
      * 关联模型预查询
      * @access public
-     * @param  array   $where       关联预查询条件
-     * @param  string  $key         关联键名
-     * @param  string  $relation    关联名
-     * @param  array   $subRelation 子关联
-     * @param  Closure $closure
+     * @param array $where 关联预查询条件
+     * @param string $key 关联键名
+     * @param string $relation 关联名
+     * @param array $subRelation 子关联
+     * @param Closure $closure
      * @return array
      */
     protected function eagerlyWhere(array $where, string $key, string $relation, array $subRelation = [], Closure $closure = null): array

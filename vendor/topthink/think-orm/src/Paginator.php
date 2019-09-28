@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: zhangyajun <448901948@qq.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think;
 
@@ -76,8 +76,8 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
      */
     protected $options = [
         'var_page' => 'page',
-        'path'     => '/',
-        'query'    => [],
+        'path' => '/',
+        'query' => [],
         'fragment' => '',
     ];
 
@@ -104,7 +104,7 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
 
         $this->options['path'] = '/' != $this->options['path'] ? rtrim($this->options['path'], '/') : $this->options['path'];
 
-        $this->simple   = $simple;
+        $this->simple = $simple;
         $this->listRows = $listRows;
 
         if (!$items instanceof Collection) {
@@ -113,13 +113,13 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
 
         if ($simple) {
             $this->currentPage = $this->setCurrentPage($currentPage);
-            $this->hasMore     = count($items) > ($this->listRows);
-            $items             = $items->slice(0, $this->listRows);
+            $this->hasMore = count($items) > ($this->listRows);
+            $items = $items->slice(0, $this->listRows);
         } else {
-            $this->total       = $total;
-            $this->lastPage    = (int) ceil($total / $listRows);
+            $this->total = $total;
+            $this->lastPage = (int)ceil($total / $listRows);
             $this->currentPage = $this->setCurrentPage($currentPage);
-            $this->hasMore     = $this->currentPage < $this->lastPage;
+            $this->hasMore = $this->currentPage < $this->lastPage;
         }
         $this->items = $items;
     }
@@ -127,10 +127,10 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
     /**
      * @access public
      * @param mixed $items
-     * @param int   $listRows
-     * @param int   $currentPage
-     * @param int   $total
-     * @param bool  $simple
+     * @param int $listRows
+     * @param int $currentPage
+     * @param int $total
+     * @param bool $simple
      * @param array $options
      * @return Paginator
      */
@@ -172,10 +172,10 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
 
         if (strpos($this->options['path'], '[PAGE]') === false) {
             $parameters = [$this->options['var_page'] => $page];
-            $path       = $this->options['path'];
+            $path = $this->options['path'];
         } else {
             $parameters = [];
-            $path       = str_replace('[PAGE]', $page, $this->options['path']);
+            $path = str_replace('[PAGE]', $page, $this->options['path']);
         }
 
         if (count($this->options['query']) > 0) {
@@ -194,7 +194,7 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
      * 自动获取当前页码
      * @access public
      * @param string $varPage
-     * @param int    $default
+     * @param int $default
      * @return int
      */
     public static function getCurrentPage(string $varPage = 'page', int $default = 1): int
@@ -449,7 +449,7 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
 
     public function __toString()
     {
-        return (string) $this->render();
+        return (string)$this->render();
     }
 
     public function toArray(): array
@@ -461,11 +461,11 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
         }
 
         return [
-            'total'        => $total,
-            'per_page'     => $this->listRows(),
+            'total' => $total,
+            'per_page' => $this->listRows(),
             'current_page' => $this->currentPage(),
-            'last_page'    => $this->lastPage,
-            'data'         => $this->items->toArray(),
+            'last_page' => $this->lastPage,
+            'data' => $this->items->toArray(),
         ];
     }
 

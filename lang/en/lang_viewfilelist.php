@@ -2,7 +2,7 @@
 
 $lang_viewfilelist = array
 (
-	'col_path' => "Path",
+    'col_path' => "Path",
 );
 
 ?>

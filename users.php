@@ -5,68 +5,57 @@ require_once(get_langfile_path());
 loggedinorreturn();
 parked();
 if (get_user_class() < $viewuserlist_class)
-permissiondenied();
+    permissiondenied();
 $search = trim($_GET['search']);
-$class = 0+$_GET['class'];
-$country = 0+$_GET['country'];
+$class = 0 + $_GET['class'];
+$country = 0 + $_GET['country'];
 $letter = trim($_GET["letter"]);
-$school =$_GET['school'];
+$school = $_GET['school'];
 if (strlen($letter) > 1)
-	die;
+    die;
 
 
-
-
-if (($search != '' || $class != '-') && $letter == '')
-{
-	$query = "username LIKE " . sqlesc("%$search%") . " AND status='confirmed'";
-	if ($search)
-		$q = "search=" . rawurlencode($search);
-}
-elseif ($letter != '' && strpos("0abcdefghijklmnopqrstuvwxyz", $letter) == true)
-{
-  $query = "username LIKE '$letter%' AND status='confirmed'";
-  $q = "letter=$letter";
-}
-else
-{
-$query = "status='confirmed'";
+if (($search != '' || $class != '-') && $letter == '') {
+    $query = "username LIKE " . sqlesc("%$search%") . " AND status='confirmed'";
+    if ($search)
+        $q = "search=" . rawurlencode($search);
+} elseif ($letter != '' && strpos("0abcdefghijklmnopqrstuvwxyz", $letter) == true) {
+    $query = "username LIKE '$letter%' AND status='confirmed'";
+    $q = "letter=$letter";
+} else {
+    $query = "status='confirmed'";
 }
 
 
-if ($school)
-{
-	if(is_numeric($school))$query .= " AND school=".sqlesc($school);
-	else $query .= " AND school LIKE " . sqlesc("%$school%");
-	$q .= ($q ? "&" : "") . "school=$school";
+if ($school) {
+    if (is_numeric($school)) $query .= " AND school=" . sqlesc($school);
+    else $query .= " AND school LIKE " . sqlesc("%$school%");
+    $q .= ($q ? "&" : "") . "school=$school";
 }
 
 
-if ($class != '-')
-{
-	$query .= " AND class=$class";
-	$q .= ($q ? "&" : "") . "class=$class";
+if ($class != '-') {
+    $query .= " AND class=$class";
+    $q .= ($q ? "&" : "") . "class=$class";
 }
 
-if ($country > 0)
-{
-	$query .= " AND country=$country";
-	$q .= ($q ? "&" : "") . "country=$country";
+if ($country > 0) {
+    $query .= " AND country=$country";
+    $q .= ($q ? "&" : "") . "country=$country";
 }
 stdhead($lang_users['head_users']);
 
 print($lang_users['text_users']);
 
 print("<form method=get action=?>\n");
-print($lang_users['text_search'] ." <input type=text style=\"width:100px\" name=search value=$search> \n");
+print($lang_users['text_search'] . " <input type=text style=\"width:100px\" name=search value=$search> \n");
 print("<select name=class>\n");
-print("<option value='-'>".$lang_users['select_any_class']."</option>\n");
-for ($i = 0;;++$i)
-{
-	if ($c = get_user_class_name($i,false,true,true))
-		print("<option value=$i" . ($class != '-' && $class == $i ? " selected" : "") . ">$c</option>\n");
-	else
-		break;
+print("<option value='-'>" . $lang_users['select_any_class'] . "</option>\n");
+for ($i = 0; ; ++$i) {
+    if ($c = get_user_class_name($i, false, true, true))
+        print("<option value=$i" . ($class != '-' && $class == $i ? " selected" : "") . ">$c</option>\n");
+    else
+        break;
 }
 print("</select>\n");
 /*$countries = "<option value=0>".$lang_users['select_any_country']."</option>\n";
@@ -79,11 +68,11 @@ print("<select name=country>".$countries."</select>");*/
 $schoollist = "<option value=0>(任何学校)</option>\n";
 $ct_r = sql_query("SELECT id,name FROM schools ORDER BY name") or die;
 while ($ct_a = mysql_fetch_array($ct_r))
-	$schoollist .= "<option value=".htmlspecialchars($ct_a[id])."" . ($school == $ct_a[id] ? " selected" : "") . ">".htmlspecialchars($ct_a[name])."</option>\n";
-print("<select name=school>".$schoollist."</select>");
+    $schoollist .= "<option value=" . htmlspecialchars($ct_a[id]) . "" . ($school == $ct_a[id] ? " selected" : "") . ">" . htmlspecialchars($ct_a[name]) . "</option>\n";
+print("<select name=school>" . $schoollist . "</select>");
 
 
-print("<input type=submit value=\"".$lang_users['submit_okay']."\">\n");
+print("<input type=submit value=\"" . $lang_users['submit_okay'] . "\">\n");
 print("</form>\n");
 
 print("<p>\n");
@@ -114,7 +103,7 @@ $res = sql_query("SELECT COUNT(*) FROM users WHERE $query") or sqlerr();
 $arr = mysql_fetch_row($res);
 $count = $arr[0];
 
-list($pagertop, $pagerbottom, $limit) = pager($perpage, $count, "users.php?".$q.($q ? "&" : ""));
+list($pagertop, $pagerbottom, $limit) = pager($perpage, $count, "users.php?" . $q . ($q ? "&" : ""));
 
 print($pagertop);
 
@@ -138,7 +127,7 @@ $sql = sprintf('SELECT
        LEFT JOIN countries ON users.country = countries.id
        WHERE %s
        ORDER BY username %s',
-       $country_sql, $query, $limit);
+    $country_sql, $query, $limit);
 
 
 $res = sql_query($sql) or sqlerr();
@@ -147,13 +136,12 @@ $res = sql_query($sql) or sqlerr();
 $num = mysql_num_rows($res);
 
 print("<table border=1 cellspacing=0 cellpadding=5>\n");
-print("<tr><td class=colhead align=left>".$lang_users['col_user_name']."</td><td class=colhead>".$lang_users['col_registered']."</td><td class=colhead>".$lang_users['col_last_access']."</td><td class=colhead align=left>".$lang_users['col_class']."</td></tr>\n");
+print("<tr><td class=colhead align=left>" . $lang_users['col_user_name'] . "</td><td class=colhead>" . $lang_users['col_registered'] . "</td><td class=colhead>" . $lang_users['col_last_access'] . "</td><td class=colhead align=left>" . $lang_users['col_class'] . "</td></tr>\n");
 //print("<tr><td class=colhead align=left>".$lang_users['col_user_name']."</td><td class=colhead>".$lang_users['col_registered']."</td><td class=colhead>".$lang_users['col_last_access']."</td><td class=colhead align=left>".$lang_users['col_class']."</td><td class=colhead>".$lang_users['col_country']."</td></tr>\n");
-for ($i = 0; $i < $num; ++$i)
-{
-$arr = mysql_fetch_assoc($res);
+for ($i = 0; $i < $num; ++$i) {
+    $arr = mysql_fetch_assoc($res);
 
-print("<tr><td align=left>".get_username($arr['id'])."</td><td>".gettime($arr['added'], true, false)."</td><td>".gettime($arr['last_access'],true,false)."</td><td align=left>". get_user_class_name($arr['class'],false,true,true) . "</td></tr>");
+    print("<tr><td align=left>" . get_username($arr['id']) . "</td><td>" . gettime($arr['added'], true, false) . "</td><td>" . gettime($arr['last_access'], true, false) . "</td><td align=left>" . get_user_class_name($arr['class'], false, true, true) . "</td></tr>");
 
 //print("<tr><td align=left>".get_username($arr['id'])."</td><td>".gettime($arr['added'], true, false)."</td><td>".gettime($arr['last_access'],true,false)."</td><td align=left>". get_user_class_name($arr['class'],false,true,true) . "</td><td align=center>".$arr['country']."</td></tr>");
 }

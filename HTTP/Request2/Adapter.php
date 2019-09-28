@@ -60,59 +60,59 @@ require_once 'HTTP/Request2/Response.php';
  */
 abstract class HTTP_Request2_Adapter
 {
-   /**
-    * A list of methods that MUST NOT have a request body, per RFC 2616
-    * @var  array
-    */
+    /**
+     * A list of methods that MUST NOT have a request body, per RFC 2616
+     * @var  array
+     */
     protected static $bodyDisallowed = array('TRACE');
 
-   /**
-    * Methods having defined semantics for request body
-    *
-    * Content-Length header (indicating that the body follows, section 4.3 of
-    * RFC 2616) will be sent for these methods even if no body was added
-    *
-    * @var  array
-    * @link http://pear.php.net/bugs/bug.php?id=12900
-    * @link http://pear.php.net/bugs/bug.php?id=14740
-    */
+    /**
+     * Methods having defined semantics for request body
+     *
+     * Content-Length header (indicating that the body follows, section 4.3 of
+     * RFC 2616) will be sent for these methods even if no body was added
+     *
+     * @var  array
+     * @link http://pear.php.net/bugs/bug.php?id=12900
+     * @link http://pear.php.net/bugs/bug.php?id=14740
+     */
     protected static $bodyRequired = array('POST', 'PUT');
 
-   /**
-    * Request being sent
-    * @var  HTTP_Request2
-    */
+    /**
+     * Request being sent
+     * @var  HTTP_Request2
+     */
     protected $request;
 
-   /**
-    * Request body
-    * @var  string|resource|HTTP_Request2_MultipartBody
-    * @see  HTTP_Request2::getBody()
-    */
+    /**
+     * Request body
+     * @var  string|resource|HTTP_Request2_MultipartBody
+     * @see  HTTP_Request2::getBody()
+     */
     protected $requestBody;
 
-   /**
-    * Length of the request body
-    * @var  integer
-    */
+    /**
+     * Length of the request body
+     * @var  integer
+     */
     protected $contentLength;
 
-   /**
-    * Sends request to the remote server and returns its response
-    *
-    * @param    HTTP_Request2
-    * @return   HTTP_Request2_Response
-    * @throws   HTTP_Request2_Exception
-    */
+    /**
+     * Sends request to the remote server and returns its response
+     *
+     * @param HTTP_Request2
+     * @return   HTTP_Request2_Response
+     * @throws   HTTP_Request2_Exception
+     */
     abstract public function sendRequest(HTTP_Request2 $request);
 
-   /**
-    * Calculates length of the request body, adds proper headers
-    *
-    * @param    array   associative array of request headers, this method will
-    *                   add proper 'Content-Length' and 'Content-Type' headers
-    *                   to this array (or remove them if not needed)
-    */
+    /**
+     * Calculates length of the request body, adds proper headers
+     *
+     * @param array   associative array of request headers, this method will
+     *                   add proper 'Content-Length' and 'Content-Type' headers
+     *                   to this array (or remove them if not needed)
+     */
     protected function calculateRequestLength(&$headers)
     {
         $this->requestBody = $this->request->getBody();
@@ -126,7 +126,7 @@ abstract class HTTP_Request2_Adapter
         } else {
             $this->contentLength = $this->requestBody->getLength();
             $headers['content-type'] = 'multipart/form-data; boundary=' .
-                                       $this->requestBody->getBoundary();
+                $this->requestBody->getBoundary();
             $this->requestBody->rewind();
         }
 
@@ -151,4 +151,5 @@ abstract class HTTP_Request2_Adapter
         }
     }
 }
+
 ?>

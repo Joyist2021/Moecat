@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\model;
 
@@ -121,8 +121,8 @@ abstract class Relation
     /**
      * 封装关联数据集
      * @access public
-     * @param  array $resultSet 数据集
-     * @param  Model $parent 父模型
+     * @param array $resultSet 数据集
+     * @param Model $parent 父模型
      * @return mixed
      */
     protected function resultSetBuild(array $resultSet, Model $parent = null)
@@ -170,7 +170,7 @@ abstract class Relation
     /**
      * 更新数据
      * @access public
-     * @param  array $data 更新数据
+     * @param array $data 更新数据
      * @return integer
      */
     public function update(array $data = []): int
@@ -181,7 +181,7 @@ abstract class Relation
     /**
      * 删除记录
      * @access public
-     * @param  mixed $data 表达式 true 表示强制删除
+     * @param mixed $data 表达式 true 表示强制删除
      * @return int
      * @throws Exception
      * @throws PDOException
@@ -194,7 +194,7 @@ abstract class Relation
     /**
      * 限制关联数据的数量
      * @access public
-     * @param  int $limit 关联数量限制
+     * @param int $limit 关联数量限制
      * @return $this
      */
     public function withLimit(int $limit)
@@ -206,7 +206,7 @@ abstract class Relation
     /**
      * 限制关联数据的字段
      * @access public
-     * @param  array $field 关联字段限制
+     * @param array $field 关联字段限制
      * @return $this
      */
     public function withField(array $field)
@@ -221,7 +221,8 @@ abstract class Relation
      * @return void
      */
     protected function baseQuery(): void
-    {}
+    {
+    }
 
     public function __call($method, $args)
     {
@@ -229,7 +230,7 @@ abstract class Relation
             // 执行基础查询
             $this->baseQuery();
 
-            $model  = $this->query->getModel(false);
+            $model = $this->query->getModel(false);
             $result = call_user_func_array([$model, $method], $args);
 
             $this->query = $model->getQuery();

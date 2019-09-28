@@ -57,53 +57,53 @@ require_once 'PEAR/Exception.php';
 class HTTP_Request2_Exception extends PEAR_Exception
 {
     /** An invalid argument was passed to a method */
-    const INVALID_ARGUMENT   = 1;
+    const INVALID_ARGUMENT = 1;
     /** Some required value was not available */
-    const MISSING_VALUE      = 2;
+    const MISSING_VALUE = 2;
     /** Request cannot be processed due to errors in PHP configuration */
-    const MISCONFIGURATION   = 3;
+    const MISCONFIGURATION = 3;
     /** Error reading the local file */
-    const READ_ERROR         = 4;
+    const READ_ERROR = 4;
 
     /** Server returned a response that does not conform to HTTP protocol */
     const MALFORMED_RESPONSE = 10;
     /** Failure decoding Content-Encoding or Transfer-Encoding of response */
-    const DECODE_ERROR       = 20;
+    const DECODE_ERROR = 20;
     /** Operation timed out */
-    const TIMEOUT            = 30;
+    const TIMEOUT = 30;
     /** Number of redirects exceeded 'max_redirects' configuration parameter */
     const TOO_MANY_REDIRECTS = 40;
     /** Redirect to a protocol other than http(s):// */
-    const NON_HTTP_REDIRECT  = 50;
+    const NON_HTTP_REDIRECT = 50;
 
-   /**
-    * Native error code
-    * @var int
-    */
+    /**
+     * Native error code
+     * @var int
+     */
     private $_nativeCode;
 
-   /**
-    * Constructor, can set package error code and native error code
-    *
-    * @param string exception message
-    * @param int    package error code, one of class constants
-    * @param int    error code from underlying PHP extension
-    */
+    /**
+     * Constructor, can set package error code and native error code
+     *
+     * @param string exception message
+     * @param int    package error code, one of class constants
+     * @param int    error code from underlying PHP extension
+     */
     public function __construct($message = null, $code = null, $nativeCode = null)
     {
         parent::__construct($message, $code);
         $this->_nativeCode = $nativeCode;
     }
 
-   /**
-    * Returns error code produced by underlying PHP extension
-    *
-    * For Socket Adapter this may contain error number returned by
-    * stream_socket_client(), for Curl Adapter this will contain error number
-    * returned by curl_errno()
-    *
-    * @return integer
-    */
+    /**
+     * Returns error code produced by underlying PHP extension
+     *
+     * For Socket Adapter this may contain error number returned by
+     * stream_socket_client(), for Curl Adapter this will contain error number
+     * returned by curl_errno()
+     *
+     * @return integer
+     */
     public function getNativeCode()
     {
         return $this->_nativeCode;
@@ -117,7 +117,9 @@ class HTTP_Request2_Exception extends PEAR_Exception
  * @package    HTTP_Request2
  * @version    Release: 2.0.0beta1
  */
-class HTTP_Request2_NotImplementedException extends HTTP_Request2_Exception {}
+class HTTP_Request2_NotImplementedException extends HTTP_Request2_Exception
+{
+}
 
 /**
  * Exception that represents error in the program logic
@@ -133,7 +135,9 @@ class HTTP_Request2_NotImplementedException extends HTTP_Request2_Exception {}
  * @package    HTTP_Request2
  * @version    Release: 2.0.0beta1
  */
-class HTTP_Request2_LogicException extends HTTP_Request2_Exception {}
+class HTTP_Request2_LogicException extends HTTP_Request2_Exception
+{
+}
 
 /**
  * Exception thrown when connection to a web or proxy server fails
@@ -145,7 +149,9 @@ class HTTP_Request2_LogicException extends HTTP_Request2_Exception {}
  * @package    HTTP_Request2
  * @version    Release: 2.0.0beta1
  */
-class HTTP_Request2_ConnectionException extends HTTP_Request2_Exception {}
+class HTTP_Request2_ConnectionException extends HTTP_Request2_Exception
+{
+}
 
 /**
  * Exception thrown when sending or receiving HTTP message fails
@@ -156,5 +162,8 @@ class HTTP_Request2_ConnectionException extends HTTP_Request2_Exception {}
  * @package    HTTP_Request2
  * @version    Release: 2.0.0beta1
  */
-class HTTP_Request2_MessageException extends HTTP_Request2_Exception {}
+class HTTP_Request2_MessageException extends HTTP_Request2_Exception
+{
+}
+
 ?>

@@ -4,7 +4,7 @@
 define('IN_TRACKER', true);
 define('IN_TRACKER_ANNOUNCE', true);
 //$rootpath=realpath(dirname(__FILE__) . '/..')."/";
-$rootpath=realpath(dirname(__FILE__) . '/..');
+$rootpath = realpath(dirname(__FILE__) . '/..');
 set_include_path(get_include_path() . PATH_SEPARATOR . $rootpath);
 $rootpath .= "/";
 

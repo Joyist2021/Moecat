@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\db;
 
@@ -27,7 +27,7 @@ class Raw
     /**
      * 创建一个查询表达式
      *
-     * @param  string  $value
+     * @param string $value
      * @return void
      */
     public function __construct(string $value)
@@ -47,6 +47,6 @@ class Raw
 
     public function __toString()
     {
-        return (string) $this->value;
+        return (string)$this->value;
     }
 }

@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\model\concern;
 
@@ -119,7 +119,7 @@ trait Attribute
     /**
      * 判断一个字段名是否为主键字段
      * @access public
-     * @param  string $key 名称
+     * @param string $key 名称
      * @return bool
      */
     protected function isPk(string $key): bool
@@ -154,7 +154,7 @@ trait Attribute
     /**
      * 设置允许写入的字段
      * @access public
-     * @param  array $field 允许写入的字段
+     * @param array $field 允许写入的字段
      * @return $this
      */
     public function allowField(array $field)
@@ -167,7 +167,7 @@ trait Attribute
     /**
      * 设置只读字段
      * @access public
-     * @param  array $field 只读字段
+     * @param array $field 只读字段
      * @return $this
      */
     public function readOnly(array $field)
@@ -180,7 +180,7 @@ trait Attribute
     /**
      * 获取实际的字段名
      * @access public
-     * @param  string $name 字段名
+     * @param string $name 字段名
      * @return string
      */
     protected function getRealFieldName(string $name): string
@@ -191,9 +191,9 @@ trait Attribute
     /**
      * 设置数据对象值
      * @access public
-     * @param  array    $data  数据
-     * @param  bool     $set   是否调用修改器
-     * @param  array    $allow 允许的字段名
+     * @param array $data 数据
+     * @param bool $set 是否调用修改器
+     * @param array $allow 允许的字段名
      * @return $this
      */
     public function data(array $data, bool $set = false, array $allow = [])
@@ -231,8 +231,8 @@ trait Attribute
     /**
      * 批量追加数据对象值
      * @access public
-     * @param  array $data  数据
-     * @param  bool  $set   是否需要进行数据处理
+     * @param array $data 数据
+     * @param bool $set 是否需要进行数据处理
      * @return $this
      */
     public function appendData(array $data, bool $set = false)
@@ -249,7 +249,7 @@ trait Attribute
     /**
      * 获取对象原始数据 如果不存在指定字段返回null
      * @access public
-     * @param  string $name 字段名 留空获取全部
+     * @param string $name 字段名 留空获取全部
      * @return mixed
      */
     public function getOrigin(string $name = null)
@@ -264,7 +264,7 @@ trait Attribute
     /**
      * 获取对象原始数据 如果不存在指定字段返回false
      * @access public
-     * @param  string $name 字段名 留空获取全部
+     * @param string $name 字段名 留空获取全部
      * @return mixed
      * @throws InvalidArgumentException
      */
@@ -313,8 +313,8 @@ trait Attribute
     /**
      * 直接设置数据对象值
      * @access public
-     * @param  string $name  属性名
-     * @param  mixed  $value 值
+     * @param string $name 属性名
+     * @param mixed $value 值
      * @return void
      */
     public function set(string $name, $value): void
@@ -327,7 +327,7 @@ trait Attribute
     /**
      * 通过修改器 批量设置数据对象值
      * @access public
-     * @param  array $data  数据
+     * @param array $data 数据
      * @return void
      */
     public function setAttrs(array $data): void
@@ -341,9 +341,9 @@ trait Attribute
     /**
      * 通过修改器 设置数据对象值
      * @access public
-     * @param  string $name  属性名
-     * @param  mixed  $value 属性值
-     * @param  array  $data  数据
+     * @param string $name 属性名
+     * @param mixed $value 属性值
+     * @param array $data 数据
      * @return void
      */
     public function setAttr(string $name, $value, array $data = []): void
@@ -382,8 +382,8 @@ trait Attribute
     /**
      * 数据写入 类型转换
      * @access protected
-     * @param  mixed        $value 值
-     * @param  string|array $type  要转换的类型
+     * @param mixed $value 值
+     * @param string|array $type 要转换的类型
      * @return mixed
      */
     protected function writeTransform($value, $type)
@@ -404,17 +404,17 @@ trait Attribute
 
         switch ($type) {
             case 'integer':
-                $value = (int) $value;
+                $value = (int)$value;
                 break;
             case 'float':
                 if (empty($param)) {
-                    $value = (float) $value;
+                    $value = (float)$value;
                 } else {
-                    $value = (float) number_format($value, $param, '.', '');
+                    $value = (float)number_format($value, $param, '.', '');
                 }
                 break;
             case 'boolean':
-                $value = (bool) $value;
+                $value = (bool)$value;
                 break;
             case 'timestamp':
                 if (!is_numeric($value)) {
@@ -431,10 +431,10 @@ trait Attribute
                 }
                 break;
             case 'array':
-                $value = (array) $value;
+                $value = (array)$value;
             case 'json':
-                $option = !empty($param) ? (int) $param : JSON_UNESCAPED_UNICODE;
-                $value  = json_encode($value, $option);
+                $option = !empty($param) ? (int)$param : JSON_UNESCAPED_UNICODE;
+                $value = json_encode($value, $option);
                 break;
             case 'serialize':
                 $value = serialize($value);
@@ -452,7 +452,7 @@ trait Attribute
     /**
      * 获取器 获取数据对象的值
      * @access public
-     * @param  string $name 名称
+     * @param string $name 名称
      * @return mixed
      * @throws InvalidArgumentException
      */
@@ -460,10 +460,10 @@ trait Attribute
     {
         try {
             $relation = false;
-            $value    = $this->getData($name);
+            $value = $this->getData($name);
         } catch (InvalidArgumentException $e) {
             $relation = $this->isRelationAttr($name);
-            $value    = null;
+            $value = null;
         }
 
         return $this->getValue($name, $value, $relation);
@@ -472,9 +472,9 @@ trait Attribute
     /**
      * 获取经过获取器处理后的数据对象的值
      * @access protected
-     * @param  string      $name 字段名称
-     * @param  mixed       $value 字段值
-     * @param  bool|string $relation 是否为关联属性或者关联名
+     * @param string $name 字段名称
+     * @param mixed $value 字段值
+     * @param bool|string $relation 是否为关联属性或者关联名
      * @return mixed
      * @throws InvalidArgumentException
      */
@@ -482,7 +482,7 @@ trait Attribute
     {
         // 检测属性获取器
         $fieldName = $this->getRealFieldName($name);
-        $method    = 'get' . Str::studly($name) . 'Attr';
+        $method = 'get' . Str::studly($name) . 'Attr';
 
         if (isset($this->withAttr[$fieldName])) {
             if ($relation) {
@@ -493,7 +493,7 @@ trait Attribute
                 $value = $this->getJsonValue($fieldName, $value);
             } else {
                 $closure = $this->withAttr[$fieldName];
-                $value   = $closure($value, $this->data);
+                $value = $closure($value, $this->data);
             }
         } elseif (method_exists($this, $method)) {
             if ($relation) {
@@ -518,8 +518,8 @@ trait Attribute
     /**
      * 获取JSON字段属性值
      * @access protected
-     * @param  string $name  属性名
-     * @param  mixed  $value JSON数据
+     * @param string $name 属性名
+     * @param mixed $value JSON数据
      * @return mixed
      */
     protected function getJsonValue($name, $value)
@@ -538,7 +538,7 @@ trait Attribute
     /**
      * 获取关联属性值
      * @access protected
-     * @param  string $relation 关联名
+     * @param string $relation 关联名
      * @return mixed
      */
     protected function getRelationValue(string $relation)
@@ -551,8 +551,8 @@ trait Attribute
     /**
      * 数据读取 类型转换
      * @access protected
-     * @param  mixed        $value 值
-     * @param  string|array $type  要转换的类型
+     * @param mixed $value 值
+     * @param string|array $type 要转换的类型
      * @return mixed
      */
     protected function readTransform($value, $type)
@@ -569,28 +569,28 @@ trait Attribute
 
         switch ($type) {
             case 'integer':
-                $value = (int) $value;
+                $value = (int)$value;
                 break;
             case 'float':
                 if (empty($param)) {
-                    $value = (float) $value;
+                    $value = (float)$value;
                 } else {
-                    $value = (float) number_format($value, $param, '.', '');
+                    $value = (float)number_format($value, $param, '.', '');
                 }
                 break;
             case 'boolean':
-                $value = (bool) $value;
+                $value = (bool)$value;
                 break;
             case 'timestamp':
                 if (!is_null($value)) {
                     $format = !empty($param) ? $param : $this->dateFormat;
-                    $value  = $this->formatDateTime($format, $value, true);
+                    $value = $this->formatDateTime($format, $value, true);
                 }
                 break;
             case 'datetime':
                 if (!is_null($value)) {
                     $format = !empty($param) ? $param : $this->dateFormat;
-                    $value  = $this->formatDateTime($format, $value);
+                    $value = $this->formatDateTime($format, $value);
                 }
                 break;
             case 'json':
@@ -622,8 +622,8 @@ trait Attribute
     /**
      * 设置数据字段获取器
      * @access public
-     * @param  string|array $name       字段名
-     * @param  callable     $callback   闭包获取器
+     * @param string|array $name 字段名
+     * @param callable $callback 闭包获取器
      * @return $this
      */
     public function withAttribute($name, callable $callback = null)

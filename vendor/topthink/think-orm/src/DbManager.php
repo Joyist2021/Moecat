@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think;
 
@@ -125,7 +125,7 @@ class DbManager
     /**
      * 设置缓存对象
      * @access public
-     * @param  CacheInterface $cache 缓存对象
+     * @param CacheInterface $cache 缓存对象
      * @return void
      */
     public function setCache(CacheInterface $cache): void
@@ -136,7 +136,7 @@ class DbManager
     /**
      * 设置日志对象
      * @access public
-     * @param  LoggerInterface $log 日志对象
+     * @param LoggerInterface $log 日志对象
      * @return void
      */
     public function setLog(LoggerInterface $log): void
@@ -147,7 +147,7 @@ class DbManager
     /**
      * 记录SQL日志
      * @access protected
-     * @param string $log  SQL日志信息
+     * @param string $log SQL日志信息
      * @param string $type 日志类型
      * @return void
      */
@@ -173,8 +173,8 @@ class DbManager
     /**
      * 获取配置参数
      * @access public
-     * @param  string $config 配置参数
-     * @param  mixed  $default 默认值
+     * @param string $config 配置参数
+     * @param mixed $default 默认值
      * @return mixed
      */
     public function getConfig(string $name = '', $default = null)
@@ -190,7 +190,7 @@ class DbManager
      * 创建/切换数据库连接查询
      * @access public
      * @param string|null $name 连接配置标识
-     * @param bool        $force 强制重新连接
+     * @param bool $force 强制重新连接
      * @return BaseQuery
      */
     public function connect(string $name = null, bool $force = false): BaseQuery
@@ -216,8 +216,8 @@ class DbManager
     /**
      * 创建数据库连接实例
      * @access protected
-     * @param string|null $name  连接标识
-     * @param bool        $force 强制重新连接
+     * @param string|null $name 连接标识
+     * @param bool $force 强制重新连接
      * @return Connection
      */
     protected function instance(string $name = null, bool $force = false): Connection
@@ -233,7 +233,7 @@ class DbManager
             }
 
             $config = $connections[$name];
-            $type   = !empty($config['type']) ? $config['type'] : 'mysql';
+            $type = !empty($config['type']) ? $config['type'] : 'mysql';
 
             if (strpos($type, '\\')) {
                 $class = $type;
@@ -312,7 +312,7 @@ class DbManager
     /**
      * 注册回调方法
      * @access public
-     * @param string   $event    事件名
+     * @param string $event 事件名
      * @param callable $callback 回调方法
      * @return void
      */
@@ -324,9 +324,9 @@ class DbManager
     /**
      * 触发事件
      * @access public
-     * @param string $event  事件名
-     * @param mixed  $params 传入参数
-     * @param bool   $once
+     * @param string $event 事件名
+     * @param mixed $params 传入参数
+     * @param bool $once
      * @return mixed
      */
     public function trigger(string $event, $params = null, bool $once = false)

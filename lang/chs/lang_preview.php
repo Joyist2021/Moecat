@@ -2,7 +2,7 @@
 
 $lang_preview = array
 (
-	'text_preview' => "预览"
+    'text_preview' => "预览"
 );
 
 ?>

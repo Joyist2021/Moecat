@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\model\concern;
 
@@ -46,7 +46,7 @@ trait TimeStamp
     /**
      * 是否需要自动写入时间字段
      * @access public
-     * @param  bool|string $auto
+     * @param bool|string $auto
      * @return $this
      */
     public function isAutoWriteTimestamp($auto)
@@ -59,7 +59,7 @@ trait TimeStamp
     /**
      * 检测时间字段的实际类型
      * @access public
-     * @param  bool|string $type
+     * @param bool|string $type
      * @return mixed
      */
     protected function checkTimeFieldType($type)
@@ -90,7 +90,7 @@ trait TimeStamp
     /**
      * 设置时间字段格式化
      * @access public
-     * @param  string|false $format
+     * @param string|false $format
      * @return $this
      */
     public function setDateFormat($format)
@@ -126,7 +126,7 @@ trait TimeStamp
     /**
      * 获取指定类型的时间字段值
      * @access protected
-     * @param  string $type 时间字段类型
+     * @param string $type 时间字段类型
      * @return mixed
      */
     protected function getTimeTypeValue(string $type)
@@ -156,9 +156,9 @@ trait TimeStamp
     /**
      * 时间日期字段格式化处理
      * @access protected
-     * @param  mixed $format    日期格式
-     * @param  mixed $time      时间日期表达式
-     * @param  bool  $timestamp 时间表达式是否为时间戳
+     * @param mixed $format 日期格式
+     * @param mixed $time 时间日期表达式
+     * @param bool $timestamp 时间表达式是否为时间戳
      * @return mixed
      */
     protected function formatDateTime($format, $time = 'now', bool $timestamp = false)
@@ -177,7 +177,7 @@ trait TimeStamp
             $dateTime = $time;
         } elseif ($timestamp) {
             $dateTime = new DateTime();
-            $dateTime->setTimestamp((int) $time);
+            $dateTime->setTimestamp((int)$time);
         } else {
             $dateTime = new DateTime($time);
         }
@@ -188,7 +188,7 @@ trait TimeStamp
     /**
      * 获取时间字段值
      * @access protected
-     * @param  mixed   $value
+     * @param mixed $value
      * @return mixed
      */
     protected function getTimestampValue($value)
@@ -196,8 +196,8 @@ trait TimeStamp
         $type = $this->checkTimeFieldType($this->autoWriteTimestamp);
 
         if (is_string($type) && in_array(strtolower($type), [
-            'datetime', 'date', 'timestamp',
-        ])) {
+                'datetime', 'date', 'timestamp',
+            ])) {
             $value = $this->formatDateTime($this->dateFormat, $value);
         } else {
             $value = $this->formatDateTime($this->dateFormat, $value, true);

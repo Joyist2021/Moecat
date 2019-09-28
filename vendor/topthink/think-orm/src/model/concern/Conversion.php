@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\model\concern;
 
@@ -51,7 +51,7 @@ trait Conversion
     /**
      * 设置需要附加的输出属性
      * @access public
-     * @param  array $append   属性列表
+     * @param array $append 属性列表
      * @return $this
      */
     public function append(array $append = [])
@@ -64,8 +64,8 @@ trait Conversion
     /**
      * 设置附加关联对象的属性
      * @access public
-     * @param  string       $attr    关联属性
-     * @param  string|array $append  追加属性名
+     * @param string $attr 关联属性
+     * @param string|array $append 追加属性名
      * @return $this
      * @throws Exception
      */
@@ -96,7 +96,7 @@ trait Conversion
     /**
      * 设置需要隐藏的输出属性
      * @access public
-     * @param  array $hidden   属性列表
+     * @param array $hidden 属性列表
      * @return $this
      */
     public function hidden(array $hidden = [])
@@ -109,7 +109,7 @@ trait Conversion
     /**
      * 设置需要输出的属性
      * @access public
-     * @param  array $visible
+     * @param array $visible
      * @return $this
      */
     public function visible(array $visible = [])
@@ -126,17 +126,17 @@ trait Conversion
      */
     public function toArray(): array
     {
-        $item       = [];
+        $item = [];
         $hasVisible = false;
 
         foreach ($this->visible as $key => $val) {
             if (is_string($val)) {
                 if (strpos($val, '.')) {
-                    list($relation, $name)      = explode('.', $val);
+                    list($relation, $name) = explode('.', $val);
                     $this->visible[$relation][] = $name;
                 } else {
                     $this->visible[$val] = true;
-                    $hasVisible          = true;
+                    $hasVisible = true;
                 }
                 unset($this->visible[$key]);
             }
@@ -145,7 +145,7 @@ trait Conversion
         foreach ($this->hidden as $key => $val) {
             if (is_string($val)) {
                 if (strpos($val, '.')) {
-                    list($relation, $name)     = explode('.', $val);
+                    list($relation, $name) = explode('.', $val);
                     $this->hidden[$relation][] = $name;
                 } else {
                     $this->hidden[$val] = true;
@@ -188,17 +188,17 @@ trait Conversion
     {
         if (is_array($name)) {
             // 追加关联对象属性
-            $relation   = $this->getRelation($key, true);
+            $relation = $this->getRelation($key, true);
             $item[$key] = $relation ? $relation->append($name)
                 ->toArray() : [];
         } elseif (strpos($name, '.')) {
             list($key, $attr) = explode('.', $name);
             // 追加关联对象属性
-            $relation   = $this->getRelation($key, true);
+            $relation = $this->getRelation($key, true);
             $item[$key] = $relation ? $relation->append([$attr])
                 ->toArray() : [];
         } else {
-            $value       = $this->getAttr($name);
+            $value = $this->getAttr($name);
             $item[$name] = $value;
 
             $this->getBindAttr($name, $value, $item);
@@ -236,7 +236,7 @@ trait Conversion
     /**
      * 转换当前模型对象为JSON字符串
      * @access public
-     * @param  integer $options json参数
+     * @param integer $options json参数
      * @return string
      */
     public function toJson(int $options = JSON_UNESCAPED_UNICODE): string
@@ -258,8 +258,8 @@ trait Conversion
     /**
      * 转换数据集为数据集对象
      * @access public
-     * @param  array|Collection $collection 数据集
-     * @param  string           $resultSetType 数据集类
+     * @param array|Collection $collection 数据集
+     * @param string $resultSetType 数据集类
      * @return Collection
      */
     public function toCollection(iterable $collection = [], string $resultSetType = null): Collection

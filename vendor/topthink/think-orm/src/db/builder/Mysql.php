@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\db\builder;
 
@@ -27,18 +27,18 @@ class Mysql extends Builder
      * @var array
      */
     protected $parser = [
-        'parseCompare'     => ['=', '<>', '>', '>=', '<', '<='],
-        'parseLike'        => ['LIKE', 'NOT LIKE'],
-        'parseBetween'     => ['NOT BETWEEN', 'BETWEEN'],
-        'parseIn'          => ['NOT IN', 'IN'],
-        'parseExp'         => ['EXP'],
-        'parseRegexp'      => ['REGEXP', 'NOT REGEXP'],
-        'parseNull'        => ['NOT NULL', 'NULL'],
+        'parseCompare' => ['=', '<>', '>', '>=', '<', '<='],
+        'parseLike' => ['LIKE', 'NOT LIKE'],
+        'parseBetween' => ['NOT BETWEEN', 'BETWEEN'],
+        'parseIn' => ['NOT IN', 'IN'],
+        'parseExp' => ['EXP'],
+        'parseRegexp' => ['REGEXP', 'NOT REGEXP'],
+        'parseNull' => ['NOT NULL', 'NULL'],
         'parseBetweenTime' => ['BETWEEN TIME', 'NOT BETWEEN TIME'],
-        'parseTime'        => ['< TIME', '> TIME', '<= TIME', '>= TIME'],
-        'parseExists'      => ['NOT EXISTS', 'EXISTS'],
-        'parseColumn'      => ['COLUMN'],
-        'parseFindInSet'   => ['FIND IN SET'],
+        'parseTime' => ['< TIME', '> TIME', '<= TIME', '>= TIME'],
+        'parseExists' => ['NOT EXISTS', 'EXISTS'],
+        'parseColumn' => ['COLUMN'],
+        'parseFindInSet' => ['FIND IN SET'],
     ];
 
     /**
@@ -74,8 +74,8 @@ class Mysql extends Builder
     /**
      * 生成查询SQL
      * @access public
-     * @param  Query  $query  查询对象
-     * @param  bool   $one    是否仅获取一个记录
+     * @param Query $query 查询对象
+     * @param bool $one 是否仅获取一个记录
      * @return string
      */
     public function select(Query $query, bool $one = false): string
@@ -107,7 +107,7 @@ class Mysql extends Builder
     /**
      * 生成Insert SQL
      * @access public
-     * @param  Query $query 查询对象
+     * @param Query $query 查询对象
      * @return string
      */
     public function insert(Query $query): string
@@ -142,9 +142,9 @@ class Mysql extends Builder
     /**
      * 生成insertall SQL
      * @access public
-     * @param  Query     $query   查询对象
-     * @param  array     $dataSet 数据集
-     * @param  bool      $replace 是否replace
+     * @param Query $query 查询对象
+     * @param array $dataSet 数据集
+     * @param bool $replace 是否replace
      * @return string
      */
     public function insertAll(Query $query, array $dataSet, bool $replace = false): string
@@ -196,7 +196,7 @@ class Mysql extends Builder
     /**
      * 生成update SQL
      * @access public
-     * @param  Query     $query  查询对象
+     * @param Query $query 查询对象
      * @return string
      */
     public function update(Query $query): string
@@ -233,7 +233,7 @@ class Mysql extends Builder
     /**
      * 生成delete SQL
      * @access public
-     * @param  Query  $query  查询对象
+     * @param Query $query 查询对象
      * @return string
      */
     public function delete(Query $query): string
@@ -260,11 +260,11 @@ class Mysql extends Builder
     /**
      * 正则查询
      * @access protected
-     * @param  Query        $query        查询对象
-     * @param  string       $key
-     * @param  string       $exp
-     * @param  mixed        $value
-     * @param  string       $field
+     * @param Query $query 查询对象
+     * @param string $key
+     * @param string $exp
+     * @param mixed $value
+     * @param string $field
      * @return string
      */
     protected function parseRegexp(Query $query, string $key, string $exp, $value, string $field): string
@@ -279,11 +279,11 @@ class Mysql extends Builder
     /**
      * FIND_IN_SET 查询
      * @access protected
-     * @param  Query        $query        查询对象
-     * @param  string       $key
-     * @param  string       $exp
-     * @param  mixed        $value
-     * @param  string       $field
+     * @param Query $query 查询对象
+     * @param string $key
+     * @param string $exp
+     * @param mixed $value
+     * @param string $field
      * @return string
      */
     protected function parseFindInSet(Query $query, string $key, string $exp, $value, string $field): string
@@ -298,15 +298,15 @@ class Mysql extends Builder
     /**
      * 字段和表名处理
      * @access public
-     * @param  Query     $query 查询对象
-     * @param  mixed     $key   字段名
-     * @param  bool      $strict   严格检测
+     * @param Query $query 查询对象
+     * @param mixed $key 字段名
+     * @param bool $strict 严格检测
      * @return string
      */
     public function parseKey(Query $query, $key, bool $strict = false): string
     {
         if (is_int($key)) {
-            return (string) $key;
+            return (string)$key;
         } elseif ($key instanceof Raw) {
             return $key->getValue();
         }
@@ -354,7 +354,7 @@ class Mysql extends Builder
     /**
      * 随机排序
      * @access protected
-     * @param  Query     $query        查询对象
+     * @param Query $query 查询对象
      * @return string
      */
     protected function parseRand(Query $query): string
@@ -365,8 +365,8 @@ class Mysql extends Builder
     /**
      * Partition 分析
      * @access protected
-     * @param  Query        $query    查询对象
-     * @param  string|array $partition  分区
+     * @param Query $query 查询对象
+     * @param string|array $partition 分区
      * @return string
      */
     protected function parsePartition(Query $query, $partition): string
@@ -385,8 +385,8 @@ class Mysql extends Builder
     /**
      * ON DUPLICATE KEY UPDATE 分析
      * @access protected
-     * @param  Query  $query    查询对象
-     * @param  mixed  $duplicate
+     * @param Query $query 查询对象
+     * @param mixed $duplicate
      * @return string
      */
     protected function parseDuplicate(Query $query, $duplicate): string
@@ -406,12 +406,12 @@ class Mysql extends Builder
         $updates = [];
         foreach ($duplicate as $key => $val) {
             if (is_numeric($key)) {
-                $val       = $this->parseKey($query, $val);
+                $val = $this->parseKey($query, $val);
                 $updates[] = $val . ' = VALUES(' . $val . ')';
             } elseif ($val instanceof Raw) {
                 $updates[] = $this->parseKey($query, $key) . " = " . $val->getValue();
             } else {
-                $name      = $query->bindValue($val, $query->getConnection()->getFieldBindType($key));
+                $name = $query->bindValue($val, $query->getConnection()->getFieldBindType($key));
                 $updates[] = $this->parseKey($query, $key) . " = :" . $name;
             }
         }

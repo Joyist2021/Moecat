@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\db\connector;
 
@@ -27,45 +27,45 @@ class Mysql extends PDOConnection
      */
     protected $config = [
         // 数据库类型
-        'type'            => 'mysql',
+        'type' => 'mysql',
         // 服务器地址
-        'hostname'        => '127.0.0.1',
+        'hostname' => '127.0.0.1',
         // 数据库名
-        'database'        => '',
+        'database' => '',
         // 用户名
-        'username'        => '',
+        'username' => '',
         // 密码
-        'password'        => '',
+        'password' => '',
         // 端口
-        'hostport'        => '',
+        'hostport' => '',
         // 连接dsn
-        'dsn'             => '',
+        'dsn' => '',
         // 数据库连接参数
-        'params'          => [],
+        'params' => [],
         // 数据库编码默认采用utf8
-        'charset'         => 'utf8',
+        'charset' => 'utf8',
         // 数据库表前缀
-        'prefix'          => '',
+        'prefix' => '',
         // 数据库调试模式
-        'debug'           => false,
+        'debug' => false,
         // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
-        'deploy'          => 0,
+        'deploy' => 0,
         // 数据库读写是否分离 主从式有效
-        'rw_separate'     => false,
+        'rw_separate' => false,
         // 读写分离后 主服务器数量
-        'master_num'      => 1,
+        'master_num' => 1,
         // 指定从服务器序号
-        'slave_no'        => '',
+        'slave_no' => '',
         // 模型写入后自动读取主服务器
-        'read_master'     => false,
+        'read_master' => false,
         // 是否严格检查字段是否存在
-        'fields_strict'   => true,
+        'fields_strict' => true,
         // 是否需要进行SQL性能分析
-        'sql_explain'     => false,
+        'sql_explain' => false,
         // Builder类
-        'builder'         => '',
+        'builder' => '',
         // Query类
-        'query'           => '',
+        'query' => '',
         // 是否需要断线重连
         'break_reconnect' => false,
         // 断线标识字符串
@@ -75,7 +75,7 @@ class Mysql extends PDOConnection
     /**
      * 解析pdo连接的dsn信息
      * @access protected
-     * @param  array $config 连接信息
+     * @param array $config 连接信息
      * @return string
      */
     protected function parseDsn(array $config): string
@@ -99,7 +99,7 @@ class Mysql extends PDOConnection
     /**
      * 取得数据表的字段信息
      * @access public
-     * @param  string $tableName
+     * @param string $tableName
      * @return array
      */
     public function getFields(string $tableName): array
@@ -113,19 +113,19 @@ class Mysql extends PDOConnection
             $tableName = '`' . $tableName . '`';
         }
 
-        $sql    = 'SHOW FULL COLUMNS FROM ' . $tableName;
-        $pdo    = $this->getPDOStatement($sql);
+        $sql = 'SHOW FULL COLUMNS FROM ' . $tableName;
+        $pdo = $this->getPDOStatement($sql);
         $result = $pdo->fetchAll(PDO::FETCH_ASSOC);
-        $info   = [];
+        $info = [];
 
         if (!empty($result)) {
             foreach ($result as $key => $val) {
                 $val = array_change_key_case($val);
 
                 $info[$val['field']] = [
-                    'name'    => $val['field'],
-                    'type'    => $val['type'],
-                    'notnull' => (bool) ('' === $val['null']), // not null is empty, null is yes
+                    'name' => $val['field'],
+                    'type' => $val['type'],
+                    'notnull' => (bool)('' === $val['null']), // not null is empty, null is yes
                     'default' => $val['default'],
                     'primary' => (strtolower($val['key']) == 'pri'),
                     'autoinc' => (strtolower($val['extra']) == 'auto_increment'),
@@ -140,15 +140,15 @@ class Mysql extends PDOConnection
     /**
      * 取得数据库的表信息
      * @access public
-     * @param  string $dbName
+     * @param string $dbName
      * @return array
      */
     public function getTables(string $dbName = ''): array
     {
-        $sql    = !empty($dbName) ? 'SHOW TABLES FROM ' . $dbName : 'SHOW TABLES ';
-        $pdo    = $this->getPDOStatement($sql);
+        $sql = !empty($dbName) ? 'SHOW TABLES FROM ' . $dbName : 'SHOW TABLES ';
+        $pdo = $this->getPDOStatement($sql);
         $result = $pdo->fetchAll(PDO::FETCH_ASSOC);
-        $info   = [];
+        $info = [];
 
         foreach ($result as $key => $val) {
             $info[$key] = current($val);

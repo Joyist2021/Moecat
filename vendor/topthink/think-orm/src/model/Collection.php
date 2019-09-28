@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: zhangyajun <448901948@qq.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\model;
 
@@ -24,14 +24,14 @@ class Collection extends BaseCollection
     /**
      * 延迟预载入关联查询
      * @access public
-     * @param  array|string $relation 关联
+     * @param array|string $relation 关联
      * @return $this
      */
     public function load($relation)
     {
         if (!$this->isEmpty()) {
             $item = current($this->items);
-            $item->eagerlyResultSet($this->items, (array) $relation);
+            $item->eagerlyResultSet($this->items, (array)$relation);
         }
 
         return $this;
@@ -54,7 +54,7 @@ class Collection extends BaseCollection
     /**
      * 更新数据
      * @access public
-     * @param array $data       数据数组
+     * @param array $data 数据数组
      * @param array $allowField 允许字段
      * @return bool
      */
@@ -74,7 +74,7 @@ class Collection extends BaseCollection
     /**
      * 设置需要隐藏的输出属性
      * @access public
-     * @param  array $hidden 属性列表
+     * @param array $hidden 属性列表
      * @return $this
      */
     public function hidden(array $hidden)
@@ -89,7 +89,7 @@ class Collection extends BaseCollection
     /**
      * 设置需要输出的属性
      * @access public
-     * @param  array $visible
+     * @param array $visible
      * @return $this
      */
     public function visible(array $visible)
@@ -104,7 +104,7 @@ class Collection extends BaseCollection
     /**
      * 设置需要追加的输出属性
      * @access public
-     * @param  array $append 属性列表
+     * @param array $append 属性列表
      * @return $this
      */
     public function append(array $append)
@@ -119,7 +119,7 @@ class Collection extends BaseCollection
     /**
      * 设置父模型
      * @access public
-     * @param  Model $parent 父模型
+     * @param Model $parent 父模型
      * @return $this
      */
     public function setParent(Model $parent)
@@ -134,8 +134,8 @@ class Collection extends BaseCollection
     /**
      * 设置数据字段获取器
      * @access public
-     * @param  string|array $name       字段名
-     * @param  callable     $callback   闭包获取器
+     * @param string|array $name 字段名
+     * @param callable $callback 闭包获取器
      * @return $this
      */
     public function withAttr($name, $callback = null)
@@ -150,8 +150,8 @@ class Collection extends BaseCollection
     /**
      * 绑定（一对一）关联属性到当前模型
      * @access protected
-     * @param  string $relation 关联名称
-     * @param  array  $attrs    绑定属性
+     * @param string $relation 关联名称
+     * @param array $attrs 绑定属性
      * @return $this
      * @throws Exception
      */
@@ -168,8 +168,8 @@ class Collection extends BaseCollection
      * 按指定键整理数据
      *
      * @access public
-     * @param  mixed  $items    数据
-     * @param  string $indexKey 键名
+     * @param mixed $items 数据
+     * @param string $indexKey 键名
      * @return array
      */
     public function dictionary($items = null, string &$indexKey = null)
@@ -195,8 +195,8 @@ class Collection extends BaseCollection
      * 比较数据集，返回差集
      *
      * @access public
-     * @param  mixed  $items    数据
-     * @param  string $indexKey 指定比较的键名
+     * @param mixed $items 数据
+     * @param string $indexKey 指定比较的键名
      * @return static
      */
     public function diff($items, string $indexKey = null)
@@ -205,7 +205,7 @@ class Collection extends BaseCollection
             return new static($items);
         }
 
-        $diff       = [];
+        $diff = [];
         $dictionary = $this->dictionary($items, $indexKey);
 
         if (is_string($indexKey)) {
@@ -223,8 +223,8 @@ class Collection extends BaseCollection
      * 比较数据集，返回交集
      *
      * @access public
-     * @param  mixed  $items    数据
-     * @param  string $indexKey 指定比较的键名
+     * @param mixed $items 数据
+     * @param string $indexKey 指定比较的键名
      * @return static
      */
     public function intersect($items, string $indexKey = null)
@@ -233,7 +233,7 @@ class Collection extends BaseCollection
             return new static([]);
         }
 
-        $intersect  = [];
+        $intersect = [];
         $dictionary = $this->dictionary($items, $indexKey);
 
         if (is_string($indexKey)) {

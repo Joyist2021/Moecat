@@ -337,47 +337,47 @@ function docleanup($forceAll = 0, $printProgress = false)
         //$res = sql_query("SELECT id, name FROM torrents WHERE added < $dt AND sp_state = ".sqlesc($type).' AND promotion_time_type=0') or sqlerr(__FILE__, __LINE__);
         switch ($targettype) {
             case 1: //normal
-                {
-                    $sp_state = 1;
-                    $become = "normal";
-                    break;
-                }
+            {
+                $sp_state = 1;
+                $become = "normal";
+                break;
+            }
             case 2: //Free
-                {
-                    $sp_state = 2;
-                    $become = "Free";
-                    break;
-                }
+            {
+                $sp_state = 2;
+                $become = "Free";
+                break;
+            }
             case 3: //2X
-                {
-                    $sp_state = 3;
-                    $become = "2X";
-                    break;
-                }
+            {
+                $sp_state = 3;
+                $become = "2X";
+                break;
+            }
             case 4: //2X Free
-                {
-                    $sp_state = 4;
-                    $become = "2X Free";
-                    break;
-                }
+            {
+                $sp_state = 4;
+                $become = "2X Free";
+                break;
+            }
             case 5: //Half Leech
-                {
-                    $sp_state = 5;
-                    $become = "50%";
-                    break;
-                }
+            {
+                $sp_state = 5;
+                $become = "50%";
+                break;
+            }
             case 6: //2X Half Leech
-                {
-                    $sp_state = 6;
-                    $become = "2X 50%";
-                    break;
-                }
+            {
+                $sp_state = 6;
+                $become = "2X 50%";
+                break;
+            }
             default: //normal
-                {
-                    $sp_state = 1;
-                    $become = "normal";
-                    break;
-                }
+            {
+                $sp_state = 1;
+                $become = "normal";
+                break;
+            }
         }
 
         sql_query("UPDATE torrents SET sp_state = " . sqlesc($sp_state) . "  WHERE added < $dt AND sp_state = " . sqlesc($type) . ' AND promotion_time_type=0') or sqlerr(__FILE__, __LINE__);

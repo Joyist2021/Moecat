@@ -5,15 +5,15 @@ require_once(get_langfile_path());
 loggedinorreturn();
 
 if (get_user_class() < $userprofile_class)
-	permissiondenied();
+    permissiondenied();
 
 $userid = 0 + $_GET["id"];
 if (!is_valid_id($userid))
-	stderr($lang_iphistory['std_error'], $lang_iphistory['std_invalid_id']);
+    stderr($lang_iphistory['std_error'], $lang_iphistory['std_invalid_id']);
 
 $res = sql_query("SELECT username FROM users WHERE id = $userid") or sqlerr(__FILE__, __LINE__);
 if (mysql_num_rows($res) == 0)
-	stderr($lang_iphistory['error'], $lang_iphistory['text_user_not_found']);
+    stderr($lang_iphistory['error'], $lang_iphistory['text_user_not_found']);
 
 $arr = mysql_fetch_array($res);
 $username = $arr["username"];
@@ -34,39 +34,36 @@ UNION DISTINCT SELECT u.id, iplog.ip as ip, iplog.access as access FROM users AS
 RIGHT JOIN iplog on u.id = iplog.userid WHERE u.id = $userid ORDER BY access DESC $limit";*/
 
 
-
 $query = "SELECT ip,access ,(SELECT count(*)  FROM  `iplog` as you where you.ip=my.ip and you.userid != $userid  )as ipcount FROM  `iplog` as  my WHERE my.userid = $userid ORDER BY access DESC $limit";
 
 $res = sql_query($query) or sqlerr(__FILE__, __LINE__);
 
-stdhead($lang_iphistory['head_ip_history_log_for'].$username);
+stdhead($lang_iphistory['head_ip_history_log_for'] . $username);
 begin_main_frame();
 
-print("<h1 align=\"center\">".$lang_iphistory['text_historical_ip_by'] . get_username($userid)."</h1>");
+print("<h1 align=\"center\">" . $lang_iphistory['text_historical_ip_by'] . get_username($userid) . "</h1>");
 
 if ($countrows > $perpage)
-echo $pagertop;
+    echo $pagertop;
 
 print("<table width=500 border=1 cellspacing=0 cellpadding=5 align=center>\n");
 print("<tr>\n
-<td class=colhead>".$lang_iphistory['col_last_access']."</td>\n
-<td class=colhead>".$lang_iphistory['col_ip']."</td>\n
-<td class=colhead>".$lang_iphistory['col_hostname']."</td>\n
+<td class=colhead>" . $lang_iphistory['col_last_access'] . "</td>\n
+<td class=colhead>" . $lang_iphistory['col_ip'] . "</td>\n
+<td class=colhead>" . $lang_iphistory['col_hostname'] . "</td>\n
 </tr>\n");
-while ($arr = mysql_fetch_array($res))
-{
-$addr = "";
-$ipshow = "";
-if ($arr["ip"])
-{
-$ip = $arr["ip"];
-//$dom = @gethostbyaddr($arr["ip"]);
-//if ($dom == $arr["ip"] || @gethostbyname($dom) != $arr["ip"])
-list($loc_pub, $loc_mod) = get_ip_location($ip );
-$addr =  $loc_pub;
-//else
-//$addr = $dom;
-/*
+while ($arr = mysql_fetch_array($res)) {
+    $addr = "";
+    $ipshow = "";
+    if ($arr["ip"]) {
+        $ip = $arr["ip"];
+        //$dom = @gethostbyaddr($arr["ip"]);
+        //if ($dom == $arr["ip"] || @gethostbyname($dom) != $arr["ip"])
+        list($loc_pub, $loc_mod) = get_ip_location($ip);
+        $addr = $loc_pub;
+        //else
+        //$addr = $dom;
+        /*
 $queryc = "SELECT COUNT(*) FROM
 (
 SELECT u.id FROM users AS u WHERE u.ip = " . sqlesc($ip) . "
@@ -78,15 +75,15 @@ $arrip = mysql_fetch_row($resip);
 $ipcount = $arrip[0];
 
 if ($ipcount > 1)*/
-if ($arr["ipcount"] > 1)
-$ipshow = "<a href=\"ipsearch.php?ip=". $arr['ip'] ."\">" . $arr['ip'] ."</a> <b>(<font class='striking'>".$lang_iphistory['text_duplicate']."</font>)</b>";
-else
-$ipshow = "<a href=\"ipsearch.php?ip=". $arr['ip'] ."\">" . $arr['ip'] ."</a>";
-}
-$date = gettime($arr["access"]);
-print("<tr><td>".$date."</td>\n");
-print("<td>".$ipshow."</td>\n");
-print("<td>".$addr."</td></tr>\n");
+        if ($arr["ipcount"] > 1)
+            $ipshow = "<a href=\"ipsearch.php?ip=" . $arr['ip'] . "\">" . $arr['ip'] . "</a> <b>(<font class='striking'>" . $lang_iphistory['text_duplicate'] . "</font>)</b>";
+        else
+            $ipshow = "<a href=\"ipsearch.php?ip=" . $arr['ip'] . "\">" . $arr['ip'] . "</a>";
+    }
+    $date = gettime($arr["access"]);
+    print("<tr><td>" . $date . "</td>\n");
+    print("<td>" . $ipshow . "</td>\n");
+    print("<td>" . $addr . "</td></tr>\n");
 }
 
 print("</table>");
@@ -96,4 +93,3 @@ echo $pagerbottom;
 end_main_frame();
 stdfoot();
 die;
-?>

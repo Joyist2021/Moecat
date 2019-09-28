@@ -37,34 +37,36 @@ var idaudiocodecdp='';//编码
 if(!secondvalue)secondvalue=0;
 switch(value){");
 
-	$cats = genrelist($browsecatmode);
-        foreach ($cats as $row){
-	$catsid = $row['id'];
-	$secondtype = searchbox_item_list("audiocodecs",$catsid);
-	$secondsize = count($secondtype,0);
-	if($secondsize>0){
-	$cachearray = $cachearray."case \"".$catsid."\": uplist(\"idaudiocodec_sel\", new Array(['0','请选择子类型']";
-	for($i=0; $i<$secondsize; $i++){
-		$cachearray = $cachearray.",['".$secondtype[$i]['id']."','".$secondtype[$i]['name']."']";
-	}
-	$cachearray = $cachearray."));break;\n";}
-	}
-	
-		$cats = genrelist($specialcatmode);
-        foreach ($cats as $row){
-	$catsid = $row['id'];
-	$secondtype = searchbox_item_list("audiocodecs",$catsid);
-	$secondsize = count($secondtype,0);
-	if($secondsize>0){
-	$cachearray = $cachearray."case \"".$catsid."\": uplist(\"idaudiocodec_sel\", new Array(['0','请选择子类型']";
-	for($i=0; $i<$secondsize; $i++){
-		$cachearray = $cachearray.",['".$secondtype[$i]['id']."','".$secondtype[$i]['name']."']";
-	}
-	$cachearray = $cachearray."));break;\n";}
-	}
+$cats = genrelist($browsecatmode);
+foreach ($cats as $row) {
+    $catsid = $row['id'];
+    $secondtype = searchbox_item_list("audiocodecs", $catsid);
+    $secondsize = count($secondtype, 0);
+    if ($secondsize > 0) {
+        $cachearray = $cachearray . "case \"" . $catsid . "\": uplist(\"idaudiocodec_sel\", new Array(['0','请选择子类型']";
+        for ($i = 0; $i < $secondsize; $i++) {
+            $cachearray = $cachearray . ",['" . $secondtype[$i]['id'] . "','" . $secondtype[$i]['name'] . "']";
+        }
+        $cachearray = $cachearray . "));break;\n";
+    }
+}
+
+$cats = genrelist($specialcatmode);
+foreach ($cats as $row) {
+    $catsid = $row['id'];
+    $secondtype = searchbox_item_list("audiocodecs", $catsid);
+    $secondsize = count($secondtype, 0);
+    if ($secondsize > 0) {
+        $cachearray = $cachearray . "case \"" . $catsid . "\": uplist(\"idaudiocodec_sel\", new Array(['0','请选择子类型']";
+        for ($i = 0; $i < $secondsize; $i++) {
+            $cachearray = $cachearray . ",['" . $secondtype[$i]['id'] . "','" . $secondtype[$i]['name'] . "']";
+        }
+        $cachearray = $cachearray . "));break;\n";
+    }
+}
 
 
-	print($cachearray);
+print($cachearray);
 print("
 	default: idaudiocodecdl=true;break;
 	}

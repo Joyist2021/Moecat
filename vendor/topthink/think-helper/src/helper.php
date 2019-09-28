@@ -16,9 +16,9 @@ if (!function_exists('throw_if')) {
     /**
      * 按条件抛异常
      *
-     * @param mixed            $condition
+     * @param mixed $condition
      * @param Throwable|string $exception
-     * @param array            ...$parameters
+     * @param array ...$parameters
      * @return mixed
      *
      * @throws Throwable
@@ -37,9 +37,9 @@ if (!function_exists('throw_unless')) {
     /**
      * 按条件抛异常
      *
-     * @param mixed            $condition
+     * @param mixed $condition
      * @param Throwable|string $exception
-     * @param array            ...$parameters
+     * @param array ...$parameters
      * @return mixed
      * @throws Throwable
      */
@@ -57,7 +57,7 @@ if (!function_exists('tap')) {
     /**
      * 对一个值调用给定的闭包，然后返回该值
      *
-     * @param mixed         $value
+     * @param mixed $value
      * @param callable|null $callback
      * @return mixed
      */
@@ -103,9 +103,9 @@ if (!function_exists('data_fill')) {
     /**
      * Fill in data where it's missing.
      *
-     * @param mixed        $target
+     * @param mixed $target
      * @param string|array $key
-     * @param mixed        $value
+     * @param mixed $value
      * @return mixed
      */
     function data_fill(&$target, $key, $value)
@@ -118,9 +118,9 @@ if (!function_exists('data_get')) {
     /**
      * Get an item from an array or object using "dot" notation.
      *
-     * @param mixed            $target
+     * @param mixed $target
      * @param string|array|int $key
-     * @param mixed            $default
+     * @param mixed $default
      * @return mixed
      */
     function data_get($target, $key, $default = null)
@@ -165,10 +165,10 @@ if (!function_exists('data_set')) {
     /**
      * Set an item on an array or object using dot notation.
      *
-     * @param mixed        $target
+     * @param mixed $target
      * @param string|array $key
-     * @param mixed        $value
-     * @param bool         $overwrite
+     * @param mixed $value
+     * @param bool $overwrite
      * @return mixed
      */
     function data_set(&$target, $key, $value, $overwrite = true)

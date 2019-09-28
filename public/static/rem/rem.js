@@ -1,9 +1,9 @@
 /**
-* REM自适应
-* designWidth 设计稿实际宽度
-* maxWidth 制作稿的最大宽度
-* */
-; (function (designWidth, maxWidth) {
+ * REM自适应
+ * designWidth 设计稿实际宽度
+ * maxWidth 制作稿的最大宽度
+ * */
+;(function (designWidth, maxWidth) {
     var docEle = document.documentElement;
     //设置viewport
     var meta;

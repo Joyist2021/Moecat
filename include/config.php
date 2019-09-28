@@ -1,64 +1,66 @@
 <?php
 # IMPORTANT: Do not edit below unless you know what you are doing!
-if(!defined('IN_TRACKER'))
-die('Hacking attempt!');
+if (!defined('IN_TRACKER'))
+    die('Hacking attempt!');
 
 $CONFIGURATIONS = array('ACCOUNT', 'ADVERTISEMENT', 'ATTACHMENT', 'AUTHORITY', 'BASIC', 'BONUS', 'CODE', 'MAIN', 'SECURITY', 'SMTP', 'TORRENT', 'TWEAK');
-function ReadConfig ($configname = NULL) {
-	global $CONFIGURATIONS;
-	if ($configname) {
-		$configname = basename($configname);
-		$tmp = oldReadConfig($configname);
-		WriteConfig($configname, $tmp);
-		@unlink('./config/'.$configname);
-		return $tmp;
-	} else {
-		foreach ($CONFIGURATIONS as $CONFIGURATION) {
-			$GLOBALS[$CONFIGURATION] = ReadConfig($CONFIGURATION);
-		}
-	}
+function ReadConfig($configname = NULL)
+{
+    global $CONFIGURATIONS;
+    if ($configname) {
+        $configname = basename($configname);
+        $tmp = oldReadConfig($configname);
+        WriteConfig($configname, $tmp);
+        @unlink('./config/' . $configname);
+        return $tmp;
+    } else {
+        foreach ($CONFIGURATIONS as $CONFIGURATION) {
+            $GLOBALS[$CONFIGURATION] = ReadConfig($CONFIGURATION);
+        }
+    }
 }
 
-function oldReadConfig ($configname) {
-	if (strstr($configname, ',')) {
-		$configlist = explode(',', $configname);
-		foreach ($configlist as $key=>$configname) {
-			ReadConfig(trim($configname));
-		}
-	} else {
-		$configname = basename($configname);
-		$path = './config/'.$configname;
-		if (!file_exists($path)) {
-				die("Error! File <b>".htmlspecialchars($configname)."</b> doesn't exist!</font><br /><font color=blue>Before the setup starts, please ensure that you have properly configured file and directory access permissions. Please see below.</font><br /><br />chmod 777 config/<br />chmod 777 config/".$configname);
-		}
+function oldReadConfig($configname)
+{
+    if (strstr($configname, ',')) {
+        $configlist = explode(',', $configname);
+        foreach ($configlist as $key => $configname) {
+            ReadConfig(trim($configname));
+        }
+    } else {
+        $configname = basename($configname);
+        $path = './config/' . $configname;
+        if (!file_exists($path)) {
+            die("Error! File <b>" . htmlspecialchars($configname) . "</b> doesn't exist!</font><br /><font color=blue>Before the setup starts, please ensure that you have properly configured file and directory access permissions. Please see below.</font><br /><br />chmod 777 config/<br />chmod 777 config/" . $configname);
+        }
 
-		$fp = fopen($path, 'r');
-		$content = '';
-		while (!feof($fp)) {
-			$content .= fread($fp, 102400);
-		}
-		fclose($fp);
+        $fp = fopen($path, 'r');
+        $content = '';
+        while (!feof($fp)) {
+            $content .= fread($fp, 102400);
+        }
+        fclose($fp);
 
-		if (empty($content)) {
-			return array();
-		}
-		$tmp = @unserialize($content);
+        if (empty($content)) {
+            return array();
+        }
+        $tmp = @unserialize($content);
 
-		if (empty($tmp)) {
-			die("Error! <font color=red>Cannot read configuration file <b>".htmlspecialchars($configname)."</b></font><br /><font color=blue>Before the setup starts, please ensure that you have properly configured file and directory access permissions. For *nix system, please see below.</font><br />chmod 777 config <br />chmod 777 config/".$configname."<br /><br /> If access permission is alright, perhaps there's some misconfiguration or the configuration file is corrupted. Please check config/".$configname);
-		}
-		$GLOBALS[$configname] = $tmp;
-		return $tmp;
-	}
+        if (empty($tmp)) {
+            die("Error! <font color=red>Cannot read configuration file <b>" . htmlspecialchars($configname) . "</b></font><br /><font color=blue>Before the setup starts, please ensure that you have properly configured file and directory access permissions. For *nix system, please see below.</font><br />chmod 777 config <br />chmod 777 config/" . $configname . "<br /><br /> If access permission is alright, perhaps there's some misconfiguration or the configuration file is corrupted. Please check config/" . $configname);
+        }
+        $GLOBALS[$configname] = $tmp;
+        return $tmp;
+    }
 }
 
 
-if (file_exists($rootpath .'config/allconfig.php')) {
-	require($rootpath .'config/allconfig.php');
+if (file_exists($rootpath . 'config/allconfig.php')) {
+    require($rootpath . 'config/allconfig.php');
 } else {
-	error_log('BUG:PHP_CGI');
-	die('BUG:PHP_CGI');
-	ReadConfig();
+    error_log('BUG:PHP_CGI');
+    die('BUG:PHP_CGI');
+    ReadConfig();
 }
 
 $SITENAME = $BASIC['SITENAME'];
@@ -66,12 +68,12 @@ $SITENAME = $BASIC['SITENAME'];
 $BASEURLV4V6 = $BASIC['BASEURLV4V6'];
 $BASEURLV4 = $BASIC['BASEURLV4'];
 $BASEURLV6 = $BASIC['BASEURLV6'];
-$BASEURL =$_SERVER["HTTP_HOST"];
-$BASEHOST=$BASIC['BASEHOST'];
-$BASEHOSTAGO=explode(',',$BASIC['BASEHOSTAGO']);
-$BASEHOSTAGO[]=$BASIC['BASEURLV4'];
-$BASEHOSTAGO[]=$BASIC['BASEURLV6'];
-$BASEHOSTAGO[]=$BASIC['BASEURLV4V6'];
+$BASEURL = $_SERVER["HTTP_HOST"];
+$BASEHOST = $BASIC['BASEHOST'];
+$BASEHOSTAGO = explode(',', $BASIC['BASEHOSTAGO']);
+$BASEHOSTAGO[] = $BASIC['BASEURLV4'];
+$BASEHOSTAGO[] = $BASIC['BASEURLV6'];
+$BASEHOSTAGO[] = $BASIC['BASEURLV4V6'];
 $announce_urls = array();
 $announce_urls[0] = $BASIC['announce_url'];
 $announce_urls[1] = $BASIC['announce_url1'];
@@ -81,7 +83,7 @@ $mysql_host = $BASIC['mysql_host'];
 $mysql_user = $BASIC['mysql_user'];
 $mysql_pass = $BASIC['mysql_pass'];
 $mysql_db = $BASIC['mysql_db'];
-$schoolipv6=$BASIC['schoolipv6'];
+$schoolipv6 = $BASIC['schoolipv6'];
 
 
 $SITE_ONLINE = $MAIN['site_online'];
@@ -142,7 +144,7 @@ $altname_main = $MAIN['altname'];
 $enableextforum = $MAIN['extforum'];
 $extforumurl = $MAIN['extforumurl'];
 $deflang = $MAIN['defaultlang'];
-$defcss = (date('G')<8||date('G')>20?$MAIN['defstylesheet_night']:$MAIN['defstylesheet']);
+$defcss = (date('G') < 8 || date('G') > 20 ? $MAIN['defstylesheet_night'] : $MAIN['defstylesheet']);
 $enabledonation = $MAIN['donation'];
 $enablespecial = $MAIN['spsct'];
 $enablespecial2 = $MAIN['spsct2'];
@@ -167,17 +169,17 @@ $emailnotify_smtp = $SMTP['emailnotify'];
 $smtptype = $SMTP['smtptype'];
 $smtp_host = $SMTP['smtp_host'];
 $smtp_port = $SMTP['smtp_port'];
-if (strtoupper(substr(PHP_OS,0,3)=='WIN'))
-$smtp_from = $SMTP['smtp_from'];
+if (strtoupper(substr(PHP_OS, 0, 3) == 'WIN'))
+    $smtp_from = $SMTP['smtp_from'];
 $smtpaddress = $SMTP['smtpaddress'];
 $smtpport = $SMTP['smtpport'];
 $accountname = $SMTP['accountname'];
 
-	if (strstr($SMTP['accountname'], ',')){
-		$configlist = explode(',', $SMTP['accountname']);
-		$accountname=$configlist[mt_rand (0,count($configlist)-1)];
-	}else $accountname = $SMTP['accountname'];
-		
+if (strstr($SMTP['accountname'], ',')) {
+    $configlist = explode(',', $SMTP['accountname']);
+    $accountname = $configlist[mt_rand(0, count($configlist) - 1)];
+} else $accountname = $SMTP['accountname'];
+
 $accountpassword = $SMTP['accountpassword'];
 
 $securelogin = $SECURITY['securelogin'];
@@ -329,8 +331,8 @@ $oneinvite_bonus = $BONUS['oneinvite'];
 $customtitle_bonus = $BONUS['customtitle'];
 $vipstatus_bonus = $BONUS['vipstatus'];
 $bonusgift_bonus = $BONUS['bonusgift'];
-$basictax_bonus = 0+$BONUS['basictax'];
-$taxpercentage_bonus = 0+$BONUS['taxpercentage'];
+$basictax_bonus = 0 + $BONUS['basictax'];
+$taxpercentage_bonus = 0 + $BONUS['taxpercentage'];
 $prolinkpoint_bonus = $BONUS['prolinkpoint'];
 $prolinktime_bonus = $BONUS['prolinktime'];
 $namecolour_bonus = $BONUS['namecolour'];
@@ -420,7 +422,7 @@ $deldeadtorrent_torrent = $TORRENT['deldeadtorrent'];
 
 
 foreach ($CONFIGURATIONS as $CONFIGURATION) {
-	unset($GLOBALS[$CONFIGURATION]);
+    unset($GLOBALS[$CONFIGURATION]);
 }
 
 //Directory for subs
@@ -439,20 +441,20 @@ $useCronTriggerCleanUp = false;
 $promotionrules_torrent = array();
 $ROBOTUSERID = 2823;
 $MASTERUSERID = 1152;
-$chatmarisa=true;
+$chatmarisa = true;
 //$NONEEDLOGIN=hash('sha256','CVEBFHBVEINIXBYUvgytUIttVFtYUVtyUIVt64576Ft67C');
 
 //if(date('G')>=18) $maxdlsystem_time = true;
 
-$promotion_secondtype=array(
-	0=>array(0=>1,1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7),
-	1=>array(0=>1,1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7),
-	2=>array(0=>1,1=>1,2=>1,3=>4,4=>4,5=>1,6=>4,7=>1),
-	3=>array(0=>1,1=>1,2=>4,3=>1,4=>4,5=>6,6=>6,7=>6),
-	4=>array(0=>1,1=>1,2=>1,3=>1,4=>1,5=>1,6=>1,7=>1),
-	5=>array(0=>1,1=>1,2=>2,3=>6,4=>4,5=>1,6=>6,7=>7),
-	6=>array(0=>1,1=>1,2=>4,3=>1,4=>4,5=>1,6=>1,7=>1),
-	7=>array(0=>1,1=>1,2=>2,3=>6,4=>4,5=>1,6=>6,7=>1)
-	);
+$promotion_secondtype = array(
+    0 => array(0 => 1, 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7),
+    1 => array(0 => 1, 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7),
+    2 => array(0 => 1, 1 => 1, 2 => 1, 3 => 4, 4 => 4, 5 => 1, 6 => 4, 7 => 1),
+    3 => array(0 => 1, 1 => 1, 2 => 4, 3 => 1, 4 => 4, 5 => 6, 6 => 6, 7 => 6),
+    4 => array(0 => 1, 1 => 1, 2 => 1, 3 => 1, 4 => 1, 5 => 1, 6 => 1, 7 => 1),
+    5 => array(0 => 1, 1 => 1, 2 => 2, 3 => 6, 4 => 4, 5 => 1, 6 => 6, 7 => 7),
+    6 => array(0 => 1, 1 => 1, 2 => 4, 3 => 1, 4 => 4, 5 => 1, 6 => 1, 7 => 1),
+    7 => array(0 => 1, 1 => 1, 2 => 2, 3 => 6, 4 => 4, 5 => 1, 6 => 6, 7 => 1)
+);
 
 ?>

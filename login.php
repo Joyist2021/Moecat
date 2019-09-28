@@ -2,22 +2,23 @@
 <html>
 <head>
     <title>登录 :: MoeCat</title>
-    <meta charSet="utf-8" class="next-head" />
-    <meta name="viewport" content="initial-scale=1.0, width=device-width" class="next-head" />
+    <meta charSet="utf-8" class="next-head"/>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" class="next-head"/>
     <meta name="description" content="MoeCat-reserved-land">
     <meta name="keywords" content="MoeCat-reserved-land">
-    <link href="/favicon.ico" rel="icon" type="image/x-icon" class="next-head" />
-    <link rel="stylesheet" href="//freessl.cn/_next/static/style.css" class="next-head" />
+    <link href="/favicon.ico" rel="icon" type="image/x-icon" class="next-head"/>
+    <link rel="stylesheet" href="//freessl.cn/_next/static/style.css" class="next-head"/>
     <link rel="stylesheet" href="/public/static/layui-v2.5.4/css/layui.css">
     <script src="/public/static/vue-2.6.1/vue.min.js"></script>
-     <script src="/public/static/jquery-3.4.1/jquery.min.js"></script>
+    <script src="/public/static/jquery-3.4.1/jquery.min.js"></script>
     <script src="/public/static/layui-v2.5.4/layui.js"></script>
     <style>
-        body{
+        body {
             background-image: url(/styles/hatsune_miku/top.jpg);
             background-size: cover;
             background-repeat: no-repeat;
         }
+
         .bg-11 {
             background-image: none;
         }
@@ -77,7 +78,8 @@
                                                     <span class="ant-form-item-children">
                                                         <span class="ant-input-affix-wrapper">
                                                             <span class="ant-input-prefix">
-                                                                <i aria-label="icon: user" style="color:rgba(0,0,0,.25)" class="anticon anticon-user">
+                                                                <i aria-label="icon: user" style="color:rgba(0,0,0,.25)"
+                                                                   class="anticon anticon-user">
                                                                     <svg
                                                                             viewBox="64 64 896 896" class=""
                                                                             data-icon="user" width="1em" height="1em"
@@ -89,7 +91,8 @@
                                                                     </svg>
                                                                 </i>
                                                             </span>
-                                                            <input type="text" v-model="username" placeholder="邮箱/用户名" spellcheck="false" value=""  class="ant-input" />
+                                                            <input type="text" v-model="username" placeholder="邮箱/用户名"
+                                                                   spellcheck="false" value="" class="ant-input"/>
                                                         </span>
                                                     </span>
                                             </div>
@@ -115,7 +118,8 @@
                                                                     </svg>
                                                                 </i>
                                                             </span>
-                                                            <input type="password" v-model="password" placeholder="密码" spellcheck="false" value=""  class="ant-input" />
+                                                            <input type="password" v-model="password" placeholder="密码"
+                                                                   spellcheck="false" value="" class="ant-input"/>
                                                         </span>
                                                     </span>
                                             </div>
@@ -125,7 +129,8 @@
                                         <div class="ant-col ant-form-item-control-wrapper">
                                             <div class="ant-form-item-control">
                                                     <span class="ant-form-item-children">
-                                                        <button @click="formSubmit"  type="button" class="ant-btn btn-block ant-btn-info">
+                                                        <button @click="formSubmit" type="button"
+                                                                class="ant-btn btn-block ant-btn-info">
                                                             <span>登录</span>
                                                         </button>
                                                     </span>
@@ -136,7 +141,8 @@
                                         <div class="ant-col ant-form-item-control-wrapper">
                                             <div class="ant-form-item-control">
                                                     <span class="ant-form-item-children">
-                                                        <a class="pull-right link-color" href="/recover.php">通过邮件找回密码</a>
+                                                        <a class="pull-right link-color"
+                                                           href="/recover.php">通过邮件找回密码</a>
                                                         <a class="pull-right link-color" href="/confirm_resend.php">重新发送验证邮件&nbsp;&nbsp;</a>
                                                         <a class="pull-right link-color" href="/signup.php">还没有账号? 马上注册！&nbsp;&nbsp;</a>
                                                     </span>
@@ -157,7 +163,7 @@
                     <a href="/rules.php" target="_blank">用户规则</a>
                     <a href="mailto:moecat@shabimail.com" target="_blank">联系我们</a>
                     <a href="/punishment.php" target="_blank">封禁查询</a>
-                    <br />©  MoeCat 2019 Powered by NexusPHP
+                    <br/>© MoeCat 2019 Powered by NexusPHP
                 </p>
             </div>
         </div>
@@ -167,42 +173,43 @@
 </html>
 <script>
     new Vue({
-        el:"#__next",
-        data:{
-            username:"",
-            password:"" ,
+        el: "#__next",
+        data: {
+            username: "",
+            password: "",
         },
         created() {
-            layui.use('layer', function(){});
+            layui.use('layer', function () {
+            });
         },
         methods: {
-            formSubmit:function(){
-                if(!this.username.length){
+            formSubmit: function () {
+                if (!this.username.length) {
                     return layer.msg('用户名或者邮箱不能为空', {
                         icon: 2
                     });
                 }
-                if(!this.password.length){
+                if (!this.password.length) {
                     return layer.msg('密码不能为空', {
                         icon: 2
                     });
                 }
-                $.post("/takelogin.php",{
+                $.post("/takelogin.php", {
                     username: this.username,
                     password: this.password,
-                },((res)=>{
+                }, ((res) => {
                     res = JSON.parse(res);
-                    if(!res.code){
+                    if (!res.code) {
                         return layer.alert(res.msg, {
                             icon: 2
                         })
-                    }else{
+                    } else {
                         layer.msg(res.msg, {
                             icon: 1
                         });
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             location.href = res.url
-                        },1000)
+                        }, 1000)
                     }
 
                 }))

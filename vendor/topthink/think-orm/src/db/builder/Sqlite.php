@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace think\db\builder;
 
@@ -24,8 +24,8 @@ class Sqlite extends Builder
     /**
      * limit
      * @access public
-     * @param  Query     $query        查询对象
-     * @param  mixed     $limit
+     * @param Query $query 查询对象
+     * @param mixed $limit
      * @return string
      */
     public function parseLimit(Query $query, string $limit): string
@@ -47,7 +47,7 @@ class Sqlite extends Builder
     /**
      * 随机排序
      * @access protected
-     * @param  Query     $query        查询对象
+     * @param Query $query 查询对象
      * @return string
      */
     protected function parseRand(Query $query): string
@@ -58,15 +58,15 @@ class Sqlite extends Builder
     /**
      * 字段和表名处理
      * @access public
-     * @param  Query     $query     查询对象
-     * @param  mixed     $key       字段名
-     * @param  bool      $strict   严格检测
+     * @param Query $query 查询对象
+     * @param mixed $key 字段名
+     * @param bool $strict 严格检测
      * @return string
      */
     public function parseKey(Query $query, $key, bool $strict = false): string
     {
         if (is_int($key)) {
-            return (string) $key;
+            return (string)$key;
         } elseif ($key instanceof Raw) {
             return $key->getValue();
         }
